@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'anymail',
     
     # Internal project apps
     'apps.core.apps.CoreConfig',
@@ -171,32 +172,45 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# Email (Gmail SMTP / Production SMTP) Configuration
-EMAIL_BACKEND = env('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = env('EMAIL_HOST', 'smtp.gmail.com').strip()
-EMAIL_PORT = int(env('EMAIL_PORT', '587'))
+# ─── Email Configuration ─────────────────────────────────────────────────────
+# Railway blocks outbound SMTP (ports 465/587). Use SendGrid API (HTTPS port 443) in production.
+# On localhost, falls back to Gmail SMTP automatically.
 
-_use_tls_env = env('EMAIL_USE_TLS', '')
-_use_ssl_env = env('EMAIL_USE_SSL', '')
+SENDGRID_API_KEY = env('SENDGRID_API_KEY', '')
 
-if _use_ssl_env:
-    EMAIL_USE_SSL = _use_ssl_env.lower() in ('true', '1', 'yes')
-    EMAIL_USE_TLS = False if EMAIL_USE_SSL else (_use_tls_env.lower() in ('true', '1', 'yes') if _use_tls_env else True)
-elif EMAIL_PORT == 465:
-    EMAIL_USE_SSL = True
-    EMAIL_USE_TLS = False
+if SENDGRID_API_KEY:
+    # Production: SendGrid HTTP API — works on Railway (no SMTP port needed)
+    EMAIL_BACKEND = 'anymail.backends.sendgrid.EmailBackend'
+    ANYMAIL = {
+        'SENDGRID_API_KEY': SENDGRID_API_KEY,
+    }
+    print('[EMAIL] Using SendGrid API backend (production mode)')
 else:
-    EMAIL_USE_SSL = False
-    EMAIL_USE_TLS = _use_tls_env.lower() in ('true', '1', 'yes') if _use_tls_env else True
+    # Local Development: Gmail SMTP
+    EMAIL_BACKEND = env('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+    EMAIL_HOST = env('EMAIL_HOST', 'smtp.gmail.com').strip()
+    EMAIL_PORT = int(env('EMAIL_PORT', '587'))
 
-EMAIL_HOST_USER = env('EMAIL_HOST_USER', '').strip()
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', '').strip()
-EMAIL_TIMEOUT = int(env('EMAIL_TIMEOUT', '15'))
+    _use_tls_env = env('EMAIL_USE_TLS', '')
+    _use_ssl_env = env('EMAIL_USE_SSL', '')
 
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', '').strip() or (
-    f"Mayank Classes <{EMAIL_HOST_USER}>" if EMAIL_HOST_USER else "Mayank Classes <admissions@mayankclasses.com>"
-)
-ADMIN_EMAIL_NOTIFICATION = env('ADMIN_EMAIL_NOTIFICATION', '').strip() or EMAIL_HOST_USER
+    if _use_ssl_env:
+        EMAIL_USE_SSL = _use_ssl_env.lower() in ('true', '1', 'yes')
+        EMAIL_USE_TLS = False if EMAIL_USE_SSL else (_use_tls_env.lower() in ('true', '1', 'yes') if _use_tls_env else True)
+    elif EMAIL_PORT == 465:
+        EMAIL_USE_SSL = True
+        EMAIL_USE_TLS = False
+    else:
+        EMAIL_USE_SSL = False
+        EMAIL_USE_TLS = _use_tls_env.lower() in ('true', '1', 'yes') if _use_tls_env else True
+
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER', '').strip()
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', '').strip()
+    EMAIL_TIMEOUT = int(env('EMAIL_TIMEOUT', '15'))
+    print(f'[EMAIL] Using SMTP backend: {EMAIL_HOST}:{EMAIL_PORT} (local/dev mode)')
+
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', '').strip() or 'Mayank Classes <admissions@mayankclasses.com>'
+ADMIN_EMAIL_NOTIFICATION = env('ADMIN_EMAIL_NOTIFICATION', '').strip() or env('EMAIL_HOST_USER', '')
 
 
 # Production Logging Configuration (Ensures logs appear in Railway dashboard)
