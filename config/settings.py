@@ -7,19 +7,28 @@ import dj_database_url
 # Load environment variables
 load_dotenv()
 
+
+def env(key, default=''):
+    """Get env var, stripping surrounding quotes that some dashboards (Railway) may include."""
+    val = os.getenv(key, default)
+    if val and len(val) >= 2 and ((val[0] == '"' and val[-1] == '"') or (val[0] == "'" and val[-1] == "'")):
+        val = val[1:-1]
+    return val
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-mayank-classes-coaching-secret-key-default-2026')
+SECRET_KEY = env('SECRET_KEY', 'django-insecure-mayank-classes-coaching-secret-key-default-2026')
 
-DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 'yes')
+DEBUG = env('DEBUG', 'True').lower() in ('true', '1', 'yes')
 
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY', '')
+GEMINI_API_KEY = env('GEMINI_API_KEY', '')
 
-ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', '*').split(',') if host.strip()]
+ALLOWED_HOSTS = [host.strip() for host in env('ALLOWED_HOSTS', '*').split(',') if host.strip()]
 
 CSRF_TRUSTED_ORIGINS = [
-    origin.strip() for origin in os.getenv(
+    origin.strip() for origin in env(
         'CSRF_TRUSTED_ORIGINS',
         'http://127.0.0.1:8000,http://localhost:8000,https://*.railway.app,https://*.up.railway.app'
     ).split(',') if origin.strip()
@@ -163,14 +172,14 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 # Email (Gmail SMTP / Production SMTP) Configuration
-EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com').strip()
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
+EMAIL_BACKEND = env('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = env('EMAIL_HOST', 'smtp.gmail.com').strip()
+EMAIL_PORT = int(env('EMAIL_PORT', '587'))
 
-_use_tls_env = os.getenv('EMAIL_USE_TLS')
-_use_ssl_env = os.getenv('EMAIL_USE_SSL')
+_use_tls_env = env('EMAIL_USE_TLS', '')
+_use_ssl_env = env('EMAIL_USE_SSL', '')
 
-if _use_ssl_env is not None:
+if _use_ssl_env:
     EMAIL_USE_SSL = _use_ssl_env.lower() in ('true', '1', 'yes')
     EMAIL_USE_TLS = False if EMAIL_USE_SSL else (_use_tls_env.lower() in ('true', '1', 'yes') if _use_tls_env else True)
 elif EMAIL_PORT == 465:
@@ -180,14 +189,15 @@ else:
     EMAIL_USE_SSL = False
     EMAIL_USE_TLS = _use_tls_env.lower() in ('true', '1', 'yes') if _use_tls_env else True
 
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '').strip().strip('"').strip("'")
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '').strip().strip('"').strip("'")
-EMAIL_TIMEOUT = int(os.getenv('EMAIL_TIMEOUT', '15'))
+EMAIL_HOST_USER = env('EMAIL_HOST_USER', '').strip()
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', '').strip()
+EMAIL_TIMEOUT = int(env('EMAIL_TIMEOUT', '15'))
 
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', '').strip() or (
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', '').strip() or (
     f"Mayank Classes <{EMAIL_HOST_USER}>" if EMAIL_HOST_USER else "Mayank Classes <admissions@mayankclasses.com>"
 )
-ADMIN_EMAIL_NOTIFICATION = os.getenv('ADMIN_EMAIL_NOTIFICATION', '').strip() or EMAIL_HOST_USER
+ADMIN_EMAIL_NOTIFICATION = env('ADMIN_EMAIL_NOTIFICATION', '').strip() or EMAIL_HOST_USER
+
 
 # Production Logging Configuration (Ensures logs appear in Railway dashboard)
 LOGGING = {
