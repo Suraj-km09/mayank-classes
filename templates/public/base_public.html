@@ -112,28 +112,40 @@
 
   <!-- Mobile Navigation Drawer -->
   <div class="mobile-nav-drawer" id="mobile-nav-drawer" role="dialog" aria-label="Mobile Menu">
+    <div class="mobile-nav-header">
+      <a href="/" class="brand-logo-box" aria-label="Mayank Classes Home" onclick="closeMobileNav()">
+        <div class="logo-emblem logo-emblem-sm">
+          <span class="logo-emblem-letter">M</span>
+        </div>
+        <div class="logo-text-group">
+          <div class="logo-name" style="font-size:0.95rem;">MAYANK'S<sup class="logo-tm">™</sup></div>
+          <div class="logo-subtitle" style="font-size:0.65rem;">CLASSES</div>
+        </div>
+      </a>
+      <button type="button" class="mobile-nav-close-btn" onclick="closeMobileNav()" aria-label="Close menu">✕</button>
+    </div>
     <div class="mobile-nav-inner">
-      <a href="/" class="mobile-nav-link">🏠 Home</a>
-      <a href="/about/" class="mobile-nav-link">ℹ️ About</a>
+      <a href="/" class="mobile-nav-link" onclick="closeMobileNav()">🏠 Home</a>
+      <a href="/about/" class="mobile-nav-link" onclick="closeMobileNav()">ℹ️ About</a>
       <div class="mobile-nav-group">
         <button class="mobile-nav-link mobile-nav-accordion-btn" onclick="toggleMobileAccordion(this)">
           📖 Courses <svg class="mobile-chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
         </button>
         <div class="mobile-nav-sub">
-          <a href="/courses/foundation/" class="mobile-sub-link">🎓 Foundation (6–10)</a>
-          <a href="/courses/jee/" class="mobile-sub-link">⚛️ IIT-JEE Preparation</a>
-          <a href="/courses/neet/" class="mobile-sub-link">🩺 NEET-UG Medical</a>
-          <a href="/courses/other-exams/" class="mobile-sub-link">🏆 Other Competitive</a>
+          <a href="/courses/foundation/" class="mobile-sub-link" onclick="closeMobileNav()">🎓 Foundation (6–10)</a>
+          <a href="/courses/jee/" class="mobile-sub-link" onclick="closeMobileNav()">⚛️ IIT-JEE Preparation</a>
+          <a href="/courses/neet/" class="mobile-sub-link" onclick="closeMobileNav()">🩺 NEET-UG Medical</a>
+          <a href="/courses/other-exams/" class="mobile-sub-link" onclick="closeMobileNav()">🏆 Other Competitive</a>
         </div>
       </div>
-      <a href="/courses/neet/" class="mobile-nav-link">🩺 NEET</a>
-      <a href="/courses/jee/" class="mobile-nav-link">⚛️ JEE</a>
-      <a href="/results/" class="mobile-nav-link">🏆 Results</a>
-      <a href="/faculty/" class="mobile-nav-link">👥 Faculty</a>
-      <a href="/contact/" class="mobile-nav-link">📇 Contact</a>
+      <a href="/courses/neet/" class="mobile-nav-link" onclick="closeMobileNav()">🩺 NEET</a>
+      <a href="/courses/jee/" class="mobile-nav-link" onclick="closeMobileNav()">⚛️ JEE</a>
+      <a href="/results/" class="mobile-nav-link" onclick="closeMobileNav()">🏆 Results</a>
+      <a href="/faculty/" class="mobile-nav-link" onclick="closeMobileNav()">👥 Faculty</a>
+      <a href="/contact/" class="mobile-nav-link" onclick="closeMobileNav()">📇 Contact</a>
       <div class="mobile-nav-footer">
         <a href="/login/" class="btn btn-secondary btn-sm" style="width:100%;text-align:center;margin-bottom:0.75rem;">Portal Login</a>
-        <button onclick="openGlobalDemoModal()" class="btn-enroll" style="width:100%;justify-content:center;">Enroll Now</button>
+        <button onclick="closeMobileNav(); openGlobalDemoModal()" class="btn-enroll" style="width:100%;justify-content:center;">Enroll Now</button>
       </div>
     </div>
   </div>
@@ -278,13 +290,12 @@
           </svg>
         </button>
       </div>
-      <div class="ai-chat-disclaimer">⚡ Powered by Gemini AI • Website Course & Admission Assistant</div>
+      <div class="ai-chat-disclaimer">⚡ Powered by Gemini AI • Mayank Classes Assistant</div>
     </form>
   </div>
 </div>
 
-<!-- Back to Top Button -->
-<button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="back-to-top-btn" title="Back to top" id="back-to-top">↑</button>
+
 
 
 <!-- Global Counseling & Demo Registration Modal -->
@@ -292,34 +303,34 @@
   <div class="global-modal-card">
     <div class="modal-header-banner">
       <div>
-        <span class="badge badge-gold" style="margin-bottom:0.25rem;">Admissions Open 2026</span>
-        <h3 style="margin:0;">Book Free Demo & Counseling</h3>
+        <span class="badge badge-gold" style="font-size:0.65rem;padding:0.15rem 0.5rem;margin-bottom:0.15rem;">Admissions Open 2026</span>
+        <h3 style="margin:0;font-size:1.05rem;">Book Free Demo & Counseling</h3>
       </div>
       <button onclick="closeGlobalDemoModal()" class="modal-close-btn">&times;</button>
     </div>
-    <div style="padding:1.75rem;">
-      <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:1.25rem;">
-        Fill in your details to reserve your free demo seat and get a 1-on-1 counseling call from our senior faculty.
+    <div style="padding:1.15rem 1.25rem;">
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.85rem;line-height:1.4;">
+        Reserve your free demo seat and get a 1-on-1 counseling call from our senior faculty mentors.
       </p>
       <form id="global-demo-form" onsubmit="handleGlobalDemoSubmit(event)">
-        <div class="form-group">
-          <label class="form-label">Student Full Name</label>
-          <input type="text" id="g_name" class="form-control" placeholder="e.g. Aarav Sharma" required>
+        <div class="form-group" style="margin-bottom:0.6rem;">
+          <label class="form-label" style="font-size:0.75rem;font-weight:700;margin-bottom:0.2rem;">Student Full Name</label>
+          <input type="text" id="g_name" class="form-control" placeholder="e.g. Aarav Sharma" style="padding:0.45rem 0.65rem;font-size:0.825rem;" required>
         </div>
-        <div class="grid grid-2 gap-3">
-          <div class="form-group">
-            <label class="form-label">Mobile Number</label>
-            <input type="tel" id="g_phone" class="form-control" placeholder="+91 98765..." required>
+        <div class="grid grid-2 gap-2" style="margin-bottom:0.6rem;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" style="font-size:0.75rem;font-weight:700;margin-bottom:0.2rem;">Mobile Number</label>
+            <input type="tel" id="g_phone" class="form-control" placeholder="+91 98765..." style="padding:0.45rem 0.65rem;font-size:0.825rem;" required>
           </div>
-          <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input type="email" id="g_email" class="form-control" placeholder="student@gmail.com" required>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" style="font-size:0.75rem;font-weight:700;margin-bottom:0.2rem;">Email Address</label>
+            <input type="email" id="g_email" class="form-control" placeholder="student@gmail.com" style="padding:0.45rem 0.65rem;font-size:0.825rem;" required>
           </div>
         </div>
-        <div class="grid grid-2 gap-3">
-          <div class="form-group">
-            <label class="form-label">Target Program</label>
-            <select id="g_course" class="form-control">
+        <div class="grid grid-2 gap-2" style="margin-bottom:0.6rem;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" style="font-size:0.75rem;font-weight:700;margin-bottom:0.2rem;">Target Program</label>
+            <select id="g_course" class="form-control" style="padding:0.45rem 0.65rem;font-size:0.825rem;">
               <option value="NEET-UG Medical Champions">NEET-UG Medical Champions</option>
               <option value="JEE Advanced Pinnacle">JEE Advanced Pinnacle</option>
               <option value="Foundation (Classes 6-10)">Foundation (Classes 6–10)</option>
@@ -327,9 +338,9 @@
               <option value="CUET & NDA Entrance">CUET / NDA Defence</option>
             </select>
           </div>
-          <div class="form-group">
-            <label class="form-label">Current Class</label>
-            <select id="g_class" class="form-control">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" style="font-size:0.75rem;font-weight:700;margin-bottom:0.2rem;">Current Class</label>
+            <select id="g_class" class="form-control" style="padding:0.45rem 0.65rem;font-size:0.825rem;">
               <option value="Class 11">Class 11</option>
               <option value="Class 12">Class 12</option>
               <option value="Class 10">Class 10</option>
@@ -341,11 +352,11 @@
             </select>
           </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Any specific query (Optional)</label>
-          <textarea id="g_message" class="form-control" rows="2" placeholder="Ask about batch timings, scholarship test, or hostel..."></textarea>
+        <div class="form-group" style="margin-bottom:0.85rem;">
+          <label class="form-label" style="font-size:0.75rem;font-weight:700;margin-bottom:0.2rem;">Any specific query (Optional)</label>
+          <textarea id="g_message" class="form-control" rows="2" placeholder="Ask about batch timings, scholarship test, or hostel..." style="padding:0.45rem 0.65rem;font-size:0.825rem;"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg w-full" style="background:var(--brand-red);">
+        <button type="submit" class="btn btn-primary w-full" style="background:var(--brand-red);padding:0.6rem 1rem;font-size:0.875rem;font-weight:700;border-radius:10px;">
           Confirm Free Demo Request ➔
         </button>
       </form>
@@ -355,28 +366,28 @@
 
 <!-- Global Download Brochure Modal -->
 <div id="brochure-modal" class="global-modal-backdrop" style="display:none;" onclick="if(event.target===this) closeBrochureModal()">
-  <div class="global-modal-card">
+  <div class="global-modal-card" style="max-width:400px;">
     <div class="modal-header-banner" style="background:linear-gradient(135deg, #059669, #10B981);">
       <div>
-        <span class="badge badge-gold" style="margin-bottom:0.25rem;">Curriculum & Syllabus</span>
-        <h3 style="margin:0;">Download Official Brochure</h3>
+        <span class="badge badge-gold" style="font-size:0.65rem;padding:0.15rem 0.5rem;margin-bottom:0.15rem;">Curriculum & Syllabus</span>
+        <h3 style="margin:0;font-size:1.05rem;">Download Official Brochure</h3>
       </div>
       <button onclick="closeBrochureModal()" class="modal-close-btn">&times;</button>
     </div>
-    <div style="padding:1.75rem;">
-      <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:1.25rem;">
+    <div style="padding:1.15rem 1.25rem;">
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.85rem;line-height:1.4;">
         Enter your WhatsApp number to receive the comprehensive 2026 syllabus breakdown and fee structure PDF.
       </p>
       <form id="brochure-form" onsubmit="handleBrochureSubmit(event)">
-        <div class="form-group">
-          <label class="form-label">Your Name</label>
-          <input type="text" id="b_name" class="form-control" placeholder="e.g. Priya Patel" required>
+        <div class="form-group" style="margin-bottom:0.65rem;">
+          <label class="form-label" style="font-size:0.75rem;font-weight:700;margin-bottom:0.2rem;">Your Name</label>
+          <input type="text" id="b_name" class="form-control" placeholder="e.g. Priya Patel" style="padding:0.45rem 0.65rem;font-size:0.825rem;" required>
         </div>
-        <div class="form-group">
-          <label class="form-label">WhatsApp Number</label>
-          <input type="tel" id="b_phone" class="form-control" placeholder="+91 98765..." required>
+        <div class="form-group" style="margin-bottom:0.85rem;">
+          <label class="form-label" style="font-size:0.75rem;font-weight:700;margin-bottom:0.2rem;">WhatsApp Number</label>
+          <input type="tel" id="b_phone" class="form-control" placeholder="+91 98765..." style="padding:0.45rem 0.65rem;font-size:0.825rem;" required>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg w-full" style="background:#059669;">
+        <button type="submit" class="btn btn-primary w-full" style="background:#059669;padding:0.6rem 1rem;font-size:0.875rem;font-weight:700;border-radius:10px;">
           📥 Download Brochure PDF
         </button>
       </form>
@@ -470,11 +481,7 @@ function toggleMobileAccordion(btn) {
   sub.classList.toggle('open');
 }
 
-// Back to top visibility
-const backToTop = document.getElementById('back-to-top');
-window.addEventListener('scroll', () => {
-  if (backToTop) backToTop.style.opacity = window.scrollY > 400 ? '1' : '0';
-});
+
 
 // Scroll reveal animations
 const revealObserver = new IntersectionObserver((entries) => {

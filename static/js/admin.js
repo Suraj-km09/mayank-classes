@@ -30,6 +30,10 @@ function updateAdminProfileUI() {
 }
 
 function switchAdminTab(tabId) {
+  if (typeof closeSidebar === 'function') {
+    closeSidebar();
+  }
+
   document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
   document.querySelectorAll('.sidebar-nav-item a').forEach(el => el.classList.remove('active'));
 
@@ -295,7 +299,7 @@ async function submitNewStudentForm(e) {
     const res = await api.post('/students/', payload);
     const roll = (res.student_profile && res.student_profile.roll_number) || 'MC-NEW';
     showToast(`🎉 Student ${payload.first_name} ${payload.last_name} admitted! Roll: ${roll}`, 'success', 6000);
-    
+
     const modal = document.getElementById('new-student-modal');
     if (modal) modal.remove();
     loadAdminStudentsTab();
@@ -417,7 +421,7 @@ async function openAddBatchModal() {
   try {
     const cData = await api.get('/courses/');
     coursesList = cData.results || cData;
-  } catch (e) {}
+  } catch (e) { }
 
   const optionsHtml = coursesList.map(c => `<option value="${c.id}">${c.title}</option>`).join('');
 
@@ -499,7 +503,7 @@ async function submitNewBatchForm(e) {
 
     await api.post('/batches/', payload);
     showToast(`🎉 Batch "${payload.name}" created successfully!`, 'success', 5000);
-    
+
     const modal = document.getElementById('new-batch-modal');
     if (modal) modal.remove();
     loadAdminBatchesTab();
@@ -687,7 +691,7 @@ function applyAdminInquiryFilters() {
   }
 
   if (keyword) {
-    filtered = filtered.filter(i => 
+    filtered = filtered.filter(i =>
       i.full_name.toLowerCase().includes(keyword) ||
       i.phone.toLowerCase().includes(keyword) ||
       i.email.toLowerCase().includes(keyword) ||
@@ -743,7 +747,7 @@ async function loadAdminNoticesTab() {
     container.innerHTML = allAdminNotices.map(n => {
       let badgeClass = n.category === 'URGENT' ? 'badge-danger' : (n.category === 'EXAM' ? 'badge-primary' : 'badge-gold');
       let audience = n.target_role === 'STUDENT' ? '🎓 Students' : (n.target_role === 'TEACHER' ? '👨‍🏫 Faculty' : '🌐 All Portals');
-      
+
       return `
         <div class="card p-3" style="border-left:4px solid var(--primary-600);border-radius:12px;margin-bottom:0.75rem;">
           <div class="flex items-center justify-between" style="margin-bottom:0.4rem;">

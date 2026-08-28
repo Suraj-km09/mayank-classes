@@ -12,6 +12,7 @@
         <h2>MAYANK <span style="color:var(--brand-gold);">LMS</span></h2>
         <span>Student Portal</span>
       </div>
+      <button type="button" onclick="toggleSidebar()" class="sidebar-close-btn" aria-label="Close sidebar">✕</button>
     </div>
 
     <ul class="sidebar-nav">
@@ -63,14 +64,16 @@
       <li class="sidebar-nav-item">
         <a href="javascript:void(0)" id="nav-notices" onclick="switchStudentTab('notices')">
           <span class="nav-icon">📢</span> <span class="nav-text">Notice Board & Alerts</span>
-          <span id="student-notice-badge" class="badge badge-danger" style="margin-left:auto;font-size:0.68rem;padding:0.15rem 0.45rem;">Live</span>
+          <span id="student-notice-badge" class="badge badge-danger"
+            style="margin-left:auto;font-size:0.68rem;padding:0.15rem 0.45rem;">Live</span>
         </a>
       </li>
     </ul>
 
     <div class="sidebar-footer">
       <div class="user-mini-profile">
-        <img id="user-display-avatar" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100" class="user-avatar" alt="Avatar">
+        <img id="user-display-avatar" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100"
+          class="user-avatar" alt="Avatar">
         <div class="user-info">
           <h4 id="user-display-name" class="user-name">Student Name</h4>
           <span id="student-roll-badge" class="user-role-badge badge badge-primary">Roll: MC-001</span>
@@ -79,6 +82,9 @@
       </div>
     </div>
   </aside>
+
+  <!-- Sidebar Mobile Backdrop Overlay -->
+  <div class="portal-sidebar-overlay" id="portalSidebarOverlay" onclick="toggleSidebar()"></div>
 
   <!-- Portal Main Area -->
   <main class="portal-main">
@@ -93,8 +99,10 @@
       <div class="topbar-right">
         <div class="flex items-center gap-1">
           <span style="font-size:0.72rem;color:var(--text-muted);font-weight:600;">Switch:</span>
-          <button onclick="AuthManager.demoLogin('teacher')" class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.55rem;">Teacher</button>
-          <button onclick="AuthManager.demoLogin('admin')" class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.55rem;">Admin</button>
+          <button onclick="AuthManager.demoLogin('teacher')" class="btn btn-secondary btn-sm"
+            style="font-size:0.75rem;padding:0.25rem 0.55rem;">Teacher</button>
+          <button onclick="AuthManager.demoLogin('admin')" class="btn btn-secondary btn-sm"
+            style="font-size:0.75rem;padding:0.25rem 0.55rem;">Admin</button>
         </div>
         <a href="/" class="btn btn-secondary btn-sm" style="font-size:0.78rem;padding:0.35rem 0.75rem;">Website ↗</a>
       </div>
@@ -107,11 +115,15 @@
         <div class="page-header">
           <div>
             <h1 class="page-title">My Enrolled Courses</h1>
-            <p class="page-subtitle">Select a course to access its recorded lessons, study materials, and curriculum.</p>
+            <p class="page-subtitle">Select a course to access its recorded lessons, study materials, and curriculum.
+            </p>
           </div>
         </div>
-        <div id="courses-list-container" class="kpi-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-          <div class="card p-4 text-center" style="grid-column: 1 / -1;"><div class="spinner" style="margin:0 auto;"></div></div>
+        <div id="courses-list-container" class="kpi-grid"
+          style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+          <div class="card p-4 text-center" style="grid-column: 1 / -1;">
+            <div class="spinner" style="margin:0 auto;"></div>
+          </div>
         </div>
       </div>
 
@@ -120,7 +132,8 @@
         <div class="page-header">
           <div>
             <h1 class="page-title">Welcome Back, Student!</h1>
-            <p class="page-subtitle">Here is your daily learning progress, attendance summary, and upcoming mock tests.</p>
+            <p class="page-subtitle">Here is your daily learning progress, attendance summary, and upcoming mock tests.
+            </p>
           </div>
           <button onclick="switchStudentTab('lms')" class="btn btn-primary">Resume Video Lessons ➔</button>
         </div>
@@ -169,7 +182,9 @@
                 <span class="badge badge-primary">Active</span>
               </div>
               <div id="dashboard-enrolled-courses" class="flex flex-col gap-3">
-                <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+                <div class="p-4 text-center">
+                  <div class="spinner" style="margin:0 auto;"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -181,7 +196,9 @@
                 <span class="badge badge-warning">Live Ticker</span>
               </div>
               <div id="dashboard-notices">
-                <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+                <div class="p-4 text-center">
+                  <div class="spinner" style="margin:0 auto;"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -193,7 +210,8 @@
         <div class="page-header">
           <div>
             <h1 class="page-title">Recorded Video Lessons & Curriculum</h1>
-            <p class="page-subtitle" id="lms-current-course-title">Course Hierarchy: Course → Subject → Chapter → Video Lesson</p>
+            <p class="page-subtitle" id="lms-current-course-title">Course Hierarchy: Course → Subject → Chapter → Video
+              Lesson</p>
           </div>
         </div>
 
@@ -201,13 +219,16 @@
           <!-- Video Stage Left -->
           <div class="lms-video-stage">
             <div class="video-frame-box">
-              <iframe id="player-video-iframe" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <iframe id="player-video-iframe" src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
             </div>
 
             <div class="video-details-box">
               <div class="video-title-row">
                 <h3 id="player-video-title">Select a video lesson from the curriculum drawer</h3>
-                <button id="player-complete-btn" onclick="markCurrentVideoComplete()" class="btn btn-primary btn-sm">Mark as Completed</button>
+                <button id="player-complete-btn" onclick="markCurrentVideoComplete()"
+                  class="btn btn-primary btn-sm">Mark as Completed</button>
               </div>
 
               <div class="video-meta-tags">
@@ -217,7 +238,8 @@
               </div>
 
               <p id="player-video-desc" style="font-size:0.875rem;color:#CBD5E1;margin-top:1rem;line-height:1.6;">
-                Click any chapter and topic on the right drawer to start streaming high-definition theoretical derivations and problem-solving modules.
+                Click any chapter and topic on the right drawer to start streaming high-definition theoretical
+                derivations and problem-solving modules.
               </p>
             </div>
           </div>
@@ -229,7 +251,9 @@
               <p style="font-size:0.75rem;color:var(--text-muted);">Click lesson to stream</p>
             </div>
             <div class="drawer-content" id="lms-curriculum-container">
-              <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+              <div class="p-4 text-center">
+                <div class="spinner" style="margin:0 auto;"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -240,12 +264,15 @@
         <div class="page-header">
           <div>
             <h1 class="page-title">Online Tests & Mock CBT Series</h1>
-            <p class="page-subtitle">Computer-based mock tests with real-time timer, instant negative marking evaluation, and scorecard explanations.</p>
+            <p class="page-subtitle">Computer-based mock tests with real-time timer, instant negative marking
+              evaluation, and scorecard explanations.</p>
           </div>
         </div>
 
         <div id="tests-list-container" class="flex flex-col gap-4">
-          <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+          <div class="p-4 text-center">
+            <div class="spinner" style="margin:0 auto;"></div>
+          </div>
         </div>
       </div>
 
@@ -270,10 +297,12 @@
                 <div class="options-grid" id="question-options-container"></div>
               </div>
 
-              <div class="flex items-center justify-between" style="padding-top:2rem;border-top:1px solid var(--border-color);margin-top:2rem;">
+              <div class="flex items-center justify-between"
+                style="padding-top:2rem;border-top:1px solid var(--border-color);margin-top:2rem;">
                 <button id="btn-quiz-prev" onclick="prevQuizQuestion()" class="btn btn-secondary">← Previous</button>
                 <div class="flex gap-2">
-                  <button id="btn-quiz-next" onclick="nextQuizQuestion()" class="btn btn-primary">Next Question →</button>
+                  <button id="btn-quiz-next" onclick="nextQuizQuestion()" class="btn btn-primary">Next Question
+                    →</button>
                   <button onclick="confirmAndSubmitQuiz()" class="btn btn-gold">Submit Exam</button>
                 </div>
               </div>
@@ -293,12 +322,15 @@
         <div class="page-header">
           <div>
             <h1 class="page-title">Comprehensive Study Materials & DPPs</h1>
-            <p class="page-subtitle">Download handwritten lecture notes, quick formula sheets, and Daily Practice Problems.</p>
+            <p class="page-subtitle">Download handwritten lecture notes, quick formula sheets, and Daily Practice
+              Problems.</p>
           </div>
         </div>
 
         <div id="materials-list-container" class="flex flex-col gap-3">
-          <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+          <div class="p-4 text-center">
+            <div class="spinner" style="margin:0 auto;"></div>
+          </div>
         </div>
       </div>
 
@@ -328,7 +360,11 @@
                 </tr>
               </thead>
               <tbody id="attendance-records-table">
-                <tr><td colspan="4" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+                <tr>
+                  <td colspan="4" class="text-center p-4">
+                    <div class="spinner" style="margin:0 auto;"></div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -345,7 +381,9 @@
         </div>
 
         <div id="fees-invoices-container">
-          <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+          <div class="p-4 text-center">
+            <div class="spinner" style="margin:0 auto;"></div>
+          </div>
         </div>
       </div>
 
@@ -359,7 +397,9 @@
         </div>
 
         <div id="certificates-container">
-          <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+          <div class="p-4 text-center">
+            <div class="spinner" style="margin:0 auto;"></div>
+          </div>
         </div>
       </div>
 
@@ -368,31 +408,43 @@
         <div class="page-header">
           <div>
             <h1 class="page-title">Institute Notice Board & Circulars</h1>
-            <p class="page-subtitle">Official announcements regarding test series schedules, masterclasses, and academic notices.</p>
+            <p class="page-subtitle">Official announcements regarding test series schedules, masterclasses, and academic
+              notices.</p>
           </div>
-          <button onclick="loadStudentNoticesTab()" class="btn btn-secondary btn-sm" title="Refresh Notices">🔄 Refresh</button>
+          <button onclick="loadStudentNoticesTab()" class="btn btn-secondary btn-sm" title="Refresh Notices">🔄
+            Refresh</button>
         </div>
 
         <!-- Filter & Search Bar -->
         <div class="card p-3" style="margin-bottom:1.5rem;">
           <div class="flex items-center justify-between gap-4" style="flex-wrap:wrap;">
             <div class="flex items-center gap-2" id="student-notice-filters" style="flex-wrap:wrap;">
-              <button type="button" class="btn btn-sm btn-primary" onclick="filterStudentNotices('')" data-cat="">All Notices</button>
-              <button type="button" class="btn btn-sm btn-secondary" onclick="filterStudentNotices('URGENT')" data-cat="URGENT">🚨 Urgent</button>
-              <button type="button" class="btn btn-sm btn-secondary" onclick="filterStudentNotices('EXAM')" data-cat="EXAM">📝 Exam & Tests</button>
-              <button type="button" class="btn btn-sm btn-secondary" onclick="filterStudentNotices('EVENT')" data-cat="EVENT">⚡ Masterclasses</button>
-              <button type="button" class="btn btn-sm btn-secondary" onclick="filterStudentNotices('HOLIDAY')" data-cat="HOLIDAY">🎉 Holidays</button>
-              <button type="button" class="btn btn-sm btn-secondary" onclick="filterStudentNotices('GENERAL')" data-cat="GENERAL">📌 General</button>
+              <button type="button" class="btn btn-sm btn-primary" onclick="filterStudentNotices('')" data-cat="">All
+                Notices</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterStudentNotices('URGENT')"
+                data-cat="URGENT">🚨 Urgent</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterStudentNotices('EXAM')"
+                data-cat="EXAM">📝 Exam & Tests</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterStudentNotices('EVENT')"
+                data-cat="EVENT">⚡ Masterclasses</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterStudentNotices('HOLIDAY')"
+                data-cat="HOLIDAY">🎉 Holidays</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterStudentNotices('GENERAL')"
+                data-cat="GENERAL">📌 General</button>
             </div>
             <div style="min-width:240px;flex:1;max-width:320px;">
-              <input type="text" id="student-notice-search" class="form-control" placeholder="Search notices by keyword..." oninput="searchStudentNotices(this.value)" style="padding:0.45rem 0.85rem;font-size:0.85rem;">
+              <input type="text" id="student-notice-search" class="form-control"
+                placeholder="Search notices by keyword..." oninput="searchStudentNotices(this.value)"
+                style="padding:0.45rem 0.85rem;font-size:0.85rem;">
             </div>
           </div>
         </div>
 
         <!-- Notice Cards Feed -->
         <div id="student-notices-feed" class="flex flex-col gap-4">
-          <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+          <div class="p-4 text-center">
+            <div class="spinner" style="margin:0 auto;"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -404,8 +456,30 @@
 <script>
   function toggleSidebar() {
     const sidebar = document.getElementById('mainSidebar');
-    sidebar.classList.toggle('collapsed');
+    const overlay = document.getElementById('portalSidebarOverlay');
+    if (window.innerWidth <= 1024) {
+      const isOpen = sidebar.classList.toggle('open');
+      if (overlay) {
+        if (isOpen) overlay.classList.add('visible');
+        else overlay.classList.remove('visible');
+      }
+    } else {
+      sidebar.classList.toggle('collapsed');
+    }
   }
+
+  function closeSidebar() {
+    const sidebar = document.getElementById('mainSidebar');
+    const overlay = document.getElementById('portalSidebarOverlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('visible');
+  }
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1024) {
+      closeSidebar();
+    }
+  });
 </script>
-<script src="/static/js/student.js?v=3"></script>
+<script src="/static/js/student.js?v=4"></script>
 {% endblock %}

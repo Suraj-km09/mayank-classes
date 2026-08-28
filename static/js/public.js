@@ -11,19 +11,19 @@ function openGlobalDemoModal(courseName = '') {
   const modal = document.getElementById('global-demo-modal');
   if (!modal) return;
   modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
   if (courseName) {
     const sel = document.getElementById('g_course');
     if (sel) {
       let matched = false;
       for (let opt of sel.options) {
-        if (courseName.toLowerCase().includes(opt.value.toLowerCase())) {
+        if (courseName.toLowerCase().includes(opt.value.toLowerCase()) || opt.value.toLowerCase().includes(courseName.toLowerCase())) {
           sel.value = opt.value;
           matched = true;
           break;
         }
       }
       if (!matched && sel.options.length > 0) {
-        // Add temporary option if not present
         const newOpt = new Option(courseName, courseName, true, true);
         sel.add(newOpt);
       }
@@ -34,16 +34,35 @@ function openGlobalDemoModal(courseName = '') {
 function closeGlobalDemoModal() {
   const modal = document.getElementById('global-demo-modal');
   if (modal) modal.style.display = 'none';
+  document.body.style.overflow = '';
 }
+
+// Global ESC key listener to close modals
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeGlobalDemoModal();
+    closeBrochureModal();
+    closeVideoPreviewModal();
+  }
+});
 
 async function handleGlobalDemoSubmit(e) {
   e.preventDefault();
-  const name = document.getElementById('g_name').value;
-  const phone = document.getElementById('g_phone').value;
-  const email = document.getElementById('g_email').value;
+  const form = document.getElementById('global-demo-form');
+  const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+  const originalBtnText = submitBtn ? submitBtn.innerHTML : 'Confirm Free Demo Request ➔';
+
+  const name = document.getElementById('g_name').value.trim();
+  const phone = document.getElementById('g_phone').value.trim();
+  const email = document.getElementById('g_email').value.trim();
   const course = document.getElementById('g_course').value;
   const currClass = document.getElementById('g_class').value;
-  const msg = document.getElementById('g_message').value;
+  const msg = document.getElementById('g_message').value.trim();
+
+  if (!name || !phone || !email) {
+    showToast('Please fill all required fields.', 'error');
+    return;
+  }
 
   const payload = {
     full_name: name,
@@ -54,14 +73,23 @@ async function handleGlobalDemoSubmit(e) {
     message: msg || `Demo class request for ${course}`
   };
 
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '⏳ Reserving Seat...';
+  }
+
   try {
     await api.post('/inquiries/', payload);
-    showToast('Demo seat reserved! Academic counselor will call you within 24h.', 'success', 6000);
+    showToast('🎉 Demo seat reserved! Our academic counselor will call you within 24 hours.', 'success', 6000);
     closeGlobalDemoModal();
-    const form = document.getElementById('global-demo-form');
     if (form) form.reset();
   } catch (err) {
-    showToast(err.message || 'Submission failed. Please check your phone number.', 'error');
+    showToast(err.message || 'Submission failed. Please check your phone number and email.', 'error');
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnText;
+    }
   }
 }
 

@@ -12,6 +12,7 @@
         <h2>MAYANK <span style="color:var(--brand-gold);">ADMIN</span></h2>
         <span>Master Command Center</span>
       </div>
+      <button type="button" onclick="toggleSidebar()" class="sidebar-close-btn" aria-label="Close sidebar">✕</button>
     </div>
 
     <ul class="sidebar-nav">
@@ -70,7 +71,8 @@
 
     <div class="sidebar-footer">
       <div class="user-mini-profile">
-        <img id="user-display-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="user-avatar" alt="Avatar">
+        <img id="user-display-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100"
+          class="user-avatar" alt="Avatar">
         <div class="user-info">
           <h4 id="user-display-name" class="user-name">Mayank Agrawal</h4>
           <span class="user-role-badge badge badge-danger">Super Admin</span>
@@ -79,6 +81,9 @@
       </div>
     </div>
   </aside>
+
+  <!-- Sidebar Mobile Backdrop Overlay -->
+  <div class="portal-sidebar-overlay" id="portalSidebarOverlay" onclick="toggleSidebar()"></div>
 
   <!-- Portal Main Area -->
   <main class="portal-main">
@@ -91,11 +96,12 @@
       </div>
 
       <div class="topbar-right">
-        <a href="/admin/" target="_blank" class="btn btn-gold btn-sm" style="font-size:0.78rem;padding:0.35rem 0.75rem;">⚙️ Open Django Admin ↗</a>
         <div class="flex items-center gap-1">
           <span style="font-size:0.72rem;color:var(--text-muted);font-weight:600;">Switch:</span>
-          <button onclick="AuthManager.demoLogin('student')" class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.55rem;">Student</button>
-          <button onclick="AuthManager.demoLogin('teacher')" class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.55rem;">Teacher</button>
+          <button onclick="AuthManager.demoLogin('student')" class="btn btn-secondary btn-sm"
+            style="font-size:0.75rem;padding:0.25rem 0.55rem;">Student</button>
+          <button onclick="AuthManager.demoLogin('teacher')" class="btn btn-secondary btn-sm"
+            style="font-size:0.75rem;padding:0.25rem 0.55rem;">Teacher</button>
         </div>
         <a href="/" class="btn btn-secondary btn-sm" style="font-size:0.78rem;padding:0.35rem 0.75rem;">Website ↗</a>
       </div>
@@ -150,7 +156,8 @@
           <div class="card p-4">
             <div class="card-header" style="padding:0 0 1rem;margin-bottom:1rem;">
               <h3 style="font-size:1.15rem;font-weight:700;">System Summary</h3>
-              <button onclick="loadAdminDashboard()" class="btn btn-secondary btn-sm" title="Refresh">🔄 Refresh</button>
+              <button onclick="loadAdminDashboard()" class="btn btn-secondary btn-sm" title="Refresh">🔄
+                Refresh</button>
             </div>
             <div class="flex flex-col gap-3" style="font-size:0.95rem;">
               <div class="flex justify-between" style="padding:0.6rem 0;border-bottom:1px solid var(--border-color);">
@@ -184,7 +191,11 @@
                   </tr>
                 </thead>
                 <tbody id="recent-inquiries-table">
-                  <tr><td colspan="4" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+                  <tr>
+                    <td colspan="4" class="text-center p-4">
+                      <div class="spinner" style="margin:0 auto;"></div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -205,7 +216,9 @@
         <div class="card p-3" style="margin-bottom:1.25rem;">
           <div class="flex items-center justify-between gap-4" style="flex-wrap:wrap;">
             <div style="min-width:260px;flex:1;max-width:380px;">
-              <input type="text" id="admin-student-search" class="form-control" placeholder="Search by name, email, roll number..." oninput="searchAdminStudents(this.value)" style="padding:0.45rem 0.85rem;font-size:0.85rem;">
+              <input type="text" id="admin-student-search" class="form-control"
+                placeholder="Search by name, email, roll number..." oninput="searchAdminStudents(this.value)"
+                style="padding:0.45rem 0.85rem;font-size:0.85rem;">
             </div>
             <span id="admin-students-count" class="badge badge-primary">-- Enrolled Students</span>
           </div>
@@ -226,7 +239,11 @@
                 </tr>
               </thead>
               <tbody id="students-table-body">
-                <tr><td colspan="7" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+                <tr>
+                  <td colspan="7" class="text-center p-4">
+                    <div class="spinner" style="margin:0 auto;"></div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -238,12 +255,15 @@
         <div class="page-header">
           <div>
             <h1 class="page-title">Faculty Roster & Department Heads</h1>
-            <p class="page-subtitle">Review teaching faculty, subject specializations, ratings, and student feedback.</p>
+            <p class="page-subtitle">Review teaching faculty, subject specializations, ratings, and student feedback.
+            </p>
           </div>
         </div>
 
         <div id="teachers-grid-container" class="grid grid-2 gap-6">
-          <div class="p-4 text-center w-full"><div class="spinner" style="margin:0 auto;"></div></div>
+          <div class="p-4 text-center w-full">
+            <div class="spinner" style="margin:0 auto;"></div>
+          </div>
         </div>
       </div>
 
@@ -271,7 +291,11 @@
                 </tr>
               </thead>
               <tbody id="admin-batches-table-body">
-                <tr><td colspan="6" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+                <tr>
+                  <td colspan="6" class="text-center p-4">
+                    <div class="spinner" style="margin:0 auto;"></div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -289,7 +313,9 @@
         </div>
 
         <div id="admin-courses-grid" class="grid grid-3 gap-6">
-          <div class="p-4 text-center w-full"><div class="spinner" style="margin:0 auto;"></div></div>
+          <div class="p-4 text-center w-full">
+            <div class="spinner" style="margin:0 auto;"></div>
+          </div>
         </div>
       </div>
 
@@ -298,7 +324,8 @@
         <div class="page-header">
           <div>
             <h1 class="page-title">Fee Accounting & Invoices</h1>
-            <p class="page-subtitle">Audit total collections, outstanding balances, and student fee payment receipts.</p>
+            <p class="page-subtitle">Audit total collections, outstanding balances, and student fee payment receipts.
+            </p>
           </div>
         </div>
 
@@ -318,7 +345,11 @@
                 </tr>
               </thead>
               <tbody id="admin-fees-table-body">
-                <tr><td colspan="8" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+                <tr>
+                  <td colspan="8" class="text-center p-4">
+                    <div class="spinner" style="margin:0 auto;"></div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -338,13 +369,19 @@
         <div class="card p-3" style="margin-bottom:1.25rem;">
           <div class="flex items-center justify-between gap-4" style="flex-wrap:wrap;">
             <div class="flex items-center gap-2" id="admin-inq-filters" style="flex-wrap:wrap;">
-              <button type="button" class="btn btn-sm btn-primary" onclick="filterAdminInquiries('')" data-status="">All Leads</button>
-              <button type="button" class="btn btn-sm btn-secondary" onclick="filterAdminInquiries('NEW')" data-status="NEW">🔥 New Inquiries</button>
-              <button type="button" class="btn btn-sm btn-secondary" onclick="filterAdminInquiries('CONTACTED')" data-status="CONTACTED">📞 Contacted</button>
-              <button type="button" class="btn btn-sm btn-secondary" onclick="filterAdminInquiries('CONVERTED')" data-status="CONVERTED">✅ Enrolled</button>
+              <button type="button" class="btn btn-sm btn-primary" onclick="filterAdminInquiries('')" data-status="">All
+                Leads</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterAdminInquiries('NEW')"
+                data-status="NEW">🔥 New Inquiries</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterAdminInquiries('CONTACTED')"
+                data-status="CONTACTED">📞 Contacted</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterAdminInquiries('CONVERTED')"
+                data-status="CONVERTED">✅ Enrolled</button>
             </div>
             <div style="min-width:240px;flex:1;max-width:320px;">
-              <input type="text" id="admin-inq-search" class="form-control" placeholder="Search by lead name, phone, course..." oninput="searchAdminInquiries(this.value)" style="padding:0.45rem 0.85rem;font-size:0.85rem;">
+              <input type="text" id="admin-inq-search" class="form-control"
+                placeholder="Search by lead name, phone, course..." oninput="searchAdminInquiries(this.value)"
+                style="padding:0.45rem 0.85rem;font-size:0.85rem;">
             </div>
           </div>
         </div>
@@ -364,7 +401,11 @@
                 </tr>
               </thead>
               <tbody id="all-inquiries-table-body">
-                <tr><td colspan="7" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+                <tr>
+                  <td colspan="7" class="text-center p-4">
+                    <div class="spinner" style="margin:0 auto;"></div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -387,7 +428,8 @@
             <form id="admin-ann-form" onsubmit="submitAdminNoticeForm(event)">
               <div class="form-group">
                 <label class="form-label">Notice Headline *</label>
-                <input class="form-control" id="adm-ann-title" placeholder="e.g. Schedule for All-India CBT Test #03" required>
+                <input class="form-control" id="adm-ann-title" placeholder="e.g. Schedule for All-India CBT Test #03"
+                  required>
               </div>
 
               <div class="grid grid-2 gap-3">
@@ -413,7 +455,8 @@
 
               <div class="form-group">
                 <label class="form-label">Notice Content *</label>
-                <textarea class="form-control" id="adm-ann-content" placeholder="Detailed circular content..." rows="5" required></textarea>
+                <textarea class="form-control" id="adm-ann-content" placeholder="Detailed circular content..." rows="5"
+                  required></textarea>
               </div>
 
               <div class="form-group">
@@ -428,7 +471,8 @@
                 </label>
               </div>
 
-              <button type="submit" id="adm-ann-submit-btn" class="btn btn-primary w-full" style="justify-content:center;padding:0.85rem;">
+              <button type="submit" id="adm-ann-submit-btn" class="btn btn-primary w-full"
+                style="justify-content:center;padding:0.85rem;">
                 📢 Broadcast Notice Now ➔
               </button>
             </form>
@@ -437,7 +481,9 @@
           <div class="card p-4">
             <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:1rem;">Active Published Circulars</h3>
             <div id="admin-notices-container" class="flex flex-col gap-3" style="max-height:600px;overflow-y:auto;">
-              <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+              <div class="p-4 text-center">
+                <div class="spinner" style="margin:0 auto;"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -452,8 +498,30 @@
 <script>
   function toggleSidebar() {
     const sidebar = document.getElementById('mainSidebar');
-    sidebar.classList.toggle('collapsed');
+    const overlay = document.getElementById('portalSidebarOverlay');
+    if (window.innerWidth <= 1024) {
+      const isOpen = sidebar.classList.toggle('open');
+      if (overlay) {
+        if (isOpen) overlay.classList.add('visible');
+        else overlay.classList.remove('visible');
+      }
+    } else {
+      sidebar.classList.toggle('collapsed');
+    }
   }
+
+  function closeSidebar() {
+    const sidebar = document.getElementById('mainSidebar');
+    const overlay = document.getElementById('portalSidebarOverlay');
+    if (sidebar) sidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('visible');
+  }
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1024) {
+      closeSidebar();
+    }
+  });
 </script>
-<script src="/static/js/admin.js?v=3"></script>
+<script src="/static/js/admin.js?v=4"></script>
 {% endblock %}

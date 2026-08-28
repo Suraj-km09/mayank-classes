@@ -27,6 +27,10 @@ function updateTeacherProfileUI() {
 }
 
 function switchTeacherTab(tabId) {
+  if (typeof closeSidebar === 'function') {
+    closeSidebar();
+  }
+
   document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
   document.querySelectorAll('.sidebar-nav-item a').forEach(el => el.classList.remove('active'));
 
@@ -94,7 +98,7 @@ async function loadAttendanceMarkerTab(preselectedBatchId = null) {
     teacherBatches = batches.results || batches;
 
     if (batchSelect) {
-      batchSelect.innerHTML = teacherBatches.map(b => 
+      batchSelect.innerHTML = teacherBatches.map(b =>
         `<option value="${b.id}" ${preselectedBatchId && preselectedBatchId == b.id ? 'selected' : ''}>${b.name} (${b.course_title})</option>`
       ).join('');
 
@@ -384,10 +388,10 @@ function renderTestBuilderQuestions() {
         <div>
           <label class="form-label" style="font-size:0.8rem;">Correct Choice:</label>
           <select class="form-control" onchange="testBuilderQuestions[${idx}].correct_option = this.value">
-            <option value="A" ${q.correct_option==='A'?'selected':''}>Option A</option>
-            <option value="B" ${q.correct_option==='B'?'selected':''}>Option B</option>
-            <option value="C" ${q.correct_option==='C'?'selected':''}>Option C</option>
-            <option value="D" ${q.correct_option==='D'?'selected':''}>Option D</option>
+            <option value="A" ${q.correct_option === 'A' ? 'selected' : ''}>Option A</option>
+            <option value="B" ${q.correct_option === 'B' ? 'selected' : ''}>Option B</option>
+            <option value="C" ${q.correct_option === 'C' ? 'selected' : ''}>Option C</option>
+            <option value="D" ${q.correct_option === 'D' ? 'selected' : ''}>Option D</option>
           </select>
         </div>
         <div>

@@ -279,7 +279,8 @@ def _send_email_thread(subject, text_body, html_body, from_email, recipient_list
         port = getattr(settings, 'EMAIL_PORT', 443)
         tls = getattr(settings, 'EMAIL_USE_TLS', False)
         ssl = getattr(settings, 'EMAIL_USE_SSL', False)
-        print(f"[EMAIL SERVICE] Connecting to {host}:{port} (TLS={tls}, SSL={ssl}) to deliver: '{subject}' -> {clean_recipients}")
+        safe_subj = subject.encode('ascii', errors='replace').decode('ascii')
+        print(f"[EMAIL SERVICE] Connecting to {host}:{port} (TLS={tls}, SSL={ssl}) to deliver: '{safe_subj}' -> {clean_recipients}")
         msg = EmailMultiAlternatives(
             subject=subject,
             body=text_body,

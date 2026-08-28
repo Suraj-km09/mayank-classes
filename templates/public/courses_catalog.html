@@ -85,9 +85,9 @@
       </div>
 
       <!-- Category Filter Pills -->
-      <div style="margin-bottom:1rem;">
-        <span style="font-size:0.8rem;font-weight:800;color:var(--text-muted);margin-right:0.75rem;">CATEGORY:</span>
-        <div class="pill-filter-list" style="display:inline-flex;">
+      <div style="margin-bottom:1.25rem;">
+        <span style="font-size:0.8rem;font-weight:800;color:var(--text-muted);display:block;margin-bottom:0.5rem;">CATEGORY:</span>
+        <div class="pill-filter-list">
           <a href="/courses/" class="pill-btn {% if active_category == 'ALL' or not active_category %}active{% endif %}">All Categories</a>
           <a href="/courses/?category=FOUNDATION" class="pill-btn {% if active_category == 'FOUNDATION' %}active{% endif %}">Foundation (6–10)</a>
           <a href="/courses/?category=ENGINEERING" class="pill-btn {% if active_category == 'ENGINEERING' %}active{% endif %}">JEE Preparation</a>
@@ -98,8 +98,8 @@
 
       <!-- Class Filter Pills -->
       <div>
-        <span style="font-size:0.8rem;font-weight:800;color:var(--text-muted);margin-right:0.75rem;">CLASS / LEVEL:</span>
-        <div class="pill-filter-list" style="display:inline-flex;">
+        <span style="font-size:0.8rem;font-weight:800;color:var(--text-muted);display:block;margin-bottom:0.5rem;">CLASS / LEVEL:</span>
+        <div class="pill-filter-list">
           <a href="/courses/" class="pill-btn {% if active_class == 'ALL' or not active_class %}active{% endif %}">All Classes</a>
           <a href="/courses/?class=Class+6" class="pill-btn {% if 'Class 6' in active_class %}active{% endif %}">Class 6</a>
           <a href="/courses/?class=Class+7" class="pill-btn {% if 'Class 7' in active_class %}active{% endif %}">Class 7</a>

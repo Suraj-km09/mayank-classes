@@ -33,6 +33,10 @@ function updateStudentProfileUI() {
 
 // 1. Navigation Tab Switching
 function switchStudentTab(tabId) {
+  if (typeof closeSidebar === 'function') {
+    closeSidebar();
+  }
+
   document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
   document.querySelectorAll('.sidebar-nav-item a').forEach(el => el.classList.remove('active'));
 
@@ -184,9 +188,9 @@ function renderLmsCurriculum(curriculum) {
           </div>
           <ul class="lesson-list">
             ${chapter.lessons.map(lesson => {
-              if (!firstLesson) firstLesson = lesson;
-              const isDone = lesson.user_progress && lesson.user_progress.is_completed;
-              return `
+        if (!firstLesson) firstLesson = lesson;
+        const isDone = lesson.user_progress && lesson.user_progress.is_completed;
+        return `
                 <li class="lesson-item ${currentActiveVideo && currentActiveVideo.id === lesson.id ? 'active' : ''}" id="lesson-item-${lesson.id}" onclick="playLmsLesson(${JSON.stringify(lesson).replace(/"/g, '&quot;')})">
                   <div class="flex items-center gap-2">
                     <span class="lesson-check-icon ${isDone ? 'completed' : 'pending'}">${isDone ? '✓' : '○'}</span>
@@ -195,7 +199,7 @@ function renderLmsCurriculum(curriculum) {
                   <span style="font-size:0.75rem;color:var(--text-muted);">${lesson.duration_minutes}m</span>
                 </li>
               `;
-            }).join('')}
+      }).join('')}
           </ul>
         </div>
       `;
@@ -304,10 +308,10 @@ async function loadStudentTests() {
       let statusBadge = `<span class="badge badge-info">Not Attempted</span>`;
 
       if (attempt && attempt.status === 'SUBMITTED') {
-        statusBadge = attempt.is_passed ? 
+        statusBadge = attempt.is_passed ?
           `<span class="badge badge-success">Passed (${attempt.score}/${attempt.total_possible_marks})</span>` :
           `<span class="badge badge-danger">Failed (${attempt.score}/${attempt.total_possible_marks})</span>`;
-        
+
         actionBtn = `
           <button onclick="viewTestScorecard(${attempt.attempt_id})" class="btn btn-secondary btn-sm">View Scorecard</button>
           <button onclick="startOnlineTest(${test.id})" class="btn btn-outline btn-sm">Retake</button>
@@ -341,7 +345,7 @@ async function startOnlineTest(testId) {
   try {
     showToast('Loading test paper & starting timer...', 'info');
     const data = await api.post(`/tests/${testId}/start/`, {});
-    
+
     activeQuizState = {
       testId: data.test_id,
       attemptId: data.attempt_id,
@@ -506,7 +510,7 @@ async function submitActiveQuiz() {
 async function viewTestScorecard(attemptId) {
   try {
     const data = await api.get(`/attempts/${attemptId}/`);
-    
+
     const answersList = data.answers.map((ans, idx) => {
       const q = ans.question_details || {};
       const statusColor = ans.is_correct ? '#10B981' : (ans.selected_option ? '#EF4444' : '#64748B');
@@ -774,7 +778,7 @@ async function loadStudentNoticesTab() {
   try {
     const data = await api.get('/notices/');
     allStudentNotices = data.results || data;
-    
+
     // Update count badge
     const badgeEl = document.getElementById('student-notice-badge');
     if (badgeEl && allStudentNotices.length > 0) {
@@ -868,7 +872,7 @@ function renderStudentNoticesList(notices) {
 
 function filterStudentNotices(category) {
   currentNoticeCategoryFilter = category;
-  
+
   // Update button active styles
   document.querySelectorAll('#student-notice-filters button').forEach(btn => {
     if (btn.getAttribute('data-cat') === category) {
@@ -896,8 +900,8 @@ function applyStudentNoticeFilters() {
   }
 
   if (keyword) {
-    filtered = filtered.filter(n => 
-      n.title.toLowerCase().includes(keyword) || 
+    filtered = filtered.filter(n =>
+      n.title.toLowerCase().includes(keyword) ||
       n.content.toLowerCase().includes(keyword) ||
       (n.category_display && n.category_display.toLowerCase().includes(keyword))
     );
