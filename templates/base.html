@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Mayank Classes - Premier Coaching Institute & Learning Platform{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}India's leading coaching platform for JEE Main, JEE Advanced, NEET-UG, and Foundation Olympiad excellence.{% endblock %}">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="/static/css/public.css?v=6">
+  <link rel="stylesheet" href="/static/css/portal.css?v=4">
+  <link rel="stylesheet" href="/static/css/player.css">
+  
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  <!-- Toast Notification System -->
+  <div id="toast-container"></div>
+
+  <!-- Main Body Content -->
+  {% block content %}{% endblock %}
+
+  <!-- Core JavaScript Libraries -->
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/chatbot.js?v=3"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

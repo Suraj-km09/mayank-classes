@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign In - Mayank Classes Unified Portal{% endblock %}
+
+{% block content %}
+<div style="min-height:100vh;background:radial-gradient(circle at top right, #EEF2FF, #F8FAFC 60%);display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box;">
+  <!-- Top Navigation Header -->
+  <header style="padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;box-sizing:border-box;">
+    <a href="/" class="brand-logo" style="display:flex;align-items:center;gap:0.6rem;font-weight:800;font-size:1.25rem;letter-spacing:-0.02em;">
+      <div class="brand-logo-icon" style="width:36px;height:36px;background:linear-gradient(135deg,var(--primary-600),var(--primary-800));color:white;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.1rem;box-shadow:0 4px 10px rgba(79,70,229,0.35);">M</div>
+      <span>MAYANK<span style="color:var(--brand-gold);">CLASSES</span></span>
+    </a>
+    <a href="/" class="btn btn-secondary btn-sm" style="font-weight:600;">← Back to Website</a>
+  </header>
+
+  <!-- Login Main Card -->
+  <main class="container" style="max-width:540px;margin:1.5rem auto;box-sizing:border-box;">
+    <!-- 1-Click Quick Demo Login Switcher Card -->
+    <div class="card p-4" style="background:#0F172A;color:white;margin-bottom:1.5rem;border-color:#1E293B;box-shadow:var(--shadow-xl);border-radius:var(--radius-lg);">
+      <div class="flex items-center justify-between gap-2" style="margin-bottom:0.75rem;flex-wrap:wrap;">
+        <span class="badge badge-gold" style="font-size:0.7rem;padding:0.2rem 0.6rem;">⚡ 1-Click Prototype Demo Access</span>
+        <span style="font-size:0.72rem;color:#94A3B8;font-weight:600;">Instant Role Switch</span>
+      </div>
+      <p style="font-size:0.825rem;color:#CBD5E1;margin-bottom:1rem;line-height:1.45;">
+        Test the entire platform instantly without manually typing credentials:
+      </p>
+      
+      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:0.6rem;margin-bottom:0.85rem;">
+        <button type="button" onclick="AuthManager.demoLogin('student')" class="btn btn-primary btn-sm" style="padding:0.6rem 0.5rem;font-size:0.8rem;border-radius:var(--radius-md);">
+          👨‍🎓 Demo Student
+        </button>
+        <button type="button" onclick="AuthManager.demoLogin('teacher')" class="btn btn-gold btn-sm" style="padding:0.6rem 0.5rem;font-size:0.8rem;border-radius:var(--radius-md);">
+          👨‍🏫 Demo Teacher
+        </button>
+        <button type="button" onclick="AuthManager.demoLogin('admin')" class="btn btn-dark btn-sm" style="padding:0.6rem 0.5rem;font-size:0.8rem;background:#334155;border-color:#475569;border-radius:var(--radius-md);">
+          📊 Custom Admin UI
+        </button>
+      </div>
+
+      <div style="padding-top:0.75rem;border-top:1px solid #1E293B;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+        <span style="font-size:0.75rem;color:#94A3B8;">Looking for Django Default Admin?</span>
+        <a href="/admin/" target="_blank" class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.65rem;background:#1E293B;color:#F8FAFC;border-color:#334155;">
+          ⚙️ Open Django Admin (/admin/) ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Auth Card -->
+    <div class="card" style="box-shadow:var(--shadow-xl);border-radius:var(--radius-lg);">
+      <!-- Auth Switch Tabs -->
+      <div class="flex" style="border-bottom:1px solid var(--border-color);background:#F8FAFC;">
+        <button id="tab-btn-login" onclick="toggleAuthForm('login')" style="flex:1;padding:0.9rem;font-weight:700;font-size:0.9rem;background:white;border:none;border-bottom:2px solid var(--primary-600);color:var(--primary-700);cursor:pointer;transition:var(--transition);">
+          Existing User Login
+        </button>
+        <button id="tab-btn-register" onclick="toggleAuthForm('register')" style="flex:1;padding:0.9rem;font-weight:700;font-size:0.9rem;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--text-muted);cursor:pointer;transition:var(--transition);">
+          New Student Register
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="form-login-pane" class="card-body" style="padding:1.75rem;">
+        <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:0.25rem;">Welcome Back</h2>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.25rem;">Enter your email or username to access your portal.</p>
+
+        <form id="login-form" onsubmit="handleLoginSubmit(event)">
+          <div class="form-group">
+            <label class="form-label">Email Address or Username</label>
+            <input class="form-control" id="login_username" value="student@mayankclasses.com" placeholder="student@mayankclasses.com" required>
+          </div>
+
+          <div class="form-group">
+            <div class="flex items-center justify-between" style="margin-bottom:0.4rem;">
+              <label class="form-label" style="margin-bottom:0;">Password</label>
+              <a href="#" onclick="showToast('Demo passwords: student123, teacher123, or admin123', 'info')" style="font-size:0.75rem;color:var(--primary-600);font-weight:600;">Demo Credentials?</a>
+            </div>
+            <input class="form-control" type="password" id="login_password" value="student123" placeholder="••••••••" required>
+          </div>
+
+          <button type="submit" id="btn-login-submit" class="btn btn-primary btn-lg w-full" style="margin-top:0.5rem;">
+            Sign In to Portal ➔
+          </button>
+        </form>
+      </div>
+
+      <!-- Student Registration Form -->
+      <div id="form-register-pane" class="card-body hidden" style="padding:1.75rem;">
+        <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:0.25rem;">Student Registration</h2>
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.25rem;">Create a student account for test series & recorded lessons.</p>
+
+        <form id="register-form" onsubmit="handleRegisterSubmit(event)">
+          <div class="grid grid-2 gap-3">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input class="form-control" id="reg_fname" placeholder="Aarav" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input class="form-control" id="reg_lname" placeholder="Sharma" required>
+            </div>
+          </div>
+
+          <div class="grid grid-2 gap-3">
+            <div class="form-group">
+              <label class="form-label">Username</label>
+              <input class="form-control" id="reg_username" placeholder="aarav_sharma" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Mobile Number</label>
+              <input class="form-control" id="reg_phone" placeholder="+91 98765..." required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-control" type="email" id="reg_email" placeholder="name@domain.com" required>
+          </div>
+
+          <div class="grid grid-2 gap-3">
+            <div class="form-group">
+              <label class="form-label">Target Exam</label>
+              <select class="form-control" id="reg_target">
+                <option value="JEE Main & Advanced">JEE Main & Advanced</option>
+                <option value="NEET-UG Medical">NEET-UG Medical</option>
+                <option value="Foundation Class 9-10">Foundation Class 9-10</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Current Class</label>
+              <select class="form-control" id="reg_class">
+                <option value="Class 11">Class 11</option>
+                <option value="Class 12">Class 12</option>
+                <option value="Class 10">Class 10</option>
+                <option value="Dropper">Dropper</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Create Password</label>
+            <input class="form-control" type="password" id="reg_password" placeholder="Minimum 6 characters" minlength="6" required>
+          </div>
+
+          <button type="submit" id="btn-register-submit" class="btn btn-primary btn-lg w-full" style="margin-top:0.5rem;">
+            Create Student Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer style="text-align:center;padding:1.5rem;font-size:0.8rem;color:var(--text-muted);">
+    © 2026 Mayank Classes Coaching Management & LMS Platform.
+  </footer>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function toggleAuthForm(mode) {
+  const loginPane = document.getElementById('form-login-pane');
+  const regPane = document.getElementById('form-register-pane');
+  const loginBtn = document.getElementById('tab-btn-login');
+  const regBtn = document.getElementById('tab-btn-register');
+
+  if (mode === 'login') {
+    loginPane.classList.remove('hidden');
+    regPane.classList.add('hidden');
+    loginBtn.style.background = 'white';
+    loginBtn.style.color = 'var(--primary-700)';
+    loginBtn.style.borderBottomColor = 'var(--primary-600)';
+    regBtn.style.background = 'transparent';
+    regBtn.style.color = 'var(--text-muted)';
+    regBtn.style.borderBottomColor = 'transparent';
+  } else {
+    loginPane.classList.add('hidden');
+    regPane.classList.remove('hidden');
+    regBtn.style.background = 'white';
+    regBtn.style.color = 'var(--primary-700)';
+    regBtn.style.borderBottomColor = 'var(--primary-600)';
+    loginBtn.style.background = 'transparent';
+    loginBtn.style.color = 'var(--text-muted)';
+    loginBtn.style.borderBottomColor = 'transparent';
+  }
+}
+
+async function handleLoginSubmit(e) {
+  e.preventDefault();
+  const uname = document.getElementById('login_username').value;
+  const pass = document.getElementById('login_password').value;
+  const btn = document.getElementById('btn-login-submit');
+
+  btn.disabled = true;
+  btn.innerText = 'Authenticating...';
+  try {
+    await AuthManager.login(uname, pass);
+  } catch (err) {
+    btn.disabled = false;
+    btn.innerText = 'Sign In to Portal ➔';
+  }
+}
+
+async function handleRegisterSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btn-register-submit');
+  btn.disabled = true;
+  btn.innerText = 'Creating account...';
+
+  const payload = {
+    first_name: document.getElementById('reg_fname').value,
+    last_name: document.getElementById('reg_lname').value,
+    username: document.getElementById('reg_username').value,
+    email: document.getElementById('reg_email').value,
+    phone: document.getElementById('reg_phone').value,
+    password: document.getElementById('reg_password').value,
+    target_exam: document.getElementById('reg_target').value,
+    current_class: document.getElementById('reg_class').value,
+  };
+
+  try {
+    const res = await api.post('/auth/register/', payload);
+    AuthManager.setSession(res.token, res.user);
+    showToast('Registration successful! Welcome to Mayank Classes.', 'success');
+    setTimeout(() => {
+      AuthManager.redirectByRole('STUDENT');
+    }, 600);
+  } catch (err) {
+    showToast(err.message || 'Registration failed', 'error');
+    btn.disabled = false;
+    btn.innerText = 'Create Student Account';
+  }
+}
+</script>
+{% endblock %}

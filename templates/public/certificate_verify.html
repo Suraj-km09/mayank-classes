@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}Verify Academic Credential - Mayank Classes{% endblock %}
+
+{% block content %}
+<div style="min-height:100vh;background:#F8FAFC;display:flex;flex-direction:column;justify-content:space-between;">
+  <header style="padding:1.5rem 2rem;background:white;border-bottom:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;">
+    <a href="/" class="brand-logo">
+      <div class="brand-logo-icon">M</div>
+      <span>MAYANK<span style="color:var(--brand-gold);">CLASSES</span></span>
+    </a>
+    <a href="/" class="btn btn-secondary btn-sm">← Institute Home</a>
+  </header>
+
+  <main class="container" style="max-width:760px;margin:3rem auto;">
+    <div class="card p-4" style="margin-bottom:2rem;text-align:center;">
+      <h1 style="font-size:1.75rem;font-weight:900;margin-bottom:0.5rem;">Digital Certificate Verification System</h1>
+      <p style="font-size:0.95rem;color:var(--text-muted);margin-bottom:1.5rem;">Enter the verification UUID or certificate identifier to check official authenticity.</p>
+
+      <form onsubmit="verifyCertificateAction(event)" style="display:flex;gap:0.75rem;max-width:500px;margin:0 auto;">
+        <input class="form-control" id="cert-search-input" value="{{ code }}" placeholder="e.g. c90a5a81-6b01-4aca-bd7c-41b781d94242" required>
+        <button type="submit" class="btn btn-primary" style="white-space:nowrap;">Verify Online</button>
+      </form>
+    </div>
+
+    <div id="cert-result-container"></div>
+  </main>
+
+  <footer style="text-align:center;padding:2rem;font-size:0.85rem;color:var(--text-muted);">
+    Official Verifiable Credential Service • Mayank Classes Institute of Technology & Medical Sciences
+  </footer>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const initialCode = document.getElementById('cert-search-input').value.trim();
+  if (initialCode) {
+    verifyCode(initialCode);
+  }
+});
+
+function verifyCertificateAction(e) {
+  e.preventDefault();
+  const code = document.getElementById('cert-search-input').value.trim();
+  if (code) verifyCode(code);
+}
+
+async function verifyCode(code) {
+  const container = document.getElementById('cert-result-container');
+  container.innerHTML = `<div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>`;
+
+  try {
+    const res = await api.get(`/certificates/verify/${code}/`);
+    const c = res.certificate;
+
+    container.innerHTML = `
+      <div class="certificate-frame" style="box-shadow:var(--shadow-xl);">
+        <div style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;background:#DCFCE7;color:#15803D;font-weight:700;font-size:0.85rem;border-radius:var(--radius-full);margin-bottom:1.5rem;">
+          ✓ OFFICIAL CERTIFICATE VERIFIED AUTHENTIC
+        </div>
+        <div class="certificate-seal">🏅</div>
+        <h2 style="font-size:1.75rem;font-weight:900;margin-bottom:0.5rem;">${c.title}</h2>
+        <p style="font-size:0.95rem;color:var(--text-muted);margin-bottom:1rem;">Awarded to</p>
+        <h3 style="font-size:1.6rem;color:var(--primary-700);font-weight:800;margin-bottom:0.75rem;">${c.student_name}</h3>
+        <p style="font-size:0.95rem;color:var(--text-muted);max-width:540px;margin:0 auto 1.5rem;line-height:1.6;">
+          ${c.description}
+        </p>
+        <div class="flex items-center justify-center gap-6" style="padding-top:1.5rem;border-top:1px solid var(--border-color);font-size:0.85rem;color:var(--text-muted);">
+          <span><strong>Course:</strong> ${c.course_title}</span>
+          <span><strong>Grade:</strong> ${c.grade}</span>
+          <span><strong>Issued:</strong> ${formatDate(c.issue_date)}</span>
+        </div>
+      </div>
+    `;
+  } catch (err) {
+    container.innerHTML = `
+      <div class="card p-4 text-center" style="border-color:#FDA4AF;background:#FFF1F2;">
+        <h3 style="color:#BE123C;font-size:1.25rem;font-weight:800;margin-bottom:0.5rem;">Certificate Not Found</h3>
+        <p style="color:#9F1239;font-size:0.9rem;">The certificate ID you entered is invalid or does not match our official records.</p>
+      </div>
+    `;
+  }
+}
+</script>
+{% endblock %}

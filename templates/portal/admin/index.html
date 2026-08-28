@@ -1,0 +1,459 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Command Center - Mayank Classes{% endblock %}
+
+{% block content %}
+<div class="portal-wrapper">
+  <!-- Admin Sidebar -->
+  <aside class="portal-sidebar" id="mainSidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo-icon" style="background:linear-gradient(135deg,#EF4444,#B91C1C);">A</div>
+      <div class="sidebar-brand-text">
+        <h2>MAYANK <span style="color:var(--brand-gold);">ADMIN</span></h2>
+        <span>Master Command Center</span>
+      </div>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="nav-section-label">Management</li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-dashboard" class="active" onclick="switchAdminTab('dashboard')">
+          <span class="nav-icon">📊</span> <span class="nav-text">Master Dashboard</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-students" onclick="switchAdminTab('students')">
+          <span class="nav-icon">👨‍🎓</span> <span class="nav-text">Student Directory</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-teachers" onclick="switchAdminTab('teachers')">
+          <span class="nav-icon">👨‍🏫</span> <span class="nav-text">Faculty & Mentors</span>
+        </a>
+      </li>
+
+      <li class="nav-section-label">Academics & Batches</li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-batches" onclick="switchAdminTab('batches')">
+          <span class="nav-icon">🏫</span> <span class="nav-text">Batch Management</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-courses" onclick="switchAdminTab('courses')">
+          <span class="nav-icon">🎓</span> <span class="nav-text">Programs & Courses</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-finance" onclick="switchAdminTab('finance')">
+          <span class="nav-icon">💰</span> <span class="nav-text">Fee Collections & Invoices</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-inquiries" onclick="switchAdminTab('inquiries')">
+          <span class="nav-icon">📞</span> <span class="nav-text">Admission Inquiries</span>
+          <span id="admin-inq-badge" class="badge badge-warning" style="margin-left:auto;font-size:0.65rem;">--</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-notices" onclick="switchAdminTab('notices')">
+          <span class="nav-icon">📢</span> <span class="nav-text">Notice Board & Broadcast</span>
+        </a>
+      </li>
+
+      <li class="nav-section-label">System</li>
+      <li class="sidebar-nav-item">
+        <a href="/admin/" target="_blank">
+          <span class="nav-icon">⚙️</span> <span class="nav-text">Django Admin Backoffice ↗</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="user-mini-profile">
+        <img id="user-display-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="user-avatar" alt="Avatar">
+        <div class="user-info">
+          <h4 id="user-display-name" class="user-name">Mayank Agrawal</h4>
+          <span class="user-role-badge badge badge-danger">Super Admin</span>
+        </div>
+        <button onclick="AuthManager.logout()" class="logout-btn" title="Logout">🚪</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Portal Main Area -->
+  <main class="portal-main">
+    <!-- Topbar -->
+    <header class="portal-topbar">
+      <div class="topbar-left">
+        <button onclick="toggleSidebar()" class="sidebar-toggle-btn" title="Toggle Sidebar">☰</button>
+        <h3>Institute Executive Command</h3>
+        <span class="role-switcher-badge" style="background:#FFE4E6;color:#BE123C;border-color:#FDA4AF;">🛡️ Full System Control</span>
+      </div>
+
+      <div class="topbar-right">
+        <a href="/admin/" target="_blank" class="btn btn-gold btn-sm" style="font-size:0.78rem;padding:0.35rem 0.75rem;">⚙️ Open Django Admin ↗</a>
+        <div class="flex items-center gap-1">
+          <span style="font-size:0.72rem;color:var(--text-muted);font-weight:600;">Switch:</span>
+          <button onclick="AuthManager.demoLogin('student')" class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.55rem;">Student</button>
+          <button onclick="AuthManager.demoLogin('teacher')" class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.55rem;">Teacher</button>
+        </div>
+        <a href="/" class="btn btn-secondary btn-sm" style="font-size:0.78rem;padding:0.35rem 0.75rem;">Website ↗</a>
+      </div>
+    </header>
+
+    <div class="portal-content">
+      <!-- 1. ADMIN MASTER DASHBOARD PANE -->
+      <div id="pane-dashboard" class="tab-pane">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Executive Operations Overview</h1>
+            <p class="page-subtitle">Real-time tracking of coaching operations, revenue, attendance, and admissions.</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="openAddStudentModal()" class="btn btn-primary">+ Admit Student</button>
+            <button onclick="openAddBatchModal()" class="btn btn-secondary">+ Create Batch</button>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon-box" style="background:#EEF2FF;color:#4F46E5;">👨‍🎓</div>
+            <div class="kpi-info">
+              <h4 id="kpi-total-students">--</h4>
+              <p>Total Active Students</p>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon-box" style="background:#DCFCE7;color:#15803D;">💰</div>
+            <div class="kpi-info">
+              <h4 id="kpi-revenue-collected">--</h4>
+              <p>Total Fees Collected</p>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon-box" style="background:#FFE4E6;color:#BE123C;">⏳</div>
+            <div class="kpi-info">
+              <h4 id="kpi-pending-fees">--</h4>
+              <p>Pending Dues</p>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon-box" style="background:#FEF3C7;color:#B45309;">📊</div>
+            <div class="kpi-info">
+              <h4 id="kpi-today-attendance">--</h4>
+              <p>Today Attendance Rate</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-2 gap-6">
+          <div class="card p-4">
+            <div class="card-header" style="padding:0 0 1rem;margin-bottom:1rem;">
+              <h3 style="font-size:1.15rem;font-weight:700;">System Summary</h3>
+              <button onclick="loadAdminDashboard()" class="btn btn-secondary btn-sm" title="Refresh">🔄 Refresh</button>
+            </div>
+            <div class="flex flex-col gap-3" style="font-size:0.95rem;">
+              <div class="flex justify-between" style="padding:0.6rem 0;border-bottom:1px solid var(--border-color);">
+                <span>Total Senior Faculty & Mentors</span>
+                <strong id="kpi-total-faculty">--</strong>
+              </div>
+              <div class="flex justify-between" style="padding:0.6rem 0;border-bottom:1px solid var(--border-color);">
+                <span>Active Classroom & Hybrid Batches</span>
+                <strong id="kpi-active-batches">--</strong>
+              </div>
+              <div class="flex justify-between" style="padding:0.6rem 0;border-bottom:1px solid var(--border-color);">
+                <span>New Unprocessed Inquiries</span>
+                <strong id="kpi-new-inquiries" style="color:var(--brand-red);">--</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="card p-4">
+            <div class="card-header" style="padding:0 0 1rem;margin-bottom:1rem;">
+              <h3 style="font-size:1.15rem;font-weight:700;">Recent Website Inquiries</h3>
+              <button onclick="switchAdminTab('inquiries')" class="btn btn-secondary btn-sm">View All ➔</button>
+            </div>
+            <div class="table-responsive">
+              <table class="table" style="font-size:0.85rem;">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-inquiries-table">
+                  <tr><td colspan="4" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. STUDENTS DIRECTORY PANE -->
+      <div id="pane-students" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Student Directory & Admissions</h1>
+            <p class="page-subtitle">Manage enrolled students, roll numbers, academic classes, and contact records.</p>
+          </div>
+          <button onclick="openAddStudentModal()" class="btn btn-primary">+ Admit New Student</button>
+        </div>
+
+        <div class="card p-3" style="margin-bottom:1.25rem;">
+          <div class="flex items-center justify-between gap-4" style="flex-wrap:wrap;">
+            <div style="min-width:260px;flex:1;max-width:380px;">
+              <input type="text" id="admin-student-search" class="form-control" placeholder="Search by name, email, roll number..." oninput="searchAdminStudents(this.value)" style="padding:0.45rem 0.85rem;font-size:0.85rem;">
+            </div>
+            <span id="admin-students-count" class="badge badge-primary">-- Enrolled Students</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Student Name & Email</th>
+                  <th>Roll Number</th>
+                  <th>Target Exam</th>
+                  <th>Class</th>
+                  <th>Student Phone</th>
+                  <th>Parent Contact</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="students-table-body">
+                <tr><td colspan="7" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. TEACHERS & FACULTY PANE -->
+      <div id="pane-teachers" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Faculty Roster & Department Heads</h1>
+            <p class="page-subtitle">Review teaching faculty, subject specializations, ratings, and student feedback.</p>
+          </div>
+        </div>
+
+        <div id="teachers-grid-container" class="grid grid-2 gap-6">
+          <div class="p-4 text-center w-full"><div class="spinner" style="margin:0 auto;"></div></div>
+        </div>
+      </div>
+
+      <!-- 4. BATCHES PANE -->
+      <div id="pane-batches" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Classroom Batches & Timetable</h1>
+            <p class="page-subtitle">Batch allocations, room schedules, mode, and student capacity ratios.</p>
+          </div>
+          <button onclick="openAddBatchModal()" class="btn btn-primary">+ Create New Batch</button>
+        </div>
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Batch Name</th>
+                  <th>Batch Code</th>
+                  <th>Course Title</th>
+                  <th>Lecture Room</th>
+                  <th>Schedule</th>
+                  <th>Capacity Ratio</th>
+                </tr>
+              </thead>
+              <tbody id="admin-batches-table-body">
+                <tr><td colspan="6" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. PROGRAMS & COURSES PANE -->
+      <div id="pane-courses" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Coaching Programs & Courses</h1>
+            <p class="page-subtitle">Active academic programs, fee structures, duration, and curriculum overviews.</p>
+          </div>
+          <a href="/courses/" target="_blank" class="btn btn-secondary btn-sm">View Public Catalog ↗</a>
+        </div>
+
+        <div id="admin-courses-grid" class="grid grid-3 gap-6">
+          <div class="p-4 text-center w-full"><div class="spinner" style="margin:0 auto;"></div></div>
+        </div>
+      </div>
+
+      <!-- 6. FINANCE & INVOICES PANE -->
+      <div id="pane-finance" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Fee Accounting & Invoices</h1>
+            <p class="page-subtitle">Audit total collections, outstanding balances, and student fee payment receipts.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Invoice #</th>
+                  <th>Student</th>
+                  <th>Course</th>
+                  <th>Total Fee</th>
+                  <th>Paid</th>
+                  <th>Due</th>
+                  <th>Status</th>
+                  <th>Due Date</th>
+                </tr>
+              </thead>
+              <tbody id="admin-fees-table-body">
+                <tr><td colspan="8" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. ADMISSION INQUIRIES PANE -->
+      <div id="pane-inquiries" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Website Leads & Counseling Requests</h1>
+            <p class="page-subtitle">Captured leads from the public website awaiting counselor calls.</p>
+          </div>
+          <button onclick="loadAdminInquiriesTab()" class="btn btn-secondary btn-sm">🔄 Refresh Leads</button>
+        </div>
+
+        <div class="card p-3" style="margin-bottom:1.25rem;">
+          <div class="flex items-center justify-between gap-4" style="flex-wrap:wrap;">
+            <div class="flex items-center gap-2" id="admin-inq-filters" style="flex-wrap:wrap;">
+              <button type="button" class="btn btn-sm btn-primary" onclick="filterAdminInquiries('')" data-status="">All Leads</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterAdminInquiries('NEW')" data-status="NEW">🔥 New Inquiries</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterAdminInquiries('CONTACTED')" data-status="CONTACTED">📞 Contacted</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterAdminInquiries('CONVERTED')" data-status="CONVERTED">✅ Enrolled</button>
+            </div>
+            <div style="min-width:240px;flex:1;max-width:320px;">
+              <input type="text" id="admin-inq-search" class="form-control" placeholder="Search by lead name, phone, course..." oninput="searchAdminInquiries(this.value)" style="padding:0.45rem 0.85rem;font-size:0.85rem;">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Lead Name</th>
+                  <th>Contact</th>
+                  <th>Course Interested</th>
+                  <th>Target Class</th>
+                  <th>Query / Note</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="all-inquiries-table-body">
+                <tr><td colspan="7" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. NOTICE BOARD & BROADCAST PANE -->
+      <div id="pane-notices" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Broadcast Announcements & Notice Board</h1>
+            <p class="page-subtitle">Publish official circulars to student and faculty portals in real time.</p>
+          </div>
+          <button onclick="loadAdminNoticesTab()" class="btn btn-secondary btn-sm">🔄 Refresh</button>
+        </div>
+
+        <div class="grid grid-2 gap-6 items-start">
+          <div class="card p-4">
+            <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:1rem;">Compose Notice</h3>
+            <form id="admin-ann-form" onsubmit="submitAdminNoticeForm(event)">
+              <div class="form-group">
+                <label class="form-label">Notice Headline *</label>
+                <input class="form-control" id="adm-ann-title" placeholder="e.g. Schedule for All-India CBT Test #03" required>
+              </div>
+
+              <div class="grid grid-2 gap-3">
+                <div class="form-group">
+                  <label class="form-label">Category *</label>
+                  <select class="form-control" id="adm-ann-category">
+                    <option value="EXAM">📝 Exam / Test Schedule</option>
+                    <option value="EVENT">⚡ Seminar / Masterclass</option>
+                    <option value="URGENT">🚨 Urgent Announcement</option>
+                    <option value="HOLIDAY">🎉 Holiday Notice</option>
+                    <option value="GENERAL" selected>📌 General Circular</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Target Role *</label>
+                  <select class="form-control" id="adm-ann-target">
+                    <option value="ALL" selected>🌐 All (Public, Students, Faculty)</option>
+                    <option value="STUDENT">🎓 Students Only</option>
+                    <option value="TEACHER">👨‍🏫 Faculty Only</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Notice Content *</label>
+                <textarea class="form-control" id="adm-ann-content" placeholder="Detailed circular content..." rows="5" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Attachment URL (Optional)</label>
+                <input type="url" class="form-control" id="adm-ann-attachment" placeholder="https://...">
+              </div>
+
+              <div class="form-group">
+                <label class="flex items-center gap-2" style="cursor:pointer;">
+                  <input type="checkbox" id="adm-ann-pin" checked>
+                  <span style="font-size:0.9rem;font-weight:600;">📌 Pin to top of notice board</span>
+                </label>
+              </div>
+
+              <button type="submit" id="adm-ann-submit-btn" class="btn btn-primary w-full" style="justify-content:center;padding:0.85rem;">
+                📢 Broadcast Notice Now ➔
+              </button>
+            </form>
+          </div>
+
+          <div class="card p-4">
+            <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:1rem;">Active Published Circulars</h3>
+            <div id="admin-notices-container" class="flex flex-col gap-3" style="max-height:600px;overflow-y:auto;">
+              <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('mainSidebar');
+    sidebar.classList.toggle('collapsed');
+  }
+</script>
+<script src="/static/js/admin.js?v=3"></script>
+{% endblock %}

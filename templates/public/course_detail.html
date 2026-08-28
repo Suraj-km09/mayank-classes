@@ -1,0 +1,650 @@
+{% extends 'public/base_public.html' %}
+
+{% block title %}{{ course.title }} - Mayank Classes Course Curriculum & Admissions{% endblock %}
+{% block meta_description %}{{ course.short_description }}{% endblock %}
+
+{% block public_content %}
+<!-- Section 1: Hero Section -->
+<section class="course-detail-hero">
+  <div class="container">
+    <div class="breadcrumb-bar">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/courses/">Courses</a>
+      <span>›</span>
+      <a href="/courses/{{ cat_key }}/">{{ cat_meta.title }}</a>
+      <span>›</span>
+      <span style="color:var(--brand-gold);">{{ course.title }}</span>
+    </div>
+
+    <div class="course-detail-grid">
+      <div>
+        <div class="flex items-center gap-2" style="margin-bottom:1rem;flex-wrap:wrap;">
+          <span class="course-badge-tag">{{ course.badge_text|default:course.target_class }}</span>
+          <span class="badge" style="background:rgba(255,255,255,0.15);color:white;">{{ course.target_class }}</span>
+          <span class="badge" style="background:rgba(255,255,255,0.15);color:white;">{{ course.get_category_display }}</span>
+        </div>
+
+        <h1 class="hero-main-title" style="font-size:2.8rem;margin-bottom:1rem;">
+          {{ course.title }}
+        </h1>
+
+        <p class="hero-main-desc" style="color:#FFE4E6;margin-bottom:1.75rem;">
+          {{ course.description }}
+        </p>
+
+        <!-- Key Quick Meta Chips -->
+        <div class="flex items-center gap-3" style="margin-bottom:2rem;flex-wrap:wrap;">
+          <div style="background:rgba(255,255,255,0.1);padding:0.5rem 1rem;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.2);">
+            <div style="font-size:0.75rem;color:#CBD5E1;">DURATION</div>
+            <div style="font-weight:800;font-size:1rem;color:var(--brand-gold);">{{ course.duration_weeks }} Weeks ({{ total_chapters }} Chapters)</div>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.1);padding:0.5rem 1rem;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.2);">
+            <div style="font-size:0.75rem;color:#CBD5E1;">MODE</div>
+            <div style="font-weight:800;font-size:1rem;color:white;">{{ course.mode }}</div>
+          </div>
+
+          <div style="background:rgba(255,255,255,0.1);padding:0.5rem 1rem;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.2);">
+            <div style="font-size:0.75rem;color:#CBD5E1;">CURRICULUM</div>
+            <div style="font-weight:800;font-size:1rem;color:#A7F3D0;">{{ course.subjects.count }} Subjects • {{ total_lessons }}+ HD Lessons</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 flex-wrap">
+          <button onclick="openGlobalDemoModal('{{ course.title }}')" class="btn btn-gold btn-lg">⭐ Enroll in this Course</button>
+          <button onclick="openBrochureModal()" class="btn btn-secondary btn-lg" style="background:rgba(255,255,255,0.2);color:white;border-color:white;">
+            📥 Download Syllabus PDF
+          </button>
+        </div>
+      </div>
+
+      <!-- Hero Floating Summary / Pricing Card -->
+      <div class="course-summary-card">
+        <div class="price-strike-box">
+          <span class="price-main">₹{{ course.discount_price|default:course.price|floatformat:0 }}</span>
+          {% if course.discount_price %}
+          <span class="price-original">₹{{ course.price|floatformat:0 }}</span>
+          <span class="badge badge-success">Save 15%</span>
+          {% endif %}
+        </div>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:1.25rem;">
+          Includes complete classroom lectures, printed books, 50+ CBT tests & LMS video access.
+        </p>
+
+        <div style="border-top:1px solid var(--border-color);padding:1rem 0;display:flex;flex-direction:column;gap:0.6rem;font-size:0.875rem;margin-bottom:1.5rem;">
+          <div class="flex justify-between">
+            <span style="color:var(--text-muted);">Batch Schedule:</span>
+            <strong>Morning / Evening Hybrid</strong>
+          </div>
+          <div class="flex justify-between">
+            <span style="color:var(--text-muted);">Batch Capacity:</span>
+            <strong>30 Students per Batch</strong>
+          </div>
+          <div class="flex justify-between">
+            <span style="color:var(--text-muted);">Doubt Support:</span>
+            <strong style="color:var(--brand-emerald);">1-on-1 Faculty Counters</strong>
+          </div>
+          <div class="flex justify-between">
+            <span style="color:var(--text-muted);">Scholarship Test:</span>
+            <strong style="color:var(--brand-crimson);">Up to 100% Waiver</strong>
+          </div>
+        </div>
+
+        <button onclick="openGlobalDemoModal('{{ course.title }}')" class="btn btn-primary btn-lg w-full" style="background:var(--brand-red);margin-bottom:0.75rem;">
+          Book Free Demo Seat
+        </button>
+        <button onclick="openBrochureModal()" class="btn btn-secondary btn-sm w-full">
+          📥 Download Full Course Guide
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 2: Who Is This Course For? -->
+<section class="section" style="background:#FFFFFF;">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Eligibility & Target</span>
+      <h2 class="section-title">Who Is This Course For?</h2>
+      <p class="section-desc">Designed with clear academic prerequisites and career milestones.</p>
+    </div>
+
+    <div class="grid grid-3 gap-6">
+      <div class="card p-4" style="border-top:4px solid var(--brand-red);">
+        <div style="font-size:2rem;margin-bottom:0.75rem;">🎯</div>
+        <h3 style="font-size:1.15rem;font-weight:800;margin-bottom:0.5rem;">Target Student Profile</h3>
+        <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
+          {{ course.overview_data.who_is_this_for|default:course.short_description }}
+        </p>
+      </div>
+
+      <div class="card p-4" style="border-top:4px solid var(--brand-gold);">
+        <div style="font-size:2rem;margin-bottom:0.75rem;">📋</div>
+        <h3 style="font-size:1.15rem;font-weight:800;margin-bottom:0.5rem;">Eligibility & Prerequisites</h3>
+        <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
+          {{ course.overview_data.eligibility|default:"Students currently enrolled in or moving to the target grade." }}
+        </p>
+      </div>
+
+      <div class="card p-4" style="border-top:4px solid var(--brand-emerald);">
+        <div style="font-size:2rem;margin-bottom:0.75rem;">🏆</div>
+        <h3 style="font-size:1.15rem;font-weight:800;margin-bottom:0.5rem;">Examination Milestone</h3>
+        <p style="font-size:0.875rem;color:var(--text-muted);line-height:1.6;">
+          {{ course.overview_data.exam_target|default:course.title }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: Course Overview & Pedagogy -->
+<section class="section" style="background:#F8FAFC;border-top:1px solid var(--border-color);border-bottom:1px solid var(--border-color);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Teaching Methodology</span>
+      <h2 class="section-title">Course Overview & Learning Approach</h2>
+      <p class="section-desc">Our 4-pillar pedagogy ensures rigorous conceptual understanding and zero exam fear.</p>
+    </div>
+
+    <div class="grid grid-2 gap-6">
+      <div class="card p-4" style="padding:2rem;">
+        <h3 style="font-size:1.3rem;font-weight:800;color:var(--brand-crimson);margin-bottom:1rem;">
+          What You Will Master
+        </h3>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:0.75rem;">
+          {% for f in course.features %}
+          <li style="display:flex;align-items:flex-start;gap:0.6rem;font-size:0.9rem;line-height:1.5;">
+            <span style="color:var(--brand-emerald);font-weight:bold;font-size:1.1rem;">✓</span>
+            <span>{{ f }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="card p-4" style="padding:2rem;">
+        <h3 style="font-size:1.3rem;font-weight:800;color:var(--brand-crimson);margin-bottom:1rem;">
+          Scientific Classroom Pedagogy
+        </h3>
+        <div class="flex flex-col gap-3">
+          <div style="display:flex;gap:0.75rem;">
+            <span style="font-weight:900;color:var(--brand-red);font-size:1.1rem;">01</span>
+            <div>
+              <strong style="font-size:0.95rem;">First-Principle Concepts:</strong>
+              <p style="font-size:0.85rem;color:var(--text-muted);">Intuition built from fundamentals rather than rote formula memorization.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:0.75rem;">
+            <span style="font-weight:900;color:var(--brand-red);font-size:1.1rem;">02</span>
+            <div>
+              <strong style="font-size:0.95rem;">Graded Problem Sheets:</strong>
+              <p style="font-size:0.85rem;color:var(--text-muted);">From simple concept checks to multi-concept national exam problems.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:0.75rem;">
+            <span style="font-weight:900;color:var(--brand-red);font-size:1.1rem;">03</span>
+            <div>
+              <strong style="font-size:0.95rem;">All-India AI-CBT Testing:</strong>
+              <p style="font-size:0.85rem;color:var(--text-muted);">Exact NTA user interface with speed, accuracy, and negative-mark reports.</p>
+            </div>
+          </div>
+          <div style="display:flex;gap:0.75rem;">
+            <span style="font-weight:900;color:var(--brand-red);font-size:1.1rem;">04</span>
+            <div>
+              <strong style="font-size:0.95rem;">Personal Faculty Doubt Counters:</strong>
+              <p style="font-size:0.85rem;color:var(--text-muted);">12-Hour daily 1-on-1 problem clearing and personal study planning.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4: Detailed Syllabus & Topics Breakdown (Tabs + Expandable Accordions) -->
+<section id="syllabus-section" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Curriculum Breakdown</span>
+      <h2 class="section-title">Detailed Course Syllabus</h2>
+      <p class="section-desc">
+        Explore subjects, chapters, estimated lecture hours, and core subtopics.
+      </p>
+    </div>
+
+    <!-- Subject Switcher Tabs -->
+    <div class="subject-nav-tabs">
+      {% for sub in course.subjects.all %}
+      <button class="subject-tab-btn {% if forloop.first %}active{% endif %}" onclick="switchSubjectTab('subject-panel-{{ sub.id }}', this)">
+        <span>📖</span> {{ sub.name }} ({{ sub.chapters.count }} Chapters)
+      </button>
+      {% endfor %}
+    </div>
+
+    <!-- Subject Tab Panels -->
+    {% for sub in course.subjects.all %}
+    <div id="subject-panel-{{ sub.id }}" class="subject-panel-content" style="display:{% if forloop.first %}block{% else %}none{% endif %};">
+      <div class="flex items-center justify-between" style="margin-bottom:1.5rem;">
+        <h3 style="font-size:1.25rem;font-weight:800;color:{{ sub.color_accent }};">
+          {{ sub.name }} Comprehensive Modules
+        </h3>
+        <button onclick="toggleAllAccordions('subject-panel-{{ sub.id }}')" class="btn btn-secondary btn-sm">
+          Expand / Collapse All
+        </button>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        {% for ch in sub.chapters.all %}
+        <div class="syllabus-accordion-item">
+          <div class="syllabus-accordion-header" onclick="toggleAccordion(this)">
+            <div class="flex items-center gap-3">
+              <span class="badge" style="background:{{ sub.color_accent }}20;color:{{ sub.color_accent }};">
+                Chapter {{ ch.chapter_number }}
+              </span>
+              <strong style="font-size:1.05rem;">{{ ch.title }}</strong>
+            </div>
+            <div class="flex items-center gap-3">
+              <span style="font-size:0.825rem;color:var(--text-muted);">{{ ch.estimated_hours }} Hours • {{ ch.lessons.count }} Lessons</span>
+              <span class="accordion-icon" style="transition:var(--transition);font-size:0.8rem;">▼</span>
+            </div>
+          </div>
+          <div class="syllabus-accordion-body">
+            <div style="margin-bottom:0.75rem;font-size:0.875rem;color:var(--text-main);">
+              <strong>Core Subtopics & Concepts:</strong>
+              <p style="color:var(--text-muted);margin-top:0.35rem;line-height:1.6;">{{ ch.description }}</p>
+            </div>
+            <div class="flex items-center justify-between" style="padding-top:0.75rem;border-top:1px dashed var(--border-color);font-size:0.825rem;">
+              <span style="color:var(--brand-emerald);">✓ Includes 2 DPP Sheets & 1 Video Masterclass</span>
+              <button onclick="openBrochureModal()" class="btn btn-secondary btn-xs">Download Chapter PDF</button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Section 5: Course Features Matrix -->
+<section class="section" style="background:#F8FAFC;border-top:1px solid var(--border-color);border-bottom:1px solid var(--border-color);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Supported Features</span>
+      <h2 class="section-title">What Makes Mayank Classes Unmatched</h2>
+      <p class="section-desc">Every resource built into your enrollment package.</p>
+    </div>
+
+    <div class="features-grid-10">
+      <div class="feature-pill-card">
+        <div class="feature-pill-icon">🏛️</div>
+        <div>
+          <h4 style="font-size:1.05rem;font-weight:800;margin-bottom:0.25rem;">Daily Live & Classroom Lectures</h4>
+          <p style="font-size:0.85rem;color:var(--text-muted);">4 Hours daily interactive coaching with senior Kota & Delhi faculty.</p>
+        </div>
+      </div>
+
+      <div class="feature-pill-card">
+        <div class="feature-pill-icon">📹</div>
+        <div>
+          <h4 style="font-size:1.05rem;font-weight:800;margin-bottom:0.25rem;">HD Recorded Lecture Archive</h4>
+          <p style="font-size:0.85rem;color:var(--text-muted);">Rewatch any lecture anytime on the mobile/web student LMS app.</p>
+        </div>
+      </div>
+
+      <div class="feature-pill-card">
+        <div class="feature-pill-icon">📚</div>
+        <div>
+          <h4 style="font-size:1.05rem;font-weight:800;margin-bottom:0.25rem;">Color Printed Study Modules</h4>
+          <p style="font-size:0.85rem;color:var(--text-muted);">Comprehensive theory booklets, formula handbooks, and solved examples.</p>
+        </div>
+      </div>
+
+      <div class="feature-pill-card">
+        <div class="feature-pill-icon">📝</div>
+        <div>
+          <h4 style="font-size:1.05rem;font-weight:800;margin-bottom:0.25rem;">Daily Practice Problems (DPP)</h4>
+          <p style="font-size:0.85rem;color:var(--text-muted);">25 Graded questions after every lecture with answer keys and video hints.</p>
+        </div>
+      </div>
+
+      <div class="feature-pill-card">
+        <div class="feature-pill-icon">💻</div>
+        <div>
+          <h4 style="font-size:1.05rem;font-weight:800;margin-bottom:0.25rem;">Computer-Based Test (AI-CBT) Lab</h4>
+          <p style="font-size:0.85rem;color:var(--text-muted);">Fortnightly all-India tests simulating the exact NTA computer testing UI.</p>
+        </div>
+      </div>
+
+      <div class="feature-pill-card">
+        <div class="feature-pill-icon">🤝</div>
+        <div>
+          <h4 style="font-size:1.05rem;font-weight:800;margin-bottom:0.25rem;">1-on-1 Faculty Doubt Desks</h4>
+          <p style="font-size:0.85rem;color:var(--text-muted);">12-Hour daily offline and online counters with full-time master teachers.</p>
+        </div>
+      </div>
+
+      <div class="feature-pill-card">
+        <div class="feature-pill-icon">📊</div>
+        <div>
+          <h4 style="font-size:1.05rem;font-weight:800;margin-bottom:0.25rem;">AI Performance Analytics</h4>
+          <p style="font-size:0.85rem;color:var(--text-muted);">Deep speed-vs-accuracy benchmarking and negative marking reduction charts.</p>
+        </div>
+      </div>
+
+      <div class="feature-pill-card">
+        <div class="feature-pill-icon">👨‍👩‍👧</div>
+        <div>
+          <h4 style="font-size:1.05rem;font-weight:800;margin-bottom:0.25rem;">Monthly Parent-Teacher Reports</h4>
+          <p style="font-size:0.85rem;color:var(--text-muted);">Transparent progress reports, attendance monitoring, and test reviews.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 6: Learning Journey Roadmap -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Learning Journey</span>
+      <h2 class="section-title">Your Step-by-Step Preparation Roadmap</h2>
+      <p class="section-desc">How students transition from fundamental building to All India Rank readiness.</p>
+    </div>
+
+    <div class="roadmap-timeline">
+      <div class="roadmap-step-card">
+        <div class="roadmap-step-num">1</div>
+        <h4 class="roadmap-step-title">Concept Building</h4>
+        <p class="roadmap-step-desc">Interactive lectures from first principles with 3D models and practical proofs.</p>
+      </div>
+
+      <div class="roadmap-step-card">
+        <div class="roadmap-step-num">2</div>
+        <h4 class="roadmap-step-title">Daily DPP Practice</h4>
+        <p class="roadmap-step-desc">25 Graded questions daily to cement formulas and problem speed.</p>
+      </div>
+
+      <div class="roadmap-step-card">
+        <div class="roadmap-step-num">3</div>
+        <h4 class="roadmap-step-title">NTA AI-CBT Tests</h4>
+        <p class="roadmap-step-desc">Fortnightly computer-based test series with exact national exam interface.</p>
+      </div>
+
+      <div class="roadmap-step-card">
+        <div class="roadmap-step-num">4</div>
+        <h4 class="roadmap-step-title">Weakness Analytics</h4>
+        <p class="roadmap-step-desc">AI diagnostic reports pinpointing negative marks, time per question, and topics.</p>
+      </div>
+
+      <div class="roadmap-step-card">
+        <div class="roadmap-step-num">5</div>
+        <h4 class="roadmap-step-title">1-on-1 Doubt Desk</h4>
+        <p class="roadmap-step-desc">12-Hour daily faculty counters resolving every question ambiguity.</p>
+      </div>
+
+      <div class="roadmap-step-card">
+        <div class="roadmap-step-num">6</div>
+        <h4 class="roadmap-step-title">Final Rank Mastery</h4>
+        <p class="roadmap-step-desc">Rapid revision masterclasses, formula cheat sheets, and full mock simulations.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 7: Batch Information & Schedule -->
+<section class="section" style="background:#F8FAFC;border-top:1px solid var(--border-color);border-bottom:1px solid var(--border-color);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Batch Details</span>
+      <h2 class="section-title">Upcoming Batches & Class Timings</h2>
+      <p class="section-desc">Seats are filled on a first-come, first-served basis with capped batch sizes.</p>
+    </div>
+
+    <div class="batch-table-wrapper">
+      <table class="batch-table">
+        <thead>
+          <tr>
+            <th>Batch Name</th>
+            <th>Schedule & Timings</th>
+            <th>Classroom Location</th>
+            <th>Delivery Mode</th>
+            <th>Seats Status</th>
+            <th>Enrollment</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for b in course.batches.all %}
+          <tr>
+            <td>
+              <strong>{{ b.name }}</strong>
+              <div style="font-size:0.75rem;color:var(--text-muted);">Batch Code: {{ b.code }}</div>
+            </td>
+            <td>{{ b.schedule_time }}</td>
+            <td>{{ b.classroom }}</td>
+            <td><span class="badge badge-primary">{{ b.get_mode_display }}</span></td>
+            <td><span style="color:var(--brand-emerald);font-weight:700;">● Admissions Open ({{ b.max_capacity }} Max)</span></td>
+            <td>
+              <button onclick="openGlobalDemoModal('{{ course.title }} - {{ b.name }}')" class="btn btn-gold btn-sm">Reserve Seat</button>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="text-center p-4">Morning and Evening Batches are currently enrolling. Contact admission desk.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Section 8: Faculty & Mentors -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Master Faculty</span>
+      <h2 class="section-title">Educators Leading this Program</h2>
+      <p class="section-desc">Learn from seasoned educators who have mentored top national rankers.</p>
+    </div>
+
+    <div class="grid grid-4 gap-6">
+      {% for t in faculty %}
+      <div class="faculty-card">
+        <img src="{{ t.avatar_url|default:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300' }}" alt="{{ t.get_full_name }}" class="faculty-avatar">
+        <span class="badge badge-gold" style="margin-bottom:0.5rem;">⭐ 4.9 / 5.0</span>
+        <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:0.25rem;">{{ t.get_full_name }}</h3>
+        <p style="color:var(--brand-red);font-size:0.85rem;font-weight:600;margin-bottom:0.4rem;">{{ t.teacher_profile.designation|default:'Senior Master Faculty' }}</p>
+        <p style="font-size:0.8rem;color:var(--text-muted);">{{ t.teacher_profile.qualification|default:'Ex-IITian / AIIMS' }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Section 9: Study Resources Included -->
+<section class="section" style="background:#F8FAFC;border-top:1px solid var(--border-color);border-bottom:1px solid var(--border-color);">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Resources Hub</span>
+      <h2 class="section-title">8 Comprehensive Study Materials Included</h2>
+      <p class="section-desc">Everything needed for comprehensive exam mastery without buying external books.</p>
+    </div>
+
+    <div class="resources-grid-8">
+      <div class="resource-card">
+        <div class="resource-icon">🏛️</div>
+        <h4 style="font-size:0.95rem;font-weight:800;margin-bottom:0.25rem;">Live Classes</h4>
+        <p style="font-size:0.78rem;color:var(--text-muted);">Daily interactive lectures</p>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-icon">📹</div>
+        <h4 style="font-size:0.95rem;font-weight:800;margin-bottom:0.25rem;">Recorded Vault</h4>
+        <p style="font-size:0.78rem;color:var(--text-muted);">24/7 LMS video library</p>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-icon">📖</div>
+        <h4 style="font-size:0.95rem;font-weight:800;margin-bottom:0.25rem;">Theory Notes</h4>
+        <p style="font-size:0.78rem;color:var(--text-muted);">Color-coded modules</p>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-icon">⚡</div>
+        <h4 style="font-size:0.95rem;font-weight:800;margin-bottom:0.25rem;">Formula Sheets</h4>
+        <p style="font-size:0.78rem;color:var(--text-muted);">Quick revision cheat books</p>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-icon">📝</div>
+        <h4 style="font-size:0.95rem;font-weight:800;margin-bottom:0.25rem;">Daily DPPs</h4>
+        <p style="font-size:0.78rem;color:var(--text-muted);">25 Graded questions daily</p>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-icon">🗂️</div>
+        <h4 style="font-size:0.95rem;font-weight:800;margin-bottom:0.25rem;">Question Banks</h4>
+        <p style="font-size:0.78rem;color:var(--text-muted);">10000+ Topic MCQs</p>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-icon">📊</div>
+        <h4 style="font-size:0.95rem;font-weight:800;margin-bottom:0.25rem;">All-India CBT Tests</h4>
+        <p style="font-size:0.78rem;color:var(--text-muted);">NTA-simulated interface</p>
+      </div>
+
+      <div class="resource-card">
+        <div class="resource-icon">🏆</div>
+        <h4 style="font-size:0.95rem;font-weight:800;margin-bottom:0.25rem;">Past 10 Yrs PYQs</h4>
+        <p style="font-size:0.78rem;color:var(--text-muted);">Solved with video hints</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 10: Results & Success Stories -->
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Proven Results</span>
+      <h2 class="section-title">Success Stories from Our Classroom Alumni</h2>
+      <p class="section-desc">Students who transformed their preparation into top national ranks.</p>
+    </div>
+
+    <div class="grid grid-3 gap-6">
+      {% for top in toppers %}
+      <div class="topper-card">
+        <span class="topper-rank-tag">{{ top.rank_or_score }}</span>
+        <img src="{{ top.image_url|default:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500' }}" alt="{{ top.student_name }}" class="topper-avatar">
+        <h4 style="font-size:1.15rem;font-weight:800;">{{ top.student_name }}</h4>
+        <p style="font-size:0.85rem;color:var(--brand-red);font-weight:700;margin-bottom:0.4rem;">{{ top.exam_name }}</p>
+        <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;">"{{ top.story }}"</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Section 11: Frequently Asked Questions (Accordion) -->
+<section class="section" style="background:#F8FAFC;border-top:1px solid var(--border-color);border-bottom:1px solid var(--border-color);">
+  <div class="container" style="max-width:800px;">
+    <div class="section-header" style="margin-bottom:2.5rem;">
+      <span class="section-tag">Common Queries</span>
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <p class="section-desc">Everything you need to know about enrollment, batches, and teaching.</p>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      {% for faq in course.faqs %}
+      <div class="faq-accordion-item {% if forloop.first %}open{% endif %}">
+        <div class="faq-header" onclick="toggleFaq(this)">
+          <span>{{ faq.q }}</span>
+          <span style="font-size:0.8rem;transition:var(--transition);">▼</span>
+        </div>
+        <div class="faq-body" style="display:{% if forloop.first %}block{% else %}none{% endif %};">
+          {{ faq.a }}
+        </div>
+      </div>
+      {% empty %}
+      <div class="faq-accordion-item open">
+        <div class="faq-header" onclick="toggleFaq(this)">
+          <span>Can I attend a free demo class before paying the fee?</span>
+          <span>▼</span>
+        </div>
+        <div class="faq-body" style="display:block;">
+          Yes, we offer up to 2 complimentary demo classes so students and parents can evaluate faculty pedagogy, classroom infrastructure, and study material.
+        </div>
+      </div>
+      <div class="faq-accordion-item">
+        <div class="faq-header" onclick="toggleFaq(this)">
+          <span>What is the scholarship test procedure?</span>
+          <span>▼</span>
+        </div>
+        <div class="faq-body">
+          Students can take the Mayank Classes Scholarship Aptitude Test (MC-SAT) conducted every Sunday to qualify for up to 100% tuition fee waiver based on merit.
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Section 12: High-Conversion Final CTA Banner -->
+<div class="container">
+  <div class="final-cta-banner">
+    <h2>Secure Your Seat in {{ course.title }}</h2>
+    <p>Admissions open for the 2026-27 academic session. Apply for scholarship and reserve your seat today.</p>
+    <div class="flex justify-center gap-3 flex-wrap">
+      <button onclick="openGlobalDemoModal('{{ course.title }}')" class="btn btn-gold btn-lg">Book Free Demo Class</button>
+      <button onclick="openBrochureModal()" class="btn btn-secondary btn-lg" style="background:rgba(255,255,255,0.2);color:white;border-color:white;">
+        📥 Download Full Syllabus PDF
+      </button>
+      <a href="tel:+919919980246" class="btn btn-secondary btn-lg" style="background:rgba(255,255,255,0.2);color:white;border-color:white;">
+        📞 Call Counselor: 9919980246
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function switchSubjectTab(panelId, btn) {
+  document.querySelectorAll('.subject-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.subject-panel-content').forEach(p => p.style.display = 'none');
+  btn.classList.add('active');
+  const panel = document.getElementById(panelId);
+  if (panel) panel.style.display = 'block';
+}
+
+function toggleAccordion(header) {
+  const item = header.closest('.syllabus-accordion-item');
+  item.classList.toggle('open');
+}
+
+function toggleAllAccordions(panelId) {
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+  const items = panel.querySelectorAll('.syllabus-accordion-item');
+  const anyOpen = Array.from(items).some(i => i.classList.contains('open'));
+  items.forEach(i => {
+    if (anyOpen) i.classList.remove('open');
+    else i.classList.add('open');
+  });
+}
+
+function toggleFaq(header) {
+  const item = header.closest('.faq-accordion-item');
+  const body = item.querySelector('.faq-body');
+  if (item.classList.contains('open')) {
+    item.classList.remove('open');
+    body.style.display = 'none';
+  } else {
+    item.classList.add('open');
+    body.style.display = 'block';
+  }
+}
+</script>
+{% endblock %}

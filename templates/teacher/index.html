@@ -1,0 +1,490 @@
+{% extends 'base.html' %}
+
+{% block title %}Faculty & Teacher Portal - Mayank Classes{% endblock %}
+
+{% block content %}
+<div class="portal-wrapper">
+  <!-- Teacher Sidebar -->
+  <aside class="portal-sidebar" id="mainSidebar">
+    <div class="sidebar-brand">
+      <div class="brand-logo-icon">T</div>
+      <div class="sidebar-brand-text">
+        <h2>MAYANK <span style="color:var(--brand-gold);">FACULTY</span></h2>
+        <span>Teacher Workspace</span>
+      </div>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="nav-section-label">Overview</li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-dashboard" class="active" onclick="switchTeacherTab('dashboard')">
+          <span class="nav-icon">📊</span> <span class="nav-text">Faculty Dashboard</span>
+        </a>
+      </li>
+
+      <li class="nav-section-label">Classroom Operations</li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-attendance" onclick="switchTeacherTab('attendance')">
+          <span class="nav-icon">📋</span> <span class="nav-text">Mark Attendance</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-lessons" onclick="switchTeacherTab('lessons')">
+          <span class="nav-icon">🎥</span> <span class="nav-text">Upload Recorded Lesson</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-materials" onclick="switchTeacherTab('materials')">
+          <span class="nav-icon">📚</span> <span class="nav-text">Upload Study Material</span>
+        </a>
+      </li>
+
+      <li class="nav-section-label">Testing & Performance</li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-test-creator" onclick="switchTeacherTab('test-creator')">
+          <span class="nav-icon">✏️</span> <span class="nav-text">Create Online Test</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-results" onclick="switchTeacherTab('results')">
+          <span class="nav-icon">📈</span> <span class="nav-text">Student Results & Ranks</span>
+        </a>
+      </li>
+      <li class="sidebar-nav-item">
+        <a href="javascript:void(0)" id="nav-announcements" onclick="switchTeacherTab('announcements')">
+          <span class="nav-icon">📢</span> <span class="nav-text">Post Notice</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="user-mini-profile">
+        <img id="user-display-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" class="user-avatar" alt="Avatar">
+        <div class="user-info">
+          <h4 id="user-display-name" class="user-name">Dr. Rajesh Sharma</h4>
+          <span id="teacher-desig-badge" class="user-role-badge badge badge-gold">HOD Physics</span>
+        </div>
+        <button onclick="AuthManager.logout()" class="logout-btn" title="Logout">🚪</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Portal Main Area -->
+  <main class="portal-main">
+    <!-- Topbar -->
+    <header class="portal-topbar">
+      <div class="topbar-left">
+        <button onclick="toggleSidebar()" class="sidebar-toggle-btn" title="Toggle Sidebar">☰</button>
+        <h3>Faculty Control Center</h3>
+        <span class="role-switcher-badge" style="background:#FEF3C7;color:#B45309;border-color:#FCD34D;">👨‍🏫 Senior Faculty</span>
+      </div>
+
+      <div class="topbar-right">
+        <div class="flex items-center gap-1">
+          <span style="font-size:0.72rem;color:var(--text-muted);font-weight:600;">Switch:</span>
+          <button onclick="AuthManager.demoLogin('student')" class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.55rem;">Student</button>
+          <button onclick="AuthManager.demoLogin('admin')" class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.55rem;">Admin</button>
+        </div>
+        <a href="/" class="btn btn-secondary btn-sm" style="font-size:0.78rem;padding:0.35rem 0.75rem;">Website ↗</a>
+      </div>
+    </header>
+
+    <div class="portal-content">
+      <!-- 1. TEACHER DASHBOARD PANE -->
+      <div id="pane-dashboard" class="tab-pane">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Faculty Overview</h1>
+            <p class="page-subtitle">Manage your assigned batches, student roll-calls, tests, and LMS content.</p>
+          </div>
+          <button onclick="switchTeacherTab('attendance')" class="btn btn-primary">Take Batch Attendance ➔</button>
+        </div>
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-icon-box" style="background:#EEF2FF;color:#4F46E5;">🏫</div>
+            <div class="kpi-info">
+              <h4 id="kpi-batches-count">--</h4>
+              <p>Assigned Batches</p>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon-box" style="background:#DCFCE7;color:#15803D;">👨‍🎓</div>
+            <div class="kpi-info">
+              <h4 id="kpi-students-count">--</h4>
+              <p>Active Students</p>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon-box" style="background:#FEF3C7;color:#B45309;">🎥</div>
+            <div class="kpi-info">
+              <h4 id="kpi-videos-count">--</h4>
+              <p>Recorded Lectures</p>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon-box" style="background:#E0F2FE;color:#0369A1;">📝</div>
+            <div class="kpi-info">
+              <h4 id="kpi-tests-count">--</h4>
+              <p>Tests Scheduled</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 style="font-size:1.15rem;font-weight:700;">My Assigned Classroom Batches</h3>
+          </div>
+          <div id="teacher-batches-list" class="flex flex-col gap-3" style="padding:1.5rem;">
+            <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. ATTENDANCE MARKER PANE -->
+      <div id="pane-attendance" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Interactive Batch Roll Call</h1>
+            <p class="page-subtitle">Mark daily classroom attendance with 1-click presets and individual status toggles.</p>
+          </div>
+          <div class="flex gap-2">
+            <button type="button" onclick="markAllPresent()" class="btn btn-secondary">⚡ Mark All Present</button>
+            <button type="button" onclick="saveAttendanceSubmission()" class="btn btn-primary">💾 Save Attendance Records</button>
+          </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="card p-4" style="margin-bottom:1.5rem;">
+          <div class="grid grid-2 gap-4">
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Select Batch</label>
+              <select class="form-control" id="att-batch-select" onchange="onAttendanceBatchChange()"></select>
+            </div>
+            <div class="form-group" style="margin-bottom:0;">
+              <label class="form-label">Lecture Date</label>
+              <input class="form-control" type="date" id="att-date-input">
+            </div>
+          </div>
+        </div>
+
+        <!-- Roll Call Cards Grid -->
+        <div id="attendance-rollcall-container" class="attendance-grid">
+          <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+        </div>
+      </div>
+
+      <!-- 3. UPLOAD VIDEO LESSON PANE -->
+      <div id="pane-lessons" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Publish Recorded Video Lesson</h1>
+            <p class="page-subtitle">Add video lectures into the Course → Subject → Chapter LMS tree for students.</p>
+          </div>
+        </div>
+
+        <div class="card" style="max-width:720px;margin:0 auto;">
+          <div class="card-header">
+            <h3 style="font-size:1.15rem;font-weight:700;">Lesson Details & Video Embed</h3>
+          </div>
+          <form id="new-lesson-form" onsubmit="submitNewLessonForm(event)">
+            <div class="card-body">
+              <div class="grid grid-3 gap-3">
+                <div class="form-group">
+                  <label class="form-label">Course</label>
+                  <select class="form-control" id="lesson-course-select" onchange="onLessonCourseSelectChange()" required></select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Subject</label>
+                  <select class="form-control" id="lesson-subject-select" required></select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Chapter</label>
+                  <select class="form-control" id="lesson-chapter-select" required></select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Lesson Title</label>
+                <input class="form-control" id="lesson-title-input" placeholder="e.g. L5: Conservation of Angular Momentum & Gyroscopic Precession" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Video Embed / Direct MP4 URL</label>
+                <input class="form-control" id="lesson-url-input" placeholder="https://www.youtube.com/embed/... or direct MP4 URL" value="https://www.youtube.com/embed/dQw4w9WgXcQ" required>
+              </div>
+
+              <div class="grid grid-2 gap-3">
+                <div class="form-group">
+                  <label class="form-label">Thumbnail Image URL</label>
+                  <input class="form-control" id="lesson-thumb-input" placeholder="https://images.unsplash.com/..." value="https://images.unsplash.com/photo-1509228468518-180dd4864904?w=500">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Duration (Minutes)</label>
+                  <input class="form-control" type="number" id="lesson-duration-input" value="50" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Lesson Summary & Key Equations</label>
+                <textarea class="form-control" id="lesson-desc-input" placeholder="Topics covered, derivations, homework problems assigned..."></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="flex items-center gap-2" style="cursor:pointer;">
+                  <input type="checkbox" id="lesson-preview-check">
+                  <span style="font-size:0.9rem;font-weight:600;">Allow Free Preview on Public Website</span>
+                </label>
+              </div>
+            </div>
+            <div class="card-footer text-right">
+              <button type="submit" class="btn btn-primary">Publish to LMS Curriculum ➔</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- 4. UPLOAD STUDY MATERIAL PANE -->
+      <div id="pane-materials" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Upload Notes, DPPs & Formula Sheets</h1>
+            <p class="page-subtitle">Distribute downloadable revision materials and homework sheets.</p>
+          </div>
+        </div>
+
+        <div class="card" style="max-width:680px;margin:0 auto;">
+          <div class="card-header">
+            <h3 style="font-size:1.15rem;font-weight:700;">Document Metadata</h3>
+          </div>
+          <form id="new-mat-form" onsubmit="submitNewMaterialForm(event)">
+            <div class="card-body">
+              <div class="grid grid-2 gap-3">
+                <div class="form-group">
+                  <label class="form-label">Course</label>
+                  <select class="form-control" id="mat-course-select" onchange="onMatCourseSelectChange()" required></select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Subject</label>
+                  <select class="form-control" id="mat-subject-select" required></select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Material Type</label>
+                <select class="form-control" id="mat-type-select">
+                  <option value="PDF_NOTES">Comprehensive Lecture Notes</option>
+                  <option value="DPP">Daily Practice Problem (DPP)</option>
+                  <option value="FORMULA_SHEET">Formula Flashcards & Cheatsheet</option>
+                  <option value="PYQ">Previous Year Question Bank</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Document Title</label>
+                <input class="form-control" id="mat-title-input" placeholder="e.g. Wave Optics DPP #02 with Complete Hints" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Document PDF / File Download URL</label>
+                <input class="form-control" id="mat-url-input" placeholder="https://..." value="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Description / Instructions</label>
+                <textarea class="form-control" id="mat-desc-input" placeholder="Recommended time to solve, problem distribution..."></textarea>
+              </div>
+            </div>
+            <div class="card-footer text-right">
+              <button type="submit" class="btn btn-primary">Upload Document ➔</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- 5. CREATE ONLINE TEST PANE -->
+      <div id="pane-test-creator" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Interactive Online Test Builder</h1>
+            <p class="page-subtitle">Design timed CBT mock tests with multiple choice questions, scoring rubrics, and detailed step solutions.</p>
+          </div>
+        </div>
+
+        <form id="new-test-form" onsubmit="submitTestCreatorForm(event)">
+          <div class="card p-4" style="margin-bottom:1.5rem;">
+            <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:1rem;">Test Settings</h3>
+            <div class="grid grid-3 gap-3">
+              <div class="form-group">
+                <label class="form-label">Course</label>
+                <select class="form-control" id="test-course-select" required></select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Test Title</label>
+                <input class="form-control" id="test-title-input" placeholder="e.g. JEE Advanced Physics Minor Test #03" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Duration (Minutes)</label>
+                <input class="form-control" type="number" id="test-duration-input" value="60" required>
+              </div>
+            </div>
+            <div class="grid grid-2 gap-3">
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Passing Marks</label>
+                <input class="form-control" type="number" id="test-pass-input" value="16" required>
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Marking Scheme</label>
+                <input class="form-control" value="+4 for correct, -1 for incorrect" readonly style="background:#F1F5F9;">
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between" style="margin-bottom:1rem;">
+            <h3 style="font-size:1.25rem;font-weight:800;">MCQ Questions</h3>
+            <button type="button" onclick="addQuestionToBuilder()" class="btn btn-secondary btn-sm">+ Add Question</button>
+          </div>
+
+          <div id="test-questions-builder-container"></div>
+
+          <div class="text-right" style="margin-top:1.5rem;">
+            <button type="submit" class="btn btn-primary btn-lg">Publish Test to Students ➔</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 6. STUDENT RESULTS & RANKS PANE -->
+      <div id="pane-results" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Student Performance & Scorecards</h1>
+            <p class="page-subtitle">Review submitted test attempt scores, percentages, and accuracy analytics.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h3 style="font-size:1.15rem;font-weight:700;">Recent Test Attempts</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Test Title</th>
+                  <th>Score</th>
+                  <th>Percentage</th>
+                  <th>Result</th>
+                  <th>Submission Date</th>
+                </tr>
+              </thead>
+              <tbody id="results-table-body">
+                <tr><td colspan="6" class="text-center p-4"><div class="spinner" style="margin:0 auto;"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. POST ANNOUNCEMENT PANE -->
+      <div id="pane-announcements" class="tab-pane hidden">
+        <div class="page-header">
+          <div>
+            <h1 class="page-title">Broadcast Announcements & Notice Board</h1>
+            <p class="page-subtitle">Publish circulars directly onto student and faculty dashboards in real-time.</p>
+          </div>
+          <button onclick="loadTeacherAnnouncementsTab()" class="btn btn-secondary btn-sm" title="Refresh list">🔄 Refresh</button>
+        </div>
+
+        <div class="grid grid-2 gap-6 items-start">
+          <!-- Compose Notice Card -->
+          <div class="card p-4">
+            <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:1rem;color:var(--text-main);">
+              ✍️ Compose Notice / Circular
+            </h3>
+            <form id="new-ann-form" onsubmit="submitAnnouncementForm(event)">
+              <div class="form-group">
+                <label class="form-label">Notice Headline *</label>
+                <input class="form-control" id="ann-title-input" placeholder="e.g. All-India Mock Test Series CBT #04 Scheduled" required>
+              </div>
+
+              <div class="grid grid-2 gap-3">
+                <div class="form-group">
+                  <label class="form-label">Category *</label>
+                  <select class="form-control" id="ann-category-select">
+                    <option value="EXAM">📝 Exam & Test Schedule</option>
+                    <option value="EVENT">⚡ Special Seminar / Masterclass</option>
+                    <option value="URGENT">🚨 Urgent Announcement</option>
+                    <option value="HOLIDAY">🎉 Holiday Notice</option>
+                    <option value="GENERAL" selected>📌 General Circular</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Target Audience *</label>
+                  <select class="form-control" id="ann-target-select">
+                    <option value="STUDENT" selected>🎓 Enrolled Students Only</option>
+                    <option value="ALL">🌐 All Users & Public Portal</option>
+                    <option value="TEACHER">👨‍🏫 Faculty & Staff Only</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Notice Content *</label>
+                <textarea class="form-control" id="ann-content-input" placeholder="Enter detailed announcement message..." rows="5" required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Attachment URL (Optional PDF / Resource link)</label>
+                <input type="url" class="form-control" id="ann-attachment-input" placeholder="https://drive.google.com/... or document link">
+              </div>
+
+              <div class="form-group">
+                <label class="flex items-center gap-2" style="cursor:pointer;">
+                  <input type="checkbox" id="ann-pin-check" checked>
+                  <span style="font-size:0.9rem;font-weight:600;">📌 Pin to top of student notice board</span>
+                </label>
+              </div>
+
+              <button type="submit" id="ann-submit-btn" class="btn btn-primary w-full" style="justify-content:center;padding:0.85rem;">
+                📢 Broadcast Notice to Dashboards ➔
+              </button>
+            </form>
+          </div>
+
+          <!-- Active Notices Feed -->
+          <div class="card p-4">
+            <div class="flex items-center justify-between" style="margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+              <h3 style="font-size:1.15rem;font-weight:700;margin:0;">Active Published Notices</h3>
+              <span id="teacher-notices-count-badge" class="badge badge-primary">-- Notices</span>
+            </div>
+
+            <!-- Filter chips -->
+            <div class="flex items-center gap-1" style="flex-wrap:wrap;margin-bottom:1rem;" id="teacher-notice-filters">
+              <button type="button" class="btn btn-sm btn-primary" onclick="filterTeacherNotices('')" data-tcat="">All</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterTeacherNotices('EXAM')" data-tcat="EXAM">Exams</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterTeacherNotices('EVENT')" data-tcat="EVENT">Events</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterTeacherNotices('URGENT')" data-tcat="URGENT">Urgent</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="filterTeacherNotices('HOLIDAY')" data-tcat="HOLIDAY">Holidays</button>
+            </div>
+
+            <div id="teacher-notices-container" class="flex flex-col gap-3" style="max-height:600px;overflow-y:auto;padding-right:4px;">
+              <div class="p-4 text-center"><div class="spinner" style="margin:0 auto;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById('mainSidebar');
+    sidebar.classList.toggle('collapsed');
+  }
+</script>
+<script src="/static/js/teacher.js?v=2"></script>
+{% endblock %}

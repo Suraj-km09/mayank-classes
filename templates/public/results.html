@@ -1,0 +1,86 @@
+{% extends 'public/base_public.html' %}
+
+{% block title %}Results & Toppers Hall of Fame - Mayank Classes{% endblock %}
+{% block meta_description %}Celebrate our outstanding rankers in JEE Advanced, JEE Main, NEET-UG, and National Olympiads.{% endblock %}
+
+{% block public_content %}
+<section class="brand-hero" style="padding:3.5rem 0 3rem;">
+  <div class="container text-center">
+    <div class="breadcrumb-bar justify-center" style="margin-bottom:1rem;">
+      <a href="/">Home</a>
+      <span>›</span>
+      <span style="color:var(--brand-gold);">Toppers & Results Hall of Fame</span>
+    </div>
+
+    <h1 class="hero-main-title" style="font-size:2.8rem;margin-bottom:0.75rem;">
+      A Proven Legacy of <span class="highlight-yellow">Top National Ranks</span>
+    </h1>
+    <p class="hero-main-desc" style="margin:0 auto 1.5rem;max-width:680px;">
+      Our students turn conceptual clarity into top selections at IIT Bombay, IIT Delhi, AIIMS New Delhi, and premier government institutions.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="grid grid-3 gap-6">
+      {% for topper in toppers %}
+      <div class="topper-card">
+        <span class="topper-rank-tag">{{ topper.rank_or_score }}</span>
+        <img src="{{ topper.image_url|default:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500' }}" alt="{{ topper.student_name }}" class="topper-avatar">
+        <h3 style="font-size:1.25rem;font-weight:800;margin-bottom:0.25rem;">{{ topper.student_name }}</h3>
+        <p style="font-size:0.875rem;color:var(--brand-red);font-weight:700;margin-bottom:0.6rem;">{{ topper.exam_name }}</p>
+        <div style="background:#F8FAFC;padding:0.75rem;border-radius:var(--radius-sm);border:1px solid var(--border-color);margin-bottom:0.85rem;font-size:0.85rem;font-weight:600;color:var(--text-main);">
+          🏫 {{ topper.summary }}
+        </div>
+        <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;">"{{ topper.story }}"</p>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Testimonials Grid -->
+    <div style="margin-top:4.5rem;">
+      <div class="section-header">
+        <span class="section-tag">Student Feedback</span>
+        <h2 class="section-title">What Our Students & Parents Say</h2>
+        <p class="section-desc">Authentic experiences from classroom and hybrid students.</p>
+      </div>
+
+      <div class="grid grid-3 gap-6">
+        {% for t in testimonials %}
+        <div class="card p-4" style="display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <div style="color:var(--brand-gold);font-size:1.1rem;margin-bottom:0.75rem;">★★★★★</div>
+            <p style="font-size:0.925rem;color:var(--text-main);line-height:1.6;font-style:italic;margin-bottom:1.5rem;">
+              "{{ t.review_text }}"
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <img src="{{ t.avatar_url|default:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100' }}" style="width:46px;height:46px;border-radius:50%;object-fit:cover;">
+            <div>
+              <h4 style="font-size:0.95rem;font-weight:700;">{{ t.student_name }}</h4>
+              <p style="font-size:0.8rem;color:var(--brand-red);font-weight:600;">{{ t.score_or_rank }}</p>
+              <p style="font-size:0.75rem;color:var(--text-muted);">{{ t.college_admitted }}</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA Banner -->
+<div class="container">
+  <div class="final-cta-banner">
+    <h2>Be Our Next National Ranker</h2>
+    <p>Join Mayank Classes today and take your first step toward IIT Bombay, AIIMS, or Top National Colleges.</p>
+    <div class="flex justify-center gap-3 flex-wrap">
+      <button onclick="openGlobalDemoModal()" class="btn btn-gold btn-lg">Apply for Scholarship Test</button>
+      <a href="tel:+919919980246" class="btn btn-secondary btn-lg" style="background:rgba(255,255,255,0.2);color:white;border-color:white;">
+        📞 Call Admission Desk: 9919980246
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

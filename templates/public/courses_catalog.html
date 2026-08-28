@@ -1,0 +1,252 @@
+{% extends 'public/base_public.html' %}
+
+{% block title %}Explore All Courses - JEE, NEET, Foundation & Competitive Programs | Mayank Classes{% endblock %}
+{% block meta_description %}Browse all courses at Mayank Classes. Foundation (Classes 6–10), IIT-JEE Main & Advanced, NEET-UG Medical, CUET, and NDA entrance coaching.{% endblock %}
+
+{% block public_content %}
+<!-- Catalog Hero Banner -->
+<section class="brand-hero" style="padding:3.5rem 0 3rem;">
+  <div class="container text-center">
+    <div class="breadcrumb-bar justify-center" style="margin-bottom:1rem;">
+      <a href="/">Home</a>
+      <span>›</span>
+      <span style="color:var(--brand-gold);">Courses & Programs</span>
+    </div>
+
+    <h1 class="hero-main-title" style="font-size:2.8rem;margin-bottom:0.75rem;">
+      Find the <span class="highlight-yellow">Right Program</span> for Your Aspirations
+    </h1>
+    <p class="hero-main-desc" style="margin:0 auto 1.5rem;max-width:680px;">
+      Explore our specialized classroom and hybrid courses engineered for Foundation Olympiads, IIT-JEE, NEET-UG, and National Competitive Examinations.
+    </p>
+  </div>
+</section>
+
+<!-- Course Discovery & Filtering Section -->
+<section class="section" style="padding-top:2.5rem;">
+  <div class="container">
+    
+    <!-- 4 Major Academic Category Highlights -->
+    <div class="grid grid-4 gap-4" style="margin-bottom:3rem;">
+      <!-- Foundation -->
+      <a href="/courses/foundation/" class="card p-4" style="text-decoration:none;border-top:4px solid var(--cat-foundation);transition:var(--transition);display:block;">
+        <div class="flex items-center justify-between" style="margin-bottom:0.5rem;">
+          <span class="badge" style="background:#DCFCE7;color:var(--cat-foundation);">CLASSES 6–10</span>
+          <span style="font-size:1.5rem;">🎓</span>
+        </div>
+        <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:0.35rem;">Foundation Hub</h3>
+        <p style="font-size:0.825rem;color:var(--text-muted);margin-bottom:0.75rem;">Class 6 to 10 + Olympiads (IJSO, PRMO, NTSE).</p>
+        <span style="font-size:0.825rem;font-weight:700;color:var(--cat-foundation);">Explore 5 Courses ➔</span>
+      </a>
+
+      <!-- JEE -->
+      <a href="/courses/jee/" class="card p-4" style="text-decoration:none;border-top:4px solid var(--cat-jee);transition:var(--transition);display:block;">
+        <div class="flex items-center justify-between" style="margin-bottom:0.5rem;">
+          <span class="badge" style="background:#EDE9FE;color:var(--cat-jee);">IIT-JEE</span>
+          <span style="font-size:1.5rem;">⚛️</span>
+        </div>
+        <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:0.35rem;">JEE Preparation</h3>
+        <p style="font-size:0.825rem;color:var(--text-muted);margin-bottom:0.75rem;">JEE Main, Advanced Pinnacle & Dropper Batches.</p>
+        <span style="font-size:0.825rem;font-weight:700;color:var(--cat-jee);">Explore 3 Courses ➔</span>
+      </a>
+
+      <!-- NEET -->
+      <a href="/courses/neet/" class="card p-4" style="text-decoration:none;border-top:4px solid var(--cat-neet);transition:var(--transition);display:block;">
+        <div class="flex items-center justify-between" style="margin-bottom:0.5rem;">
+          <span class="badge" style="background:#FEE2E2;color:var(--cat-neet);">NEET MEDICAL</span>
+          <span style="font-size:1.5rem;">🩺</span>
+        </div>
+        <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:0.35rem;">NEET-UG Medical</h3>
+        <p style="font-size:0.825rem;color:var(--text-muted);margin-bottom:0.75rem;">Class 11, 12, Droppers & NCERT Line-by-Line.</p>
+        <span style="font-size:0.825rem;font-weight:700;color:var(--cat-neet);">Explore 2 Courses ➔</span>
+      </a>
+
+      <!-- Other Exams -->
+      <a href="/courses/other-exams/" class="card p-4" style="text-decoration:none;border-top:4px solid var(--cat-other);transition:var(--transition);display:block;">
+        <div class="flex items-center justify-between" style="margin-bottom:0.5rem;">
+          <span class="badge" style="background:#E0F2FE;color:var(--cat-other);">CUET & NDA</span>
+          <span style="font-size:1.5rem;">🏆</span>
+        </div>
+        <h3 style="font-size:1.15rem;font-weight:800;color:var(--text-main);margin-bottom:0.35rem;">Other Exams</h3>
+        <p style="font-size:0.825rem;color:var(--text-muted);margin-bottom:0.75rem;">CUET (UG) General/Domain & UPSC NDA/NA.</p>
+        <span style="font-size:0.825rem;font-weight:700;color:var(--cat-other);">Explore 2 Courses ➔</span>
+      </a>
+    </div>
+
+    <!-- Live Filter & Search Controls -->
+    <div class="card p-4" style="margin-bottom:2.5rem;background:#F8FAFC;border:1px solid var(--border-color);border-radius:var(--radius-lg);">
+      <div class="grid grid-2 gap-4 items-center" style="margin-bottom:1.25rem;">
+        <div>
+          <h3 style="font-size:1.1rem;font-weight:800;">Filter Courses by Academic Stream & Class</h3>
+        </div>
+        <div>
+          <input type="text" id="course-search-input" class="form-control" placeholder="🔍 Search by course name, topic, or class..." onkeyup="handleClientCourseSearch()">
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div style="margin-bottom:1rem;">
+        <span style="font-size:0.8rem;font-weight:800;color:var(--text-muted);margin-right:0.75rem;">CATEGORY:</span>
+        <div class="pill-filter-list" style="display:inline-flex;">
+          <a href="/courses/" class="pill-btn {% if active_category == 'ALL' or not active_category %}active{% endif %}">All Categories</a>
+          <a href="/courses/?category=FOUNDATION" class="pill-btn {% if active_category == 'FOUNDATION' %}active{% endif %}">Foundation (6–10)</a>
+          <a href="/courses/?category=ENGINEERING" class="pill-btn {% if active_category == 'ENGINEERING' %}active{% endif %}">JEE Preparation</a>
+          <a href="/courses/?category=MEDICAL" class="pill-btn {% if active_category == 'MEDICAL' %}active{% endif %}">NEET Preparation</a>
+          <a href="/courses/?category=OTHER_EXAMS" class="pill-btn {% if active_category == 'OTHER_EXAMS' %}active{% endif %}">Other Competitive</a>
+        </div>
+      </div>
+
+      <!-- Class Filter Pills -->
+      <div>
+        <span style="font-size:0.8rem;font-weight:800;color:var(--text-muted);margin-right:0.75rem;">CLASS / LEVEL:</span>
+        <div class="pill-filter-list" style="display:inline-flex;">
+          <a href="/courses/" class="pill-btn {% if active_class == 'ALL' or not active_class %}active{% endif %}">All Classes</a>
+          <a href="/courses/?class=Class+6" class="pill-btn {% if 'Class 6' in active_class %}active{% endif %}">Class 6</a>
+          <a href="/courses/?class=Class+7" class="pill-btn {% if 'Class 7' in active_class %}active{% endif %}">Class 7</a>
+          <a href="/courses/?class=Class+8" class="pill-btn {% if 'Class 8' in active_class %}active{% endif %}">Class 8</a>
+          <a href="/courses/?class=Class+9" class="pill-btn {% if 'Class 9' in active_class %}active{% endif %}">Class 9</a>
+          <a href="/courses/?class=Class+10" class="pill-btn {% if 'Class 10' in active_class %}active{% endif %}">Class 10</a>
+          <a href="/courses/?class=Class+11" class="pill-btn {% if 'Class 11' in active_class %}active{% endif %}">Class 11</a>
+          <a href="/courses/?class=Class+12" class="pill-btn {% if 'Class 12' in active_class %}active{% endif %}">Class 12</a>
+          <a href="/courses/?class=Dropper" class="pill-btn {% if 'Dropper' in active_class %}active{% endif %}">Dropper / Repeater</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Courses Grid -->
+    <div id="course-cards-container" class="grid grid-3 gap-6">
+      {% for course in courses %}
+      <div class="course-card-premium course-item-filterable" data-title="{{ course.title|lower }}" data-desc="{{ course.description|lower }}" data-cat="{{ course.category }}">
+        <!-- Banner Header -->
+        <div class="course-card-banner {% if course.category == 'MEDICAL' %}neet-banner{% elif course.category == 'ENGINEERING' %}jee-banner{% elif course.category == 'FOUNDATION' %}foundation-banner{% else %}other-banner{% endif %}">
+          <div class="flex items-center justify-between">
+            <span class="course-badge-tag">{{ course.badge_text|default:course.target_class }}</span>
+            <span style="font-size:0.8rem;font-weight:700;background:rgba(0,0,0,0.3);padding:0.2rem 0.6rem;border-radius:var(--radius-full);">
+              {{ course.get_category_display|truncatewords:2 }}
+            </span>
+          </div>
+          <div class="course-card-banner-icon">
+            {% if course.category == 'MEDICAL' %}🩺{% elif course.category == 'ENGINEERING' %}⚛️{% elif course.category == 'FOUNDATION' %}🎓{% else %}🏆{% endif %}
+          </div>
+          <div></div>
+        </div>
+
+        <!-- Body -->
+        <div class="course-card-body">
+          <div>
+            <span class="badge badge-primary" style="margin-bottom:0.5rem;">{{ course.target_class }}</span>
+            <h3 class="course-card-title">{{ course.title }}</h3>
+            <p class="course-card-desc">{{ course.short_description }}</p>
+
+            <!-- Key Features Bullets -->
+            <ul style="list-style:none;margin-bottom:1.25rem;padding:0;">
+              {% for f in course.features|slice:":3" %}
+              <li style="display:flex;align-items:center;gap:0.4rem;font-size:0.825rem;color:var(--text-muted);margin-bottom:0.35rem;">
+                <span style="color:var(--brand-emerald);font-weight:bold;">✓</span> {{ f }}
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div>
+            <div class="course-meta-tags">
+              <span class="course-meta-tag">⏰ {{ course.duration_weeks }} Wks</span>
+              <span class="course-meta-tag">🏫 {{ course.mode|truncatewords:2 }}</span>
+              <span class="course-meta-tag" style="margin-left:auto;font-weight:800;color:var(--brand-crimson);font-size:1.1rem;">
+                ₹{{ course.discount_price|default:course.price|floatformat:0 }}
+              </span>
+            </div>
+
+            <div class="course-card-footer">
+              <a href="/courses/{{ course.slug }}/" class="btn btn-secondary btn-sm w-full">View Curriculum</a>
+              <button onclick="openGlobalDemoModal('{{ course.title }}')" class="btn btn-primary btn-sm w-full" style="background:var(--brand-red);">Enroll Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="card p-4 text-center w-full" style="grid-column:1/-1;">
+        <h3>No courses found matching your filter criteria.</h3>
+        <p style="color:var(--text-muted);margin-top:0.5rem;">Try clearing the search query or selecting "All Categories".</p>
+        <a href="/courses/" class="btn btn-primary btn-sm" style="margin-top:1rem;">Reset Filters</a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Course Comparison Table -->
+    <div style="margin-top:4.5rem;">
+      <div class="section-header" style="margin-bottom:2rem;">
+        <span class="section-tag">Comparison Matrix</span>
+        <h2 class="section-title">Compare Programs at a Glance</h2>
+        <p class="section-desc">Quick side-by-side comparison of duration, testing frequency, and features.</p>
+      </div>
+
+      <div class="batch-table-wrapper">
+        <table class="batch-table">
+          <thead>
+            <tr>
+              <th>Program Name</th>
+              <th>Target Class / Level</th>
+              <th>Duration</th>
+              <th>Delivery Mode</th>
+              <th>CBT Tests</th>
+              <th>Tuition Fee</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for course in all_courses %}
+            <tr>
+              <td>
+                <strong>{{ course.title }}</strong>
+                <div style="font-size:0.78rem;color:var(--text-muted);">{{ course.badge_text }}</div>
+              </td>
+              <td><span class="badge badge-primary">{{ course.target_class }}</span></td>
+              <td>{{ course.duration_weeks }} Weeks</td>
+              <td>{{ course.mode }}</td>
+              <td><span style="color:var(--brand-emerald);font-weight:700;">✓ Weekly NTA-CBT</span></td>
+              <td><strong>₹{{ course.discount_price|default:course.price|floatformat:0 }}</strong></td>
+              <td>
+                <a href="/courses/{{ course.slug }}/" class="btn btn-secondary btn-sm">Details ➔</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA Banner -->
+<div class="container">
+  <div class="final-cta-banner">
+    <h2>Need Help Choosing the Right Stream?</h2>
+    <p>Talk with our academic counselors to understand the optimal roadmap for your current grade and target exam.</p>
+    <div class="flex justify-center gap-3 flex-wrap">
+      <button onclick="openGlobalDemoModal()" class="btn btn-gold btn-lg">Book 1-on-1 Counseling Session</button>
+      <button onclick="openBrochureModal()" class="btn btn-secondary btn-lg" style="background:rgba(255,255,255,0.2);color:white;border-color:white;">
+        📥 Download 2026 Brochure
+      </button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function handleClientCourseSearch() {
+  const query = document.getElementById('course-search-input').value.toLowerCase();
+  const items = document.querySelectorAll('.course-item-filterable');
+  items.forEach(item => {
+    const title = item.getAttribute('data-title') || '';
+    const desc = item.getAttribute('data-desc') || '';
+    if (title.includes(query) || desc.includes(query)) {
+      item.style.display = 'flex';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+</script>
+{% endblock %}
