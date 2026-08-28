@@ -275,7 +275,11 @@ def _send_email_thread(subject, text_body, html_body, from_email, recipient_list
     sender = from_email or getattr(settings, 'DEFAULT_FROM_EMAIL', None) or getattr(settings, 'EMAIL_HOST_USER', 'noreply@mayankclasses.com')
 
     try:
-        print(f"[EMAIL SERVICE] Connecting to {settings.EMAIL_HOST}:{settings.EMAIL_PORT} (TLS={getattr(settings, 'EMAIL_USE_TLS', False)}, SSL={getattr(settings, 'EMAIL_USE_SSL', False)}) to deliver: '{subject}' -> {clean_recipients}")
+        host = getattr(settings, 'EMAIL_HOST', 'SendGrid-API')
+        port = getattr(settings, 'EMAIL_PORT', 443)
+        tls = getattr(settings, 'EMAIL_USE_TLS', False)
+        ssl = getattr(settings, 'EMAIL_USE_SSL', False)
+        print(f"[EMAIL SERVICE] Connecting to {host}:{port} (TLS={tls}, SSL={ssl}) to deliver: '{subject}' -> {clean_recipients}")
         msg = EmailMultiAlternatives(
             subject=subject,
             body=text_body,
@@ -317,12 +321,7 @@ def dispatch_counseling_emails(inquiry):
         )
         student_html = build_student_confirmation_html(inquiry)
 
-        t1 = threading.Thread(
-            target=_send_email_thread,
-            args=(student_subject, student_text, student_html, from_email, [inquiry.email]),
-            daemon=True
-        )
-        t1.start()
+        _send_email_thread(student_subject, student_text, student_html, from_email, [inquiry.email])
 
     # 2. Send Admin / Counselor Lead Notification Email (if admin email configured)
     if admin_recipient and '@' in admin_recipient:
@@ -338,10 +337,5 @@ def dispatch_counseling_emails(inquiry):
         )
         admin_html = build_admin_notification_html(inquiry)
 
-        t2 = threading.Thread(
-            target=_send_email_thread,
-            args=(admin_subject, admin_text, admin_html, from_email, [admin_recipient]),
-            daemon=True
-        )
-        t2.start()
+        _send_email_thread(admin_subject, admin_text, admin_html, from_email, [admin_recipient])
 
