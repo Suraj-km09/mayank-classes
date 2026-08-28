@@ -265,20 +265,35 @@ def build_admin_notification_html(inquiry):
 
 
 def _send_email_thread(subject, text_body, html_body, from_email, recipient_list):
-    """Worker function executed inside a daemon thread."""
+    """Worker function executed inside a thread with robust error logging for Railway/Production."""
+    clean_recipients = [r.strip() for r in recipient_list if r and isinstance(r, str) and '@' in r.strip()]
+    if not clean_recipients:
+        print(f"[EMAIL SERVICE] Skipped: No valid recipient found in {recipient_list}")
+        return
+
+    # Ensure from_email is valid
+    sender = from_email or getattr(settings, 'DEFAULT_FROM_EMAIL', None) or getattr(settings, 'EMAIL_HOST_USER', 'noreply@mayankclasses.com')
+
     try:
+        print(f"[EMAIL SERVICE] Connecting to {settings.EMAIL_HOST}:{settings.EMAIL_PORT} (TLS={getattr(settings, 'EMAIL_USE_TLS', False)}, SSL={getattr(settings, 'EMAIL_USE_SSL', False)}) to deliver: '{subject}' -> {clean_recipients}")
         msg = EmailMultiAlternatives(
             subject=subject,
             body=text_body,
-            from_email=from_email,
-            to=recipient_list
+            from_email=sender,
+            to=clean_recipients
         )
         if html_body:
             msg.attach_alternative(html_body, "text/html")
-        msg.send(fail_silently=False)
-        logger.info(f"Email successfully dispatched to: {recipient_list}")
+        
+        sent_count = msg.send(fail_silently=False)
+        print(f"[EMAIL SERVICE SUCCESS] Successfully delivered {sent_count} email(s) to: {clean_recipients}")
+        logger.info(f"Email successfully dispatched to: {clean_recipients}")
     except Exception as e:
-        logger.error(f"Failed to deliver email to {recipient_list}: {e}")
+        import traceback
+        err_msg = f"[EMAIL SERVICE ERROR] Failed to deliver email to {clean_recipients}: {type(e).__name__} - {e}"
+        print(err_msg)
+        traceback.print_exc()
+        logger.error(err_msg)
 
 
 def dispatch_counseling_emails(inquiry):
@@ -286,10 +301,10 @@ def dispatch_counseling_emails(inquiry):
     Dispatches both Student Confirmation and Admin Alert emails asynchronously.
     Does not block the web response.
     """
-    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'Mayank Classes <admissions@mayankclasses.com>')
+    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', None) or getattr(settings, 'EMAIL_HOST_USER', None) or 'Mayank Classes <admissions@mayankclasses.com>'
     admin_recipient = getattr(settings, 'ADMIN_EMAIL_NOTIFICATION', None) or getattr(settings, 'EMAIL_HOST_USER', None)
 
-    # 1. Send Student Confirmation Email (if valid email provided)
+    # 1. Send Student Confirmation Email (if valid student email provided)
     if inquiry.email and '@' in inquiry.email and not inquiry.email.endswith('@brochure.mayankclasses.com'):
         student_subject = f"🎯 Demo Class & Counseling Booking Confirmed - Mayank Classes"
         student_text = (
@@ -309,22 +324,24 @@ def dispatch_counseling_emails(inquiry):
         )
         t1.start()
 
-    # 2. Send Admin / Counselor Lead Notification Email
-    admin_subject = f"🚨 [NEW LEAD] {inquiry.full_name} - {inquiry.course_interested} ({inquiry.phone})"
-    admin_text = (
-        f"NEW INQUIRY RECEIVED:\n"
-        f"Name: {inquiry.full_name}\n"
-        f"Phone: {inquiry.phone}\n"
-        f"Email: {inquiry.email}\n"
-        f"Course: {inquiry.course_interested}\n"
-        f"Class: {inquiry.current_class}\n"
-        f"Message: {inquiry.message}\n"
-    )
-    admin_html = build_admin_notification_html(inquiry)
+    # 2. Send Admin / Counselor Lead Notification Email (if admin email configured)
+    if admin_recipient and '@' in admin_recipient:
+        admin_subject = f"🚨 [NEW LEAD] {inquiry.full_name} - {inquiry.course_interested} ({inquiry.phone})"
+        admin_text = (
+            f"NEW INQUIRY RECEIVED:\n"
+            f"Name: {inquiry.full_name}\n"
+            f"Phone: {inquiry.phone}\n"
+            f"Email: {inquiry.email}\n"
+            f"Course: {inquiry.course_interested}\n"
+            f"Class: {inquiry.current_class}\n"
+            f"Message: {inquiry.message}\n"
+        )
+        admin_html = build_admin_notification_html(inquiry)
 
-    t2 = threading.Thread(
-        target=_send_email_thread,
-        args=(admin_subject, admin_text, admin_html, from_email, [admin_recipient]),
-        daemon=True
-    )
-    t2.start()
+        t2 = threading.Thread(
+            target=_send_email_thread,
+            args=(admin_subject, admin_text, admin_html, from_email, [admin_recipient]),
+            daemon=True
+        )
+        t2.start()
+

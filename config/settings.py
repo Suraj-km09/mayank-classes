@@ -162,14 +162,46 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# Email (Gmail SMTP) Configuration
+# Email (Gmail SMTP / Production SMTP) Configuration
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com').strip()
 EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Mayank Classes <admissions@mayankclasses.com>')
-ADMIN_EMAIL_NOTIFICATION = os.getenv('ADMIN_EMAIL_NOTIFICATION', '')
+
+_use_tls_env = os.getenv('EMAIL_USE_TLS')
+_use_ssl_env = os.getenv('EMAIL_USE_SSL')
+
+if _use_ssl_env is not None:
+    EMAIL_USE_SSL = _use_ssl_env.lower() in ('true', '1', 'yes')
+    EMAIL_USE_TLS = False if EMAIL_USE_SSL else (_use_tls_env.lower() in ('true', '1', 'yes') if _use_tls_env else True)
+elif EMAIL_PORT == 465:
+    EMAIL_USE_SSL = True
+    EMAIL_USE_TLS = False
+else:
+    EMAIL_USE_SSL = False
+    EMAIL_USE_TLS = _use_tls_env.lower() in ('true', '1', 'yes') if _use_tls_env else True
+
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '').strip().strip('"').strip("'")
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '').strip().strip('"').strip("'")
+EMAIL_TIMEOUT = int(os.getenv('EMAIL_TIMEOUT', '15'))
+
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', '').strip() or (
+    f"Mayank Classes <{EMAIL_HOST_USER}>" if EMAIL_HOST_USER else "Mayank Classes <admissions@mayankclasses.com>"
+)
+ADMIN_EMAIL_NOTIFICATION = os.getenv('ADMIN_EMAIL_NOTIFICATION', '').strip() or EMAIL_HOST_USER
+
+# Production Logging Configuration (Ensures logs appear in Railway dashboard)
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}
 
 
