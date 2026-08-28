@@ -108,7 +108,9 @@ class ContactInquiryView(generics.ListCreateAPIView):
         try:
             dispatch_counseling_emails(inquiry)
         except Exception as e:
-            pass
+            import traceback
+            print(f"[CONTACT INQUIRY ERROR] Failed to trigger email dispatch: {e}")
+            traceback.print_exc()
 
 class ContactInquiryDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminRole]
