@@ -101,3 +101,21 @@ Or run seed demo data:
 ```bash
 railway run python manage.py seed_data
 ```
+
+---
+
+## 💻 Step 6: Running Commands in Railway Web Console
+
+Inside your Railway project **Console** tab, activate the Linux virtualenv before running management commands:
+
+```bash
+# 1. Activate the Python virtual environment
+source /opt/venv/bin/activate
+
+# 2. Test SMTP Email Delivery Handshake
+python manage.py test_email
+
+# 3. Create Superuser (Admin Account)
+python manage.py createsuperuser
+```
+
