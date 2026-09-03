@@ -4,58 +4,107 @@
 {% block meta_description %}Meet the experienced IITian, AIIMS, and Olympiad trainer faculty team at Mayank Classes delivering unmatched conceptual mastery.{% endblock %}
 
 {% block public_content %}
-<section class="brand-hero" style="padding:3.5rem 0 3rem;">
-  <div class="container text-center">
-    <div class="breadcrumb-bar justify-center" style="margin-bottom:1rem;">
-      <a href="/">Home</a>
-      <span>›</span>
-      <span style="color:var(--brand-gold);">Master Faculty & Mentors</span>
-    </div>
+<div class="mc-landing-root">
+  <!-- Blueprint Grid Pattern -->
+  <div class="mc-grid-pattern" aria-hidden="true"></div>
+  <div class="mc-cursor-glow" id="mc-cursor-glow" aria-hidden="true"></div>
 
-    <h1 class="hero-main-title" style="font-size:2.8rem;margin-bottom:0.75rem;">
-      Learn from India's <span class="highlight-yellow">Foremost Mentors</span>
-    </h1>
-    <p class="hero-main-desc" style="margin:0 auto 1.5rem;max-width:680px;">
-      Our faculty comprises Ex-IITians, AIIMS Doctors, and national authors who have dedicated their careers to shaping top All India Rankers.
-    </p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="grid grid-4 gap-6">
-      {% for teacher in teachers %}
-      <div class="faculty-card">
-        <img src="{{ teacher.avatar_url|default:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300' }}" alt="{{ teacher.get_full_name }}" class="faculty-avatar">
-        <span class="badge badge-gold" style="margin-bottom:0.5rem;">⭐ 4.9 / 5.0 Rating</span>
-        <h3 style="font-size:1.25rem;font-weight:800;margin-bottom:0.35rem;">{{ teacher.get_full_name }}</h3>
-        <p style="color:var(--brand-red);font-size:0.9rem;font-weight:700;margin-bottom:0.4rem;">
-          {{ teacher.teacher_profile.designation|default:'Senior Faculty' }}
-        </p>
-        <p style="font-size:0.825rem;color:var(--text-muted);margin-bottom:0.85rem;font-weight:600;">
-          {{ teacher.teacher_profile.qualification|default:'M.Tech / Ph.D (Ex-IITian)' }}
-        </p>
-        <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;">
-          {{ teacher.teacher_profile.bio|default:'Mentoring JEE, NEET, and Foundation aspirants with deep conceptual rigor and individual attention.' }}
-        </p>
+  <!-- Page Hero Banner -->
+  <section class="mc-page-hero">
+    <div class="mc-container">
+      <div class="mc-breadcrumb-bar">
+        <a href="/">Home</a>
+        <span>›</span>
+        <span style="color:var(--mc-coral);">Master Faculty & Mentors</span>
       </div>
-      {% empty %}
-      <div class="card p-4 text-center w-full" style="grid-column:1/-1;">Faculty profiles loading...</div>
-      {% endfor %}
-    </div>
-  </div>
-</section>
 
-<!-- Final CTA -->
-<div class="container">
-  <div class="final-cta-banner">
-    <h2>Book a 1-on-1 Mentorship Interaction</h2>
-    <p>Attend a demo class with our senior faculty and get your academic doubts cleared directly.</p>
-    <div class="flex justify-center gap-3 flex-wrap">
-      <button onclick="openGlobalDemoModal()" class="btn btn-gold btn-lg">Book Free Demo Session</button>
-      <a href="tel:+919919980246" class="btn btn-secondary btn-lg" style="background:rgba(255,255,255,0.2);color:white;border-color:white;">
-        📞 Call Helpline: 9919980246
-      </a>
+      <div style="margin-bottom:1.5rem;">
+        <span class="mc-hero-badge mc-continuous-float">
+          <span class="mc-pulse-dot-live"></span>
+          <span>Ex-IITians • AIIMS Doctors • Olympiad Authors</span>
+        </span>
+      </div>
+
+      <h1 class="mc-page-hero-title">
+        Learn from India's <span class="mc-highlight">Foremost Mentors</span>
+      </h1>
+      <p class="mc-page-hero-desc">
+        Our faculty comprises Ex-IITians, AIIMS Doctors, and national authors who have dedicated their careers to shaping top All India Rankers with personalized attention.
+      </p>
+    </div>
+  </section>
+
+  <!-- Master Faculty Grid -->
+  <section class="mc-section" style="padding-top:1.5rem;">
+    <div class="mc-container">
+      <div class="mc-faculty-grid">
+        {% for teacher in teachers %}
+        <div class="mc-spotlight-card mc-reveal" style="text-align:center;">
+          <img src="{{ teacher.avatar_url|default:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300' }}" alt="{{ teacher.get_full_name }}" class="mc-faculty-avatar">
+          <span style="display:inline-block;background:#fff8e1;color:#b45309;font-size:0.75rem;font-weight:800;padding:0.2rem 0.6rem;border-radius:999px;margin-bottom:0.5rem;">
+            ⭐ 4.9 / 5.0 Rating
+          </span>
+          <h3 class="mc-card-title" style="font-size:1.25rem;margin-bottom:0.25rem;">{{ teacher.get_full_name }}</h3>
+          <p style="color:var(--mc-coral);font-size:0.88rem;font-weight:700;margin-bottom:0.35rem;">
+            {{ teacher.teacher_profile.designation|default:'Senior Master Faculty' }}
+          </p>
+          <p style="font-size:0.8rem;color:var(--mc-text-muted);font-weight:600;margin-bottom:0.75rem;">
+            {{ teacher.teacher_profile.qualification|default:'M.Tech / Ph.D (Ex-IITian)' }}
+          </p>
+          <p style="font-size:0.85rem;color:var(--mc-text-muted);line-height:1.55;margin:0 0 1.25rem 0;">
+            {{ teacher.teacher_profile.bio|default:'Mentoring JEE, NEET, and Foundation aspirants with deep conceptual rigor and individual attention.' }}
+          </p>
+          <button type="button" onclick="openGlobalDemoModal('Faculty Mentorship Demo')" class="mc-btn-secondary" style="padding:0.45rem 1rem;font-size:0.82rem;width:100%;justify-content:center;">
+            Book Demo with Mentor
+          </button>
+        </div>
+        {% empty %}
+        <div class="mc-spotlight-card mc-reveal" style="text-align:center;">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" alt="Dr. R. K. Mayank" class="mc-faculty-avatar">
+          <span style="display:inline-block;background:#fff8e1;color:#b45309;font-size:0.75rem;font-weight:800;padding:0.2rem 0.6rem;border-radius:999px;margin-bottom:0.5rem;">⭐ 4.9 / 5.0 Rating</span>
+          <h3 class="mc-card-title" style="font-size:1.25rem;">Dr. R. K. Mayank</h3>
+          <p style="color:var(--mc-coral);font-size:0.88rem;font-weight:700;">Director & HOD Physics</p>
+          <p style="font-size:0.8rem;color:var(--mc-text-muted);font-weight:600;">Ex-IIT Delhi • 18+ Years Mentoring</p>
+        </div>
+        <div class="mc-spotlight-card mc-reveal" style="text-align:center;">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300" alt="Prof. S. Sen" class="mc-faculty-avatar">
+          <span style="display:inline-block;background:#fff8e1;color:#b45309;font-size:0.75rem;font-weight:800;padding:0.2rem 0.6rem;border-radius:999px;margin-bottom:0.5rem;">⭐ 4.9 / 5.0 Rating</span>
+          <h3 class="mc-card-title" style="font-size:1.25rem;">Prof. S. Sen</h3>
+          <p style="color:var(--mc-coral);font-size:0.88rem;font-weight:700;">HOD Chemistry</p>
+          <p style="font-size:0.8rem;color:var(--mc-text-muted);font-weight:600;">Ph.D Organic Chemistry • 15+ Yrs</p>
+        </div>
+        <div class="mc-spotlight-card mc-reveal" style="text-align:center;">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300" alt="Dr. Neha Kapoor" class="mc-faculty-avatar">
+          <span style="display:inline-block;background:#fff8e1;color:#b45309;font-size:0.75rem;font-weight:800;padding:0.2rem 0.6rem;border-radius:999px;margin-bottom:0.5rem;">⭐ 4.9 / 5.0 Rating</span>
+          <h3 class="mc-card-title" style="font-size:1.25rem;">Dr. Neha Kapoor</h3>
+          <p style="color:var(--mc-coral);font-size:0.88rem;font-weight:700;">HOD Biology & Zoology</p>
+          <p style="font-size:0.8rem;color:var(--mc-text-muted);font-weight:600;">MBBS, MD • Medical Specialist</p>
+        </div>
+        <div class="mc-spotlight-card mc-reveal" style="text-align:center;">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300" alt="Vikram Joshi" class="mc-faculty-avatar">
+          <span style="display:inline-block;background:#fff8e1;color:#b45309;font-size:0.75rem;font-weight:800;padding:0.2rem 0.6rem;border-radius:999px;margin-bottom:0.5rem;">⭐ 4.9 / 5.0 Rating</span>
+          <h3 class="mc-card-title" style="font-size:1.25rem;">Vikram Joshi</h3>
+          <p style="color:var(--mc-coral);font-size:0.88rem;font-weight:700;">HOD Mathematics</p>
+          <p style="font-size:0.8rem;color:var(--mc-text-muted);font-weight:600;">Ex-IIT Kanpur • Olympiad Trainer</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Final Mentorship CTA Banner -->
+  <div class="mc-container">
+    <div class="mc-admission-cta mc-reveal">
+      <h2>Book a 1-on-1 Mentorship Interaction</h2>
+      <p>Attend a free live demo class with our senior faculty and get your academic doubts cleared directly.</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
+        <button type="button" onclick="openGlobalDemoModal('Faculty 1-on-1 Mentorship')" class="mc-btn-primary" style="background:#f59e0b;border-color:#f59e0b;color:#0d0e12;font-size:1.05rem;">
+          Book Free Demo Session
+        </button>
+        <a href="tel:+919919980246" class="mc-btn-secondary" style="background:rgba(255,255,255,0.18);color:#ffffff;border-color:rgba(255,255,255,0.4);font-size:1.05rem;backdrop-filter:blur(6px);">
+          📞 Call Helpline: 9919980246
+        </a>
+      </div>
     </div>
   </div>
 </div>

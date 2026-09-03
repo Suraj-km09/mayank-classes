@@ -8,7 +8,7 @@ from apps.core.views import (
     teacher_portal_view, admin_portal_view, certificate_verify_view,
     courses_catalog_view, category_hub_view, course_detail_view,
     recorded_courses_view, study_materials_view,
-    faculty_view, results_view, about_view, contact_view
+    faculty_view, results_view, about_view, contact_view, photos_view
 )
 
 urlpatterns = [
@@ -34,6 +34,7 @@ urlpatterns = [
     path('faculty/', faculty_view, name='faculty'),
     path('results/', results_view, name='results'),
     path('about/', about_view, name='about'),
+    path('photos/', photos_view, name='photos'),
     path('contact/', contact_view, name='contact'),
 
     # Portals & Auth

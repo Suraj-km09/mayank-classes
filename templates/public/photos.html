@@ -1,0 +1,269 @@
+{% extends 'public/base_public.html' %}
+
+{% block title %}Photo Gallery | Campus & Student Life | Mayank's Classes{% endblock %}
+
+{% block public_content %}
+<div class="mc-landing-root">
+  <!-- Ambient Dynamic Blueprint Grid -->
+  <div class="mc-grid-pattern" aria-hidden="true"></div>
+  <div class="mc-cursor-glow" id="mc-cursor-glow" aria-hidden="true"></div>
+
+<!-- ==========================================================================
+     HERO SECTION: PHOTO GALLERY HEADER
+     ========================================================================== -->
+<section class="mc-page-hero">
+  <div class="mc-container">
+    <div class="mc-page-hero-card mc-reveal">
+      <div class="mc-badge-wrap">
+        <span class="mc-hero-badge mc-continuous-float">
+          <span class="mc-pulse-dot-live"></span>
+          <span class="mc-badge-star">★</span>
+          <span class="mc-badge-text">📸 MEMORIES & MILESTONES • CAMPUS LIFE</span>
+          <div class="mc-badge-shimmer-sweep" aria-hidden="true"></div>
+        </span>
+      </div>
+
+      <h1 class="mc-page-hero-title">
+        Campus Moments & <span class="mc-highlight">Life at Mayank's</span>
+      </h1>
+
+      <p class="mc-page-hero-desc">
+        Explore authentic classroom sessions, high-octane test labs, felicitation ceremonies, and achiever celebrations at Varanasi's premier coaching institute.
+      </p>
+
+      <!-- Category Filter Pills -->
+      <div class="mc-gallery-filter-bar">
+        <button type="button" class="mc-gallery-pill active" data-filter="all" onclick="filterGallery('all', this)">
+          <span>✨ All Photos</span>
+          <span class="mc-pill-count">{{ total_count }}</span>
+        </button>
+        <button type="button" class="mc-gallery-pill" data-filter="Classroom" onclick="filterGallery('Classroom', this)">
+          <span>👨‍🏫 Classroom</span>
+          <span class="mc-pill-count">4</span>
+        </button>
+        <button type="button" class="mc-gallery-pill" data-filter="Events" onclick="filterGallery('Events', this)">
+          <span>🎉 Events</span>
+          <span class="mc-pill-count">4</span>
+        </button>
+        <button type="button" class="mc-gallery-pill" data-filter="Exams" onclick="filterGallery('Exams', this)">
+          <span>📝 Test Sessions</span>
+          <span class="mc-pill-count">2</span>
+        </button>
+        <button type="button" class="mc-gallery-pill" data-filter="Achievements" onclick="filterGallery('Achievements', this)">
+          <span>🏆 Achievements</span>
+          <span class="mc-pill-count">5</span>
+        </button>
+        <button type="button" class="mc-gallery-pill" data-filter="Awards" onclick="filterGallery('Awards', this)">
+          <span>🎖️ Award Ceremonies</span>
+          <span class="mc-pill-count">6</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     PHOTO GALLERY GRID SECTION
+     ========================================================================== -->
+<section class="mc-section" style="padding-top: 1rem; padding-bottom: 5rem;">
+  <div class="mc-container">
+    <div class="mc-photos-grid" id="mc-photos-grid">
+      {% for photo in photos %}
+      <div class="mc-photo-card mc-reveal" data-category="{{ photo.category }}" data-index="{{ forloop.counter0 }}">
+        <div class="mc-photo-image-wrap" onclick="openPhotoViewer({{ forloop.counter0 }})">
+          <span class="mc-photo-badge badge-{{ photo.category|lower }}">{{ photo.category }}</span>
+          <img src="{{ photo.src }}" alt="{{ photo.title }}" loading="lazy">
+          <div class="mc-photo-overlay" aria-hidden="true">
+            <span class="mc-photo-zoom-icon">🔍 Tap to Expand</span>
+          </div>
+        </div>
+        <div class="mc-photo-content">
+          <h3 class="mc-photo-title">{{ photo.title }}</h3>
+          <p class="mc-photo-desc">{{ photo.description }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Empty State for Filters -->
+    <div id="mc-no-photos" class="mc-no-photos" style="display: none;">
+      <div class="mc-no-photos-icon">📷</div>
+      <h3>No photos found in this category</h3>
+      <p>Tap "All Photos" to see the full collection of campus moments.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     FULLSCREEN HIGH-FIDELITY LIGHTBOX VIEWER
+     ========================================================================== -->
+<div class="mc-lightbox-viewer" id="mcPhotoViewer" role="dialog" aria-modal="true" aria-hidden="true">
+  <!-- Top Action Bar -->
+  <div class="mc-viewer-topbar">
+    <div class="mc-viewer-meta">
+      <span class="mc-viewer-cat" id="mcViewerCategory">Classroom</span>
+      <h4 class="mc-viewer-title" id="mcViewerTitle">Classroom Session</h4>
+      <span class="mc-viewer-count" id="mcViewerCounter">1 / 19</span>
+    </div>
+    <button type="button" class="mc-viewer-close-btn" onclick="closePhotoViewer()" title="Close Viewer (Esc)" aria-label="Close Viewer">
+      &times;
+    </button>
+  </div>
+
+  <!-- Main Viewport Stage -->
+  <div class="mc-viewer-stage">
+    <button type="button" class="mc-viewer-nav-btn mc-nav-prev" onclick="prevPhoto()" title="Previous (Left Arrow)" aria-label="Previous Photo">
+      &#10094;
+    </button>
+
+    <div class="mc-viewer-img-wrap">
+      <img id="mcViewerImage" src="" alt="Photo Gallery Preview">
+      <p class="mc-viewer-caption" id="mcViewerCaption"></p>
+    </div>
+
+    <button type="button" class="mc-viewer-nav-btn mc-nav-next" onclick="nextPhoto()" title="Next (Right Arrow)" aria-label="Next Photo">
+      &#10095;
+    </button>
+  </div>
+
+  <!-- Bottom Interactive Thumbnail Strip -->
+  <div class="mc-viewer-thumbs-bar">
+    <div class="mc-viewer-thumbs-track" id="mcViewerThumbs">
+      <!-- Injected by JavaScript -->
+    </div>
+  </div>
+</div>
+<!-- End mc-landing-root -->
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  (function () {
+    const rawPhotos = {{ photos|safe }};
+    let currentIdx = 0;
+    const viewer = document.getElementById('mcPhotoViewer');
+    const viewerImg = document.getElementById('mcViewerImage');
+    const viewerTitle = document.getElementById('mcViewerTitle');
+    const viewerCat = document.getElementById('mcViewerCategory');
+    const viewerCounter = document.getElementById('mcViewerCounter');
+    const viewerCaption = document.getElementById('mcViewerCaption');
+    const thumbsTrack = document.getElementById('mcViewerThumbs');
+
+    // Filter Gallery
+    window.filterGallery = function (cat, btn) {
+      document.querySelectorAll('.mc-gallery-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const cards = document.querySelectorAll('.mc-photo-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const itemCat = card.getAttribute('data-category');
+        if (cat === 'all' || itemCat === cat) {
+          card.style.display = 'flex';
+          card.classList.add('is-revealed');
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const emptyBox = document.getElementById('mc-no-photos');
+      if (emptyBox) {
+        emptyBox.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    };
+
+    // Render Thumbnail Strip
+    function renderThumbs() {
+      if (!thumbsTrack) return;
+      thumbsTrack.innerHTML = '';
+      rawPhotos.forEach((item, idx) => {
+        const thumb = document.createElement('div');
+        thumb.className = `mc-viewer-thumb ${idx === currentIdx ? 'active' : ''}`;
+        thumb.innerHTML = `<img src="${item.src}" alt="${item.title}">`;
+        thumb.addEventListener('click', () => setPhoto(idx));
+        thumbsTrack.appendChild(thumb);
+      });
+
+      const activeThumb = thumbsTrack.querySelector('.mc-viewer-thumb.active');
+      if (activeThumb) {
+        activeThumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+
+    function updateViewer() {
+      if (!rawPhotos.length) return;
+      const item = rawPhotos[currentIdx];
+      viewerImg.src = item.src;
+      viewerTitle.textContent = item.title;
+      viewerCat.textContent = item.category;
+      viewerCaption.textContent = item.description;
+      viewerCounter.textContent = `${currentIdx + 1} / ${rawPhotos.length}`;
+      renderThumbs();
+    }
+
+    window.openPhotoViewer = function (idx) {
+      currentIdx = idx;
+      viewer.classList.add('active');
+      viewer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      updateViewer();
+    };
+
+    window.closePhotoViewer = function () {
+      viewer.classList.remove('active');
+      viewer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+
+    window.nextPhoto = function () {
+      currentIdx = (currentIdx + 1) % rawPhotos.length;
+      updateViewer();
+    };
+
+    window.prevPhoto = function () {
+      currentIdx = (currentIdx - 1 + rawPhotos.length) % rawPhotos.length;
+      updateViewer();
+    };
+
+    window.setPhoto = function (idx) {
+      currentIdx = idx;
+      updateViewer();
+    };
+
+    // Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (!viewer.classList.contains('active')) return;
+      if (e.key === 'Escape') closePhotoViewer();
+      if (e.key === 'ArrowRight') nextPhoto();
+      if (e.key === 'ArrowLeft') prevPhoto();
+    });
+
+    // Mobile Touch Swipe Gesture Support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    viewer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    viewer.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      const swipeDist = touchEndX - touchStartX;
+      if (Math.abs(swipeDist) > 40) {
+        if (swipeDist < 0) nextPhoto();
+        else prevPhoto();
+      }
+    }, { passive: true });
+
+    // Close when clicking outside image wrap
+    viewer.addEventListener('click', (e) => {
+      if (e.target === viewer || e.target.classList.contains('mc-viewer-stage')) {
+        closePhotoViewer();
+      }
+    });
+  })();
+</script>
+{% endblock %}

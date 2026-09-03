@@ -4,53 +4,64 @@
 {% block meta_description %}{{ config.subtitle }}{% endblock %}
 
 {% block public_content %}
-<div class="category-hub-page category-theme-{{ category_key }}">
+<div class="mc-landing-root">
+  <!-- Blueprint Grid Pattern -->
+  <div class="mc-grid-pattern" aria-hidden="true"></div>
+  <div class="mc-cursor-glow" id="mc-cursor-glow" aria-hidden="true"></div>
+
   <!-- Category Hero Banner -->
-  <section class="brand-hero category-hub-hero">
-    <div class="container">
-      <div class="breadcrumb-bar" style="margin-bottom:1.25rem;">
+  <section class="mc-page-hero" style="text-align:left;">
+    <div class="mc-container">
+      <div class="mc-breadcrumb-bar">
         <a href="/">Home</a>
         <span>›</span>
         <a href="/courses/">Courses</a>
         <span>›</span>
-        <span style="color:#FFC107;">{{ config.title }}</span>
+        <span style="color:var(--mc-coral);">{{ config.title }}</span>
       </div>
 
-      <div class="hero-grid">
+      <div class="mc-hero-grid" style="align-items:flex-start;">
         <div>
-          <div class="hero-badge-gold">
-            ★ {{ config.badge }}
+          <div style="margin-bottom:1.25rem;">
+            <span class="mc-hero-badge mc-continuous-float">
+              <span class="mc-pulse-dot-live"></span>
+              <span>★ {{ config.badge }}</span>
+            </span>
           </div>
-          <h1 class="hero-main-title" style="font-size:3rem;margin-bottom:1rem;color:#FFFFFF !important;">
+
+          <h1 class="mc-hero-title" style="font-size:3.6rem;line-height:1.02;margin-bottom:1.25rem;">
             {{ config.title }}
           </h1>
-          <p class="hero-main-desc" style="color:#E2E8F0 !important;font-size:1.1rem;margin-bottom:2rem;">
+          <p class="mc-hero-desc" style="max-width:620px;margin-bottom:2rem;">
             {{ config.subtitle }}
           </p>
 
-          <div class="flex items-center gap-3" style="margin-bottom:2rem;flex-wrap:wrap;">
-            <button onclick="openGlobalDemoModal('{{ config.title }}')" class="btn btn-gold btn-lg">Book Free Demo Class</button>
-            <button onclick="openBrochureModal()" class="btn btn-secondary btn-lg"
-              style="background:rgba(255,255,255,0.15);color:white;border-color:rgba(255,255,255,0.3);">
+          <div class="mc-hero-actions">
+            <button type="button" onclick="openGlobalDemoModal('{{ config.title }}')" class="mc-btn-primary" style="background:var(--mc-coral);border-color:var(--mc-coral);">
+              Book Free Demo Class ➔
+            </button>
+            <button type="button" onclick="openBrochureModal()" class="mc-btn-secondary">
               📥 Download Syllabus Brochure
             </button>
           </div>
 
-          <div class="flex items-center gap-2" style="font-size:0.85rem;color:#CBD5E1;">
-            <span style="font-weight:700;">Target Grades:</span>
+          <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+            <span style="font-weight:800;font-size:0.85rem;color:var(--mc-text-muted);">TARGET GRADES:</span>
             {% for cls in config.target_classes %}
-            <span class="badge" style="background:rgba(255,255,255,0.2);color:#FFFFFF;border:1px solid rgba(255,255,255,0.3);">{{ cls }}</span>
+            <span class="mc-pill-btn" style="padding:0.25rem 0.75rem;font-size:0.78rem;">{{ cls }}</span>
             {% endfor %}
           </div>
         </div>
 
-        <!-- Quick Feature Box -->
-        <div class="hero-pillars-card">
-          <h3>Key Academic Pillars</h3>
-          <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:0.85rem;">
+        <!-- Pillars Card (Right) -->
+        <div class="mc-spotlight-card mc-reveal" style="background:#ffffff;padding:2.25rem;box-shadow:0 12px 36px rgba(0,0,0,0.06);">
+          <h3 style="font-family:var(--mc-font-display);font-size:1.4rem;font-weight:900;margin:0 0 1.25rem 0;color:var(--mc-text-main);">
+            Key Academic Pillars
+          </h3>
+          <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:1rem;">
             {% for hl in config.highlights %}
-            <li style="display:flex;align-items:flex-start;gap:0.6rem;font-size:0.925rem;line-height:1.55;">
-              <span style="color:#FFC107;font-weight:bold;font-size:1.1rem;">✓</span>
+            <li style="display:flex;align-items:flex-start;gap:0.75rem;font-size:0.95rem;line-height:1.5;color:var(--mc-text-main);">
+              <span style="color:var(--mc-coral);font-weight:900;font-size:1.15rem;">✓</span>
               <span>{{ hl }}</span>
             </li>
             {% endfor %}
@@ -61,59 +72,55 @@
   </section>
 
   <!-- Courses in this Category -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">{{ config.badge }}</span>
-        <h2 class="section-title">Available Programs in this Category</h2>
-        <p class="section-desc">
-          Select a tailored course below to inspect full week-by-week curriculum, syllabus modules, faculty mentors, and
-          batch timings.
+  <section class="mc-section" style="padding-top:1.5rem;">
+    <div class="mc-container">
+      <div class="mc-section-header mc-reveal">
+        <span class="mc-section-tag">{{ config.badge }}</span>
+        <h2 class="mc-section-title">Available Programs in this Category</h2>
+        <p class="mc-section-desc">
+          Select a tailored course below to inspect full week-by-week curriculum, syllabus modules, faculty mentors, and batch timings.
         </p>
       </div>
 
-      <div class="grid grid-3 gap-6">
+      <div class="mc-catalog-grid">
         {% for course in courses %}
-        <div class="course-card-premium">
-          <div class="course-card-banner category-accent-banner">
-            <div class="flex items-center justify-between">
-              <span class="course-badge-tag">{{ course.badge_text|default:course.target_class }}</span>
-              <span style="font-size:0.8rem;font-weight:700;background:rgba(0,0,0,0.3);padding:0.2rem 0.6rem;border-radius:var(--radius-full);">
-                {{ course.target_class }}
-              </span>
-            </div>
-            <div class="course-card-banner-icon">
+        <div class="mc-course-card mc-reveal">
+          <div class="mc-course-banner {% if category_key == 'neet' %}banner-neet{% elif category_key == 'jee' %}banner-jee{% elif category_key == 'foundation' %}banner-foundation{% else %}banner-neet{% endif %}">
+            <span class="mc-course-badge">{{ course.badge_text|default:course.target_class }}</span>
+            <div style="font-size:2rem;">
               {% if category_key == 'neet' %}🩺{% elif category_key == 'jee' %}⚛️{% elif category_key == 'foundation' %}🎓{% else %}🏆{% endif %}
             </div>
-            <div></div>
           </div>
 
-          <div class="course-card-body">
+          <div class="mc-course-body">
             <div>
-              <h3 class="course-card-title">{{ course.title }}</h3>
-              <p class="course-card-desc">{{ course.short_description }}</p>
+              <span style="display:inline-block;font-size:0.75rem;font-weight:800;color:var(--mc-coral);background:var(--mc-coral-light);padding:0.2rem 0.6rem;border-radius:999px;margin-bottom:0.6rem;">
+                {{ course.target_class }}
+              </span>
+              <h3 class="mc-card-title">{{ course.title }}</h3>
+              <p class="mc-card-desc">{{ course.short_description }}</p>
 
-              <ul style="list-style:none;margin-bottom:1.25rem;padding:0;">
+              <ul style="list-style:none;padding:0;margin:1rem 0 1.5rem 0;">
                 {% for f in course.features|slice:":3" %}
-                <li style="display:flex;align-items:center;gap:0.4rem;font-size:0.825rem;color:var(--text-muted);margin-bottom:0.35rem;">
-                  <span style="color:var(--brand-emerald);font-weight:bold;">✓</span> {{ f }}
+                <li style="display:flex;align-items:center;gap:0.4rem;font-size:0.84rem;color:var(--mc-text-muted);margin-bottom:0.4rem;">
+                  <span style="color:#10b981;font-weight:900;">✓</span> {{ f }}
                 </li>
                 {% endfor %}
               </ul>
             </div>
 
             <div>
-              <div class="course-meta-tags">
-                <span class="course-meta-tag">⏰ {{ course.duration_weeks }} Weeks</span>
-                <span class="course-meta-tag">🏫 {{ course.mode|truncatewords:2 }}</span>
-                <span class="course-meta-tag course-meta-price">
+              <div class="mc-course-meta-tags">
+                <span>⏰ {{ course.duration_weeks }} Weeks</span>
+                <span>🏫 {{ course.mode|truncatewords:2 }}</span>
+                <span style="margin-left:auto;color:var(--mc-coral);font-size:1.15rem;font-weight:900;">
                   ₹{{ course.discount_price|default:course.price|floatformat:0 }}
                 </span>
               </div>
 
-              <div class="course-card-footer">
-                <a href="/courses/{{ course.slug }}/" class="btn btn-secondary btn-sm w-full">View Curriculum</a>
-                <button onclick="openGlobalDemoModal('{{ course.title }}')" class="btn btn-primary btn-sm w-full btn-category-accent">Enroll Now</button>
+              <div class="mc-course-actions">
+                <a href="/courses/{{ course.slug }}/" class="mc-btn-secondary" style="padding:0.6rem 1rem;font-size:0.85rem;justify-content:center;">View Curriculum</a>
+                <button type="button" onclick="openGlobalDemoModal('{{ course.title }}')" class="mc-btn-primary" style="padding:0.6rem 1rem;font-size:0.85rem;justify-content:center;background:var(--mc-coral);border-color:var(--mc-coral);">Enroll Now</button>
               </div>
             </div>
           </div>
@@ -123,73 +130,72 @@
     </div>
   </section>
 
-  <!-- Learning Journey / 6-Step Roadmap -->
-  <section class="section" style="background:#F8FAFC;border-top:1px solid var(--border-color);border-bottom:1px solid var(--border-color);">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Preparation Roadmap</span>
-        <h2 class="section-title">The 6-Step Student Learning Journey</h2>
-        <p class="section-desc">From initial conceptual intuition to final examination day mastery.</p>
+  <!-- 6-Step Student Learning Journey -->
+  <section class="mc-section bg-white">
+    <div class="mc-container">
+      <div class="mc-section-header mc-reveal">
+        <span class="mc-section-tag">Preparation Roadmap</span>
+        <h2 class="mc-section-title">The 6-Step Student Learning Journey</h2>
+        <p class="mc-section-desc">From initial conceptual intuition to final examination day mastery.</p>
       </div>
 
-      <div class="roadmap-timeline">
-        <div class="roadmap-step-card">
-          <div class="roadmap-step-num">1</div>
-          <h4 class="roadmap-step-title">Concept Building</h4>
-          <p class="roadmap-step-desc">Interactive lectures from first principles with 3D models and practical proofs.</p>
+      <div class="mc-features-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="mc-spotlight-card mc-reveal">
+          <div class="mc-card-icon-wrap" style="background:#fef0ec;color:#eb4b26;">1</div>
+          <h3 class="mc-card-title">Concept Building</h3>
+          <p class="mc-card-desc">Interactive lectures from first principles with 3D models and practical proofs.</p>
         </div>
 
-        <div class="roadmap-step-card">
-          <div class="roadmap-step-num">2</div>
-          <h4 class="roadmap-step-title">Daily DPP Practice</h4>
-          <p class="roadmap-step-desc">20-25 Graded questions daily to cement formulas and problem speed.</p>
+        <div class="mc-spotlight-card mc-reveal">
+          <div class="mc-card-icon-wrap" style="background:#fef7e6;color:#f59e0b;">2</div>
+          <h3 class="mc-card-title">Daily DPP Practice</h3>
+          <p class="mc-card-desc">20-25 Graded questions daily to cement formulas and problem solving speed.</p>
         </div>
 
-        <div class="roadmap-step-card">
-          <div class="roadmap-step-num">3</div>
-          <h4 class="roadmap-step-title">NTA AI-CBT Tests</h4>
-          <p class="roadmap-step-desc">Fortnightly computer-based test series with exact national exam interface.</p>
+        <div class="mc-spotlight-card mc-reveal">
+          <div class="mc-card-icon-wrap" style="background:#edfbf6;color:#10b981;">3</div>
+          <h3 class="mc-card-title">NTA AI-CBT Tests</h3>
+          <p class="mc-card-desc">Fortnightly computer-based test series with exact national exam interface.</p>
         </div>
 
-        <div class="roadmap-step-card">
-          <div class="roadmap-step-num">4</div>
-          <h4 class="roadmap-step-title">Weakness Analytics</h4>
-          <p class="roadmap-step-desc">AI diagnostic reports pinpointing negative marks, time per question, and topics.</p>
+        <div class="mc-spotlight-card mc-reveal">
+          <div class="mc-card-icon-wrap" style="background:#f5f0ff;color:#8b5cf6;">4</div>
+          <h3 class="mc-card-title">Weakness Analytics</h3>
+          <p class="mc-card-desc">AI diagnostic reports pinpointing negative marks, time per question, and weak topics.</p>
         </div>
 
-        <div class="roadmap-step-card">
-          <div class="roadmap-step-num">5</div>
-          <h4 class="roadmap-step-title">1-on-1 Doubt Desk</h4>
-          <p class="roadmap-step-desc">12-Hour daily faculty counters resolving every question ambiguity.</p>
+        <div class="mc-spotlight-card mc-reveal">
+          <div class="mc-card-icon-wrap" style="background:#eff6ff;color:#3b82f6;">5</div>
+          <h3 class="mc-card-title">1-on-1 Doubt Desk</h3>
+          <p class="mc-card-desc">12-Hour daily faculty counters resolving every question ambiguity.</p>
         </div>
 
-        <div class="roadmap-step-card">
-          <div class="roadmap-step-num">6</div>
-          <h4 class="roadmap-step-title">Final Rank Mastery</h4>
-          <p class="roadmap-step-desc">Rapid revision masterclasses, formula cheat sheets, and full mock simulations.</p>
+        <div class="mc-spotlight-card mc-reveal">
+          <div class="mc-card-icon-wrap" style="background:#fff1f2;color:#f43f5e;">6</div>
+          <h3 class="mc-card-title">Final Rank Mastery</h3>
+          <p class="mc-card-desc">Rapid revision masterclasses, formula cheat sheets, and full national mock simulations.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Category Faculty -->
-  <section class="section">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Faculty Mentors</span>
-        <h2 class="section-title">Senior Mentors Guiding this Program</h2>
-        <p class="section-desc">Learn from experienced IITians, Doctors, and Olympiad trainers.</p>
+  <section class="mc-section">
+    <div class="mc-container">
+      <div class="mc-section-header mc-reveal">
+        <span class="mc-section-tag">Faculty Mentors</span>
+        <h2 class="mc-section-title">Senior Mentors Guiding this Program</h2>
+        <p class="mc-section-desc">Learn from experienced IITians, Doctors, and Olympiad trainers.</p>
       </div>
 
-      <div class="grid grid-4 gap-6">
+      <div class="mc-faculty-grid">
         {% for t in faculty %}
-        <div class="faculty-card">
-          <img src="{{ t.avatar_url|default:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300' }}"
-            alt="{{ t.get_full_name }}" class="faculty-avatar">
-          <span class="badge badge-gold" style="margin-bottom:0.5rem;">⭐ 4.9 / 5.0</span>
-          <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:0.25rem;">{{ t.get_full_name }}</h3>
-          <p class="faculty-designation-cat">{{ t.teacher_profile.designation|default:'Master Faculty' }}</p>
-          <p style="font-size:0.8rem;color:var(--text-muted);">{{ t.teacher_profile.qualification|default:'Ex-IITian / AIIMS' }}</p>
+        <div class="mc-spotlight-card mc-reveal" style="text-align:center;">
+          <img src="{{ t.avatar_url|default:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300' }}" alt="{{ t.get_full_name }}" class="mc-faculty-avatar">
+          <span style="display:inline-block;background:#fff8e1;color:#b45309;font-size:0.75rem;font-weight:800;padding:0.2rem 0.6rem;border-radius:999px;margin-bottom:0.5rem;">⭐ 4.9 / 5.0</span>
+          <h3 class="mc-card-title" style="font-size:1.2rem;margin-bottom:0.25rem;">{{ t.get_full_name }}</h3>
+          <p style="color:var(--mc-coral);font-size:0.85rem;font-weight:700;margin-bottom:0.25rem;">{{ t.teacher_profile.designation|default:'Master Faculty' }}</p>
+          <p style="font-size:0.78rem;color:var(--mc-text-muted);margin:0;">{{ t.teacher_profile.qualification|default:'Ex-IITian / AIIMS' }}</p>
         </div>
         {% endfor %}
       </div>
@@ -197,14 +203,15 @@
   </section>
 
   <!-- Final CTA -->
-  <div class="container">
-    <div class="final-cta-banner final-cta-category">
+  <div class="mc-container">
+    <div class="mc-admission-cta mc-reveal">
       <h2>Enroll in {{ config.title }} Today</h2>
       <p>Join the next classroom batch or hybrid online stream. Admissions open for the 2026-27 session with up to 100% scholarship.</p>
-      <div class="flex justify-center gap-3 flex-wrap">
-        <button onclick="openGlobalDemoModal('{{ config.title }}')" class="btn btn-gold btn-lg">Book Free Demo & Scholarship Test</button>
-        <a href="tel:+919919980246" class="btn btn-secondary btn-lg"
-          style="background:rgba(255,255,255,0.2);color:white;border-color:white;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
+        <button type="button" onclick="openGlobalDemoModal('{{ config.title }}')" class="mc-btn-primary" style="background:#f59e0b;border-color:#f59e0b;color:#0d0e12;font-size:1.05rem;">
+          Book Free Demo & Scholarship Test
+        </button>
+        <a href="tel:+919919980246" class="mc-btn-secondary" style="background:rgba(255,255,255,0.18);color:#ffffff;border-color:rgba(255,255,255,0.4);font-size:1.05rem;backdrop-filter:blur(6px);">
           📞 Call Helpline: 9919980246
         </a>
       </div>

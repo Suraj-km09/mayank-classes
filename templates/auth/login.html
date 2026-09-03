@@ -3,152 +3,186 @@
 {% block title %}Sign In - Mayank Classes Unified Portal{% endblock %}
 
 {% block content %}
-<div style="min-height:100vh;background:radial-gradient(circle at top right, #EEF2FF, #F8FAFC 60%);display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box;">
+<div class="mc-landing-root" style="min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;">
+  <!-- Blueprint Grid Pattern & Cursor Glow -->
+  <div class="mc-grid-pattern" aria-hidden="true"></div>
+  <div class="mc-cursor-glow" id="mc-cursor-glow" aria-hidden="true"></div>
+
   <!-- Top Navigation Header -->
-  <header style="padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:0.75rem;box-sizing:border-box;flex-wrap:wrap;">
-    <a href="/" class="brand-logo" style="display:flex;align-items:center;gap:0.6rem;font-weight:800;font-size:1.15rem;letter-spacing:-0.02em;text-decoration:none;">
-      <div class="brand-logo-icon" style="width:34px;height:34px;background:linear-gradient(135deg,var(--primary-600),var(--primary-800));color:white;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.05rem;box-shadow:0 4px 10px rgba(79,70,229,0.35);">M</div>
-      <span>MAYANK<span style="color:var(--brand-gold);">CLASSES</span></span>
+  <header style="padding:1.25rem 2rem;background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--mc-border-subtle);display:flex;align-items:center;justify-content:space-between;gap:1rem;position:relative;z-index:10;">
+    <a href="/" class="mc-navbar-logo-link" aria-label="Mayank Classes Home">
+      <div class="mc-logo-motion-wrap">
+        <img src="/static/images/mayank_classes_logo.png" alt="Mayank Classes" class="mc-brand-logo-img">
+        <div class="mc-logo-shimmer" aria-hidden="true"></div>
+      </div>
     </a>
-    <a href="/" class="btn btn-secondary btn-sm" style="font-weight:600;white-space:nowrap;">← Back to Website</a>
+    <a href="/" class="mc-btn-secondary" style="padding:0.45rem 1.15rem;font-size:0.85rem;font-weight:700;">
+      ← Back to Website
+    </a>
   </header>
 
-  <!-- Login Main Card -->
-  <main class="container" style="max-width:540px;margin:1rem auto;padding:0 0.85rem;box-sizing:border-box;">
-    <!-- 1-Click Quick Demo Login Switcher Card -->
-    <div class="card p-4" style="background:#0F172A;color:white;margin-bottom:1.5rem;border-color:#1E293B;box-shadow:var(--shadow-xl);border-radius:var(--radius-lg);">
-      <div class="flex items-center justify-between gap-2" style="margin-bottom:0.75rem;flex-wrap:wrap;">
-        <span class="badge badge-gold" style="font-size:0.7rem;padding:0.2rem 0.6rem;">⚡ 1-Click Prototype Demo Access</span>
-        <span style="font-size:0.72rem;color:#94A3B8;font-weight:600;">Instant Role Switch</span>
-      </div>
-      <p style="font-size:0.825rem;color:#CBD5E1;margin-bottom:1rem;line-height:1.45;">
-        Test the entire platform instantly without manually typing credentials:
-      </p>
-      
-      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:0.6rem;margin-bottom:0.85rem;">
-        <button type="button" onclick="AuthManager.demoLogin('student')" class="btn btn-primary btn-sm" style="padding:0.6rem 0.5rem;font-size:0.8rem;border-radius:var(--radius-md);">
-          👨‍🎓 Demo Student
-        </button>
-        <button type="button" onclick="AuthManager.demoLogin('teacher')" class="btn btn-gold btn-sm" style="padding:0.6rem 0.5rem;font-size:0.8rem;border-radius:var(--radius-md);">
-          👨‍🏫 Demo Teacher
-        </button>
-        <button type="button" onclick="AuthManager.demoLogin('admin')" class="btn btn-dark btn-sm" style="padding:0.6rem 0.5rem;font-size:0.8rem;background:#334155;border-color:#475569;border-radius:var(--radius-md);">
-          📊 Custom Admin UI
-        </button>
-      </div>
+  <!-- Login Split Layout Container -->
+  <main class="mc-container" style="padding:2.5rem 1.5rem;">
+    <div class="mc-auth-layout">
+      <!-- Left Column: Branding & Quick 1-Click Access -->
+      <div class="mc-auth-left mc-reveal">
+        <div class="mc-auth-badge mc-continuous-float">
+          <span class="mc-pulse-dot-live"></span>
+          <span>MAYANK'S DIGITAL CAMPUS • 2026-27</span>
+        </div>
 
-      <div style="padding-top:0.75rem;border-top:1px solid #1E293B;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
-        <span style="font-size:0.75rem;color:#94A3B8;">Looking for Django Default Admin?</span>
-        <a href="/admin/" target="_blank" class="btn btn-secondary btn-sm" style="font-size:0.75rem;padding:0.25rem 0.65rem;background:#1E293B;color:#F8FAFC;border-color:#334155;">
-          ⚙️ Open Django Admin (/admin/) ↗
-        </a>
-      </div>
-    </div>
+        <h1 class="mc-hero-title" style="font-size:3.5rem;line-height:1.02;margin-bottom:1.25rem;">
+          Your Gateway to <span class="mc-highlight">Academic Excellence.</span>
+        </h1>
+        <p class="mc-hero-desc" style="font-size:1.05rem;line-height:1.65;margin-bottom:2rem;">
+          Access live tests, interactive classroom video lessons, DPP sheets, performance analytics, and personalized faculty doubt desks.
+        </p>
 
-    <!-- Main Auth Card -->
-    <div class="card" style="box-shadow:var(--shadow-xl);border-radius:var(--radius-lg);">
-      <!-- Auth Switch Tabs -->
-      <div class="flex" style="border-bottom:1px solid var(--border-color);background:#F8FAFC;">
-        <button id="tab-btn-login" onclick="toggleAuthForm('login')" style="flex:1;padding:0.9rem;font-weight:700;font-size:0.9rem;background:white;border:none;border-bottom:2px solid var(--primary-600);color:var(--primary-700);cursor:pointer;transition:var(--transition);">
-          Existing User Login
-        </button>
-        <button id="tab-btn-register" onclick="toggleAuthForm('register')" style="flex:1;padding:0.9rem;font-weight:700;font-size:0.9rem;background:transparent;border:none;border-bottom:2px solid transparent;color:var(--text-muted);cursor:pointer;transition:var(--transition);">
-          New Student Register
-        </button>
-      </div>
+        <!-- 1-Click Quick Demo Login Switcher Card -->
+        <div class="mc-curved-banner" style="display:block;padding:1.75rem 2rem;box-shadow:0 12px 32px rgba(0,0,0,0.12);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+            <strong style="color:#f59e0b;font-size:0.95rem;">⚡ 1-Click Prototype Demo Access</strong>
+            <span style="font-size:0.75rem;color:var(--mc-dark-muted);">Instant Role Switch</span>
+          </div>
+          <p style="font-size:0.85rem;color:var(--mc-dark-muted);margin-bottom:1.25rem;line-height:1.5;">
+            Test the entire platform instantly without manually typing credentials:
+          </p>
 
-      <!-- Login Form -->
-      <div id="form-login-pane" class="card-body" style="padding:1.75rem;">
-        <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:0.25rem;">Welcome Back</h2>
-        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.25rem;">Enter your email or username to access your portal.</p>
-
-        <form id="login-form" onsubmit="handleLoginSubmit(event)">
-          <div class="form-group">
-            <label class="form-label">Email Address or Username</label>
-            <input class="form-control" id="login_username" value="student@mayankclasses.com" placeholder="student@mayankclasses.com" required>
+          <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:0.75rem;margin-bottom:1rem;">
+            <button type="button" onclick="AuthManager.demoLogin('student')" class="mc-btn-primary" style="padding:0.6rem 0.5rem;font-size:0.82rem;justify-content:center;background:#1e293b;border-color:#334155;">
+              👨‍🎓 Student
+            </button>
+            <button type="button" onclick="AuthManager.demoLogin('teacher')" class="mc-btn-primary" style="padding:0.6rem 0.5rem;font-size:0.82rem;justify-content:center;background:#065f46;border-color:#047857;">
+              👨‍🏫 Teacher
+            </button>
+            <button type="button" onclick="AuthManager.demoLogin('admin')" class="mc-btn-primary" style="padding:0.6rem 0.5rem;font-size:0.82rem;justify-content:center;background:#4338ca;border-color:#3730a3;">
+              📊 Admin UI
+            </button>
           </div>
 
-          <div class="form-group">
-            <div class="flex items-center justify-between" style="margin-bottom:0.4rem;">
-              <label class="form-label" style="margin-bottom:0;">Password</label>
-              <a href="#" onclick="showToast('Demo passwords: student123, teacher123, or admin123', 'info')" style="font-size:0.75rem;color:var(--primary-600);font-weight:600;">Demo Credentials?</a>
-            </div>
-            <input class="form-control" type="password" id="login_password" value="student123" placeholder="••••••••" required>
+          <div style="padding-top:0.75rem;border-top:1px solid var(--mc-dark-border);display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;">
+            <span style="color:var(--mc-dark-muted);">Need Django Core Admin?</span>
+            <a href="/admin/" target="_blank" style="color:#f59e0b;text-decoration:none;font-weight:700;">
+              ⚙️ Open Django Admin (/admin/) ↗
+            </a>
           </div>
+        </div>
+      </div>
 
-          <button type="submit" id="btn-login-submit" class="btn btn-primary btn-lg w-full" style="margin-top:0.5rem;">
-            Sign In to Portal ➔
+      <!-- Right Column: Main Auth Card -->
+      <div class="mc-auth-card mc-reveal">
+        <!-- Auth Switch Tabs -->
+        <div style="display:flex;border-bottom:1px solid var(--mc-border-subtle);background:#f8fafc;border-radius:18px 18px 0 0;overflow:hidden;margin:-3.25rem -3.25rem 2rem -3.25rem;">
+          <button id="tab-btn-login" onclick="toggleAuthForm('login')" style="flex:1;padding:1rem;font-weight:800;font-size:0.95rem;background:#ffffff;border:none;border-bottom:2.5px solid var(--mc-coral);color:var(--mc-text-main);cursor:pointer;transition:all 0.2s ease;">
+            Existing User Login
           </button>
-        </form>
-      </div>
-
-      <!-- Student Registration Form -->
-      <div id="form-register-pane" class="card-body hidden" style="padding:1.75rem;">
-        <h2 style="font-size:1.35rem;font-weight:800;margin-bottom:0.25rem;">Student Registration</h2>
-        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.25rem;">Create a student account for test series & recorded lessons.</p>
-
-        <form id="register-form" onsubmit="handleRegisterSubmit(event)">
-          <div class="grid grid-2 gap-3">
-            <div class="form-group">
-              <label class="form-label">First Name</label>
-              <input class="form-control" id="reg_fname" placeholder="Aarav" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Last Name</label>
-              <input class="form-control" id="reg_lname" placeholder="Sharma" required>
-            </div>
-          </div>
-
-          <div class="grid grid-2 gap-3">
-            <div class="form-group">
-              <label class="form-label">Username</label>
-              <input class="form-control" id="reg_username" placeholder="aarav_sharma" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Mobile Number</label>
-              <input class="form-control" id="reg_phone" placeholder="+91 98765..." required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input class="form-control" type="email" id="reg_email" placeholder="name@domain.com" required>
-          </div>
-
-          <div class="grid grid-2 gap-3">
-            <div class="form-group">
-              <label class="form-label">Target Exam</label>
-              <select class="form-control" id="reg_target">
-                <option value="JEE Main & Advanced">JEE Main & Advanced</option>
-                <option value="NEET-UG Medical">NEET-UG Medical</option>
-                <option value="Foundation Class 9-10">Foundation Class 9-10</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Current Class</label>
-              <select class="form-control" id="reg_class">
-                <option value="Class 11">Class 11</option>
-                <option value="Class 12">Class 12</option>
-                <option value="Class 10">Class 10</option>
-                <option value="Dropper">Dropper</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Create Password</label>
-            <input class="form-control" type="password" id="reg_password" placeholder="Minimum 6 characters" minlength="6" required>
-          </div>
-
-          <button type="submit" id="btn-register-submit" class="btn btn-primary btn-lg w-full" style="margin-top:0.5rem;">
-            Create Student Account
+          <button id="tab-btn-register" onclick="toggleAuthForm('register')" style="flex:1;padding:1rem;font-weight:700;font-size:0.95rem;background:transparent;border:none;border-bottom:2.5px solid transparent;color:var(--mc-text-muted);cursor:pointer;transition:all 0.2s ease;">
+            New Student Register
           </button>
-        </form>
+        </div>
+
+        <!-- Login Form Pane -->
+        <div id="form-login-pane">
+          <h2 style="font-family:var(--mc-font-display);font-size:1.6rem;font-weight:900;margin:0 0 0.25rem 0;">
+            Welcome Back
+          </h2>
+          <p style="font-size:0.88rem;color:var(--mc-text-muted);margin:0 0 1.75rem 0;">
+            Enter your email or username to access your role dashboard.
+          </p>
+
+          <form id="login-form" onsubmit="handleLoginSubmit(event)">
+            <div class="form-group" style="margin-bottom:1.25rem;">
+              <label class="form-label" style="font-size:0.85rem;font-weight:700;">Email Address or Username</label>
+              <input class="mc-search-input" id="login_username" value="student@mayankclasses.com" placeholder="student@mayankclasses.com" style="background:#ffffff;border-radius:12px;padding:0.8rem 1rem;" required>
+            </div>
+
+            <div class="form-group" style="margin-bottom:1.5rem;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.4rem;">
+                <label class="form-label" style="font-size:0.85rem;font-weight:700;margin:0;">Password</label>
+                <a href="#" onclick="showToast('Demo passwords: student123, teacher123, or admin123', 'info')" style="font-size:0.75rem;color:var(--mc-coral);font-weight:700;text-decoration:none;">Demo Credentials?</a>
+              </div>
+              <input class="mc-search-input" type="password" id="login_password" value="student123" placeholder="••••••••" style="background:#ffffff;border-radius:12px;padding:0.8rem 1rem;" required>
+            </div>
+
+            <button type="submit" id="btn-login-submit" class="mc-btn-primary" style="width:100%;justify-content:center;padding:0.95rem;font-size:1rem;background:var(--mc-coral);border-color:var(--mc-coral);">
+              Sign In to Portal ➔
+            </button>
+          </form>
+        </div>
+
+        <!-- Register Form Pane -->
+        <div id="form-register-pane" class="hidden">
+          <h2 style="font-family:var(--mc-font-display);font-size:1.6rem;font-weight:900;margin:0 0 0.25rem 0;">
+            Student Registration
+          </h2>
+          <p style="font-size:0.88rem;color:var(--mc-text-muted);margin:0 0 1.5rem 0;">
+            Create a student account for mock test series & recorded lessons.
+          </p>
+
+          <form id="register-form" onsubmit="handleRegisterSubmit(event)">
+            <div class="grid grid-2 gap-3" style="margin-bottom:1rem;">
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:0.82rem;font-weight:700;">First Name</label>
+                <input class="mc-search-input" id="reg_fname" placeholder="Aarav" style="background:#ffffff;border-radius:12px;padding:0.75rem 1rem;" required>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:0.82rem;font-weight:700;">Last Name</label>
+                <input class="mc-search-input" id="reg_lname" placeholder="Sharma" style="background:#ffffff;border-radius:12px;padding:0.75rem 1rem;" required>
+              </div>
+            </div>
+
+            <div class="grid grid-2 gap-3" style="margin-bottom:1rem;">
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:0.82rem;font-weight:700;">Username</label>
+                <input class="mc-search-input" id="reg_username" placeholder="aarav_sharma" style="background:#ffffff;border-radius:12px;padding:0.75rem 1rem;" required>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:0.82rem;font-weight:700;">Mobile Number</label>
+                <input class="mc-search-input" id="reg_phone" placeholder="+91 98765..." style="background:#ffffff;border-radius:12px;padding:0.75rem 1rem;" required>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:1rem;">
+              <label class="form-label" style="font-size:0.82rem;font-weight:700;">Email Address</label>
+              <input class="mc-search-input" type="email" id="reg_email" placeholder="name@domain.com" style="background:#ffffff;border-radius:12px;padding:0.75rem 1rem;" required>
+            </div>
+
+            <div class="grid grid-2 gap-3" style="margin-bottom:1rem;">
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:0.82rem;font-weight:700;">Target Exam</label>
+                <select class="form-control" id="reg_target" style="border-radius:12px;padding:0.75rem 1rem;font-size:0.85rem;border:1.5px solid var(--mc-border-subtle);">
+                  <option value="JEE Main & Advanced">JEE Main & Advanced</option>
+                  <option value="NEET-UG Medical">NEET-UG Medical</option>
+                  <option value="Foundation Class 9-10">Foundation Class 9-10</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin:0;">
+                <label class="form-label" style="font-size:0.82rem;font-weight:700;">Current Class</label>
+                <select class="form-control" id="reg_class" style="border-radius:12px;padding:0.75rem 1rem;font-size:0.85rem;border:1.5px solid var(--mc-border-subtle);">
+                  <option value="Class 11">Class 11</option>
+                  <option value="Class 12">Class 12</option>
+                  <option value="Class 10">Class 10</option>
+                  <option value="Dropper">Dropper</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom:1.5rem;">
+              <label class="form-label" style="font-size:0.82rem;font-weight:700;">Create Password</label>
+              <input class="mc-search-input" type="password" id="reg_password" placeholder="Minimum 6 characters" minlength="6" style="background:#ffffff;border-radius:12px;padding:0.75rem 1rem;" required>
+            </div>
+
+            <button type="submit" id="btn-register-submit" class="mc-btn-primary" style="width:100%;justify-content:center;padding:0.95rem;font-size:1rem;background:var(--mc-coral);border-color:var(--mc-coral);">
+              Create Student Account ➔
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </main>
 
-  <footer style="text-align:center;padding:1.5rem;font-size:0.8rem;color:var(--text-muted);">
+  <!-- Footer -->
+  <footer style="text-align:center;padding:1.5rem;font-size:0.82rem;color:var(--mc-text-muted);position:relative;z-index:2;">
     © 2026 Mayank Classes Coaching Management & LMS Platform.
   </footer>
 </div>
@@ -165,20 +199,20 @@ function toggleAuthForm(mode) {
   if (mode === 'login') {
     loginPane.classList.remove('hidden');
     regPane.classList.add('hidden');
-    loginBtn.style.background = 'white';
-    loginBtn.style.color = 'var(--primary-700)';
-    loginBtn.style.borderBottomColor = 'var(--primary-600)';
+    loginBtn.style.background = '#ffffff';
+    loginBtn.style.color = 'var(--mc-text-main)';
+    loginBtn.style.borderBottomColor = 'var(--mc-coral)';
     regBtn.style.background = 'transparent';
-    regBtn.style.color = 'var(--text-muted)';
+    regBtn.style.color = 'var(--mc-text-muted)';
     regBtn.style.borderBottomColor = 'transparent';
   } else {
     loginPane.classList.add('hidden');
     regPane.classList.remove('hidden');
-    regBtn.style.background = 'white';
-    regBtn.style.color = 'var(--primary-700)';
-    regBtn.style.borderBottomColor = 'var(--primary-600)';
+    regBtn.style.background = '#ffffff';
+    regBtn.style.color = 'var(--mc-text-main)';
+    regBtn.style.borderBottomColor = 'var(--mc-coral)';
     loginBtn.style.background = 'transparent';
-    loginBtn.style.color = 'var(--text-muted)';
+    loginBtn.style.color = 'var(--mc-text-muted)';
     loginBtn.style.borderBottomColor = 'transparent';
   }
 }
@@ -226,7 +260,7 @@ async function handleRegisterSubmit(e) {
   } catch (err) {
     showToast(err.message || 'Registration failed', 'error');
     btn.disabled = false;
-    btn.innerText = 'Create Student Account';
+    btn.innerText = 'Create Student Account ➔';
   }
 }
 </script>

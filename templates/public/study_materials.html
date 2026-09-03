@@ -4,86 +4,102 @@
 {% block meta_description %}Download comprehensive lecture notes, formula cheat sheets, Daily Practice Problems (DPP), and Previous Year Question banks for JEE, NEET & Foundation.{% endblock %}
 
 {% block public_content %}
-<section class="brand-hero" style="padding:3.5rem 0 3rem;background:radial-gradient(circle at 80% 20%, #059669 0%, #064E3B 100%);">
-  <div class="container text-center">
-    <div class="breadcrumb-bar justify-center" style="margin-bottom:1rem;">
-      <a href="/">Home</a>
-      <span>›</span>
-      <span style="color:var(--brand-gold);">Study Materials & DPP Hub</span>
+<div class="mc-landing-root">
+  <!-- Blueprint Grid Pattern -->
+  <div class="mc-grid-pattern" aria-hidden="true"></div>
+  <div class="mc-cursor-glow" id="mc-cursor-glow" aria-hidden="true"></div>
+
+  <!-- Page Hero Banner -->
+  <section class="mc-page-hero">
+    <div class="mc-container">
+      <div class="mc-breadcrumb-bar">
+        <a href="/">Home</a>
+        <span>›</span>
+        <span style="color:var(--mc-coral);">Study Materials & DPP Hub</span>
+      </div>
+
+      <div style="margin-bottom:1.5rem;">
+        <span class="mc-hero-badge mc-continuous-float">
+          <span class="mc-pulse-dot-live"></span>
+          <span>Free DPPs • Formula Handbooks • PYQ Solved Banks</span>
+        </span>
+      </div>
+
+      <h1 class="mc-page-hero-title">
+        Free Sample Notes, DPPs & <span class="mc-highlight">Formula Handbooks</span>
+      </h1>
+      <p class="mc-page-hero-desc">
+        Curated by senior IITian and AIIMS faculty to accelerate revision, formula recall, and graded question solving.
+      </p>
     </div>
+  </section>
 
-    <h1 class="hero-main-title" style="font-size:2.8rem;margin-bottom:0.75rem;">
-      Free Sample Notes, DPPs & <span class="highlight-yellow">Formula Handbooks</span>
-    </h1>
-    <p class="hero-main-desc" style="margin:0 auto 1.5rem;max-width:680px;color:#DCFCE7;">
-      Curated by senior IITian and AIIMS faculty to accelerate revision, formula recall, and graded question solving.
-    </p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    
-    <!-- Material Type Filter -->
-    <div class="card p-4" style="margin-bottom:2.5rem;background:#F8FAFC;border:1px solid var(--border-color);border-radius:var(--radius-lg);">
-      <div class="flex items-center justify-between flex-wrap gap-3">
-        <div>
-          <span style="font-size:0.85rem;font-weight:800;color:var(--text-muted);margin-right:0.75rem;">MATERIAL TYPE:</span>
-          <div class="pill-filter-list" style="display:inline-flex;">
-            <a href="/study-materials/" class="pill-btn {% if active_type == 'ALL' or not active_type %}active{% endif %}">All Materials</a>
-            <a href="/study-materials/?type=PDF_NOTES" class="pill-btn {% if active_type == 'PDF_NOTES' %}active{% endif %}">Lecture Notes (PDF)</a>
-            <a href="/study-materials/?type=DPP" class="pill-btn {% if active_type == 'DPP' %}active{% endif %}">Daily Practice Problems (DPP)</a>
-            <a href="/study-materials/?type=FORMULA_SHEET" class="pill-btn {% if active_type == 'FORMULA_SHEET' %}active{% endif %}">Formula Sheets</a>
-            <a href="/study-materials/?type=PYQ" class="pill-btn {% if active_type == 'PYQ' %}active{% endif %}">Past Year Question Banks</a>
-          </div>
+  <!-- Materials Section -->
+  <section class="mc-section" style="padding-top:1rem;">
+    <div class="mc-container">
+      <!-- Material Type Filter Card -->
+      <div class="mc-filter-card mc-reveal">
+        <div class="mc-filter-label">MATERIAL TYPE:</div>
+        <div class="mc-pills-list">
+          <a href="/study-materials/" class="mc-pill-btn {% if active_type == 'ALL' or not active_type %}active{% endif %}">All Materials</a>
+          <a href="/study-materials/?type=PDF_NOTES" class="mc-pill-btn {% if active_type == 'PDF_NOTES' %}active{% endif %}">Lecture Notes (PDF)</a>
+          <a href="/study-materials/?type=DPP" class="mc-pill-btn {% if active_type == 'DPP' %}active{% endif %}">Daily Practice Problems (DPP)</a>
+          <a href="/study-materials/?type=FORMULA_SHEET" class="mc-pill-btn {% if active_type == 'FORMULA_SHEET' %}active{% endif %}">Formula Sheets</a>
+          <a href="/study-materials/?type=PYQ" class="mc-pill-btn {% if active_type == 'PYQ' %}active{% endif %}">Past Year Question Banks</a>
         </div>
       </div>
-    </div>
 
-    <!-- Materials Grid -->
-    <div class="grid grid-3 gap-6">
-      {% for mat in materials %}
-      <div class="card p-4" style="display:flex;flex-direction:column;justify-content:space-between;border-top:4px solid {% if mat.material_type == 'PDF_NOTES' %}#3B82F6{% elif mat.material_type == 'DPP' %}#10B981{% else %}#F59E0B{% endif %};">
-        <div>
-          <div class="flex items-center justify-between" style="margin-bottom:0.75rem;">
-            <span class="badge badge-primary">{{ mat.get_material_type_display }}</span>
-            <span style="font-size:0.8rem;color:var(--text-muted);">{{ mat.file_size_mb }} MB</span>
+      <!-- Materials Grid -->
+      <div class="mc-catalog-grid">
+        {% for mat in materials %}
+        <div class="mc-spotlight-card mc-reveal" style="justify-content:space-between;border-top:4px solid {% if mat.material_type == 'PDF_NOTES' %}#3b82f6{% elif mat.material_type == 'DPP' %}#10b981{% else %}#f59e0b{% endif %};">
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+              <span class="mc-pill-btn" style="padding:0.2rem 0.6rem;font-size:0.75rem;background:#f0f9ff;color:#0284c7;border-color:#bae6fd;">
+                {{ mat.get_material_type_display }}
+              </span>
+              <span style="font-size:0.8rem;color:var(--mc-text-muted);font-weight:700;">{{ mat.file_size_mb }} MB</span>
+            </div>
+
+            <h3 class="mc-card-title" style="font-size:1.2rem;margin-bottom:0.5rem;">{{ mat.title }}</h3>
+            <p class="mc-card-desc" style="margin-bottom:1.25rem;">
+              {{ mat.description|default:"Comprehensive theory, formulas, and graded problem sets with detailed solutions." }}
+            </p>
+
+            <div style="font-size:0.82rem;color:var(--mc-text-main);font-weight:700;margin-bottom:1.5rem;padding-top:0.75rem;border-top:1px solid var(--mc-border-subtle);">
+              <div>📖 {{ mat.course.title|truncatewords:4 }}</div>
+              <div style="color:var(--mc-text-muted);font-weight:500;margin-top:0.25rem;">Subject: {{ mat.subject.name }}</div>
+            </div>
           </div>
 
-          <h3 style="font-size:1.15rem;font-weight:800;margin-bottom:0.5rem;color:var(--text-main);">{{ mat.title }}</h3>
-          <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;margin-bottom:1rem;">
-            {{ mat.description|default:"Comprehensive theory, formulas, and graded problem sets with solutions." }}
-          </p>
-
-          <div style="font-size:0.8rem;color:var(--text-main);font-weight:600;margin-bottom:1.25rem;">
-            <div>📖 {{ mat.course.title|truncatewords:4 }}</div>
-            <div style="color:var(--text-muted);font-weight:400;margin-top:0.2rem;">Subject: {{ mat.subject.name }}</div>
+          <div>
+            <button type="button" onclick="openBrochureModal()" class="mc-btn-primary" style="width:100%;justify-content:center;padding:0.75rem;font-size:0.9rem;background:#059669;border-color:#059669;">
+              📥 Download Sample PDF
+            </button>
           </div>
         </div>
-
-        <div>
-          <button onclick="openBrochureModal()" class="btn btn-primary btn-sm w-full" style="background:#059669;">
-            📥 Download Sample PDF
-          </button>
+        {% empty %}
+        <div class="mc-filter-card text-center" style="grid-column:1/-1;">
+          <h3>Study materials loading...</h3>
         </div>
+        {% endfor %}
       </div>
-      {% empty %}
-      <div class="card p-4 text-center w-full" style="grid-column:1/-1;">Study materials loading...</div>
-      {% endfor %}
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Final CTA Banner -->
-<div class="container">
-  <div class="final-cta-banner" style="background:linear-gradient(135deg, #059669, #064E3B);">
-    <h2>Get Complete 24-Booklet Physical Study Material</h2>
-    <p>Enrolled classroom and hybrid students receive our physical study package delivered directly to their address or campus desk.</p>
-    <div class="flex justify-center gap-3 flex-wrap">
-      <button onclick="openGlobalDemoModal()" class="btn btn-gold btn-lg">Enroll for Full Material Kit</button>
-      <button onclick="openBrochureModal()" class="btn btn-secondary btn-lg" style="background:rgba(255,255,255,0.2);color:white;border-color:white;">
-        📥 Download Material Catalog
-      </button>
+  <!-- Final CTA Banner -->
+  <div class="mc-container">
+    <div class="mc-admission-cta mc-reveal" style="background:linear-gradient(135deg, #059669, #047857);">
+      <h2>Get Complete 24-Booklet Physical Study Material</h2>
+      <p>Enrolled classroom and hybrid students receive our comprehensive physical study package delivered directly to their address or campus desk.</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
+        <button type="button" onclick="openGlobalDemoModal('Full Material Kit')" class="mc-btn-primary" style="background:#f59e0b;border-color:#f59e0b;color:#0d0e12;font-size:1.05rem;">
+          Enroll for Full Material Kit
+        </button>
+        <button type="button" onclick="openBrochureModal()" class="mc-btn-secondary" style="background:rgba(255,255,255,0.18);color:#ffffff;border-color:rgba(255,255,255,0.4);font-size:1.05rem;backdrop-filter:blur(6px);">
+          📥 Download Material Catalog
+        </button>
+      </div>
     </div>
   </div>
 </div>

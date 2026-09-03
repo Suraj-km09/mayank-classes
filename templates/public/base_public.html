@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<!-- Top Contact Bar -->
-<div class="top-bar">
+<!-- Fixed Smart Navigation Wrapper (Auto-Hides on Scroll Down, Smoothly Reveals on Scroll Up) -->
+<div class="site-nav-wrapper" id="site-nav-wrapper">
+  <!-- Top Contact Bar -->
+  <div class="top-bar">
   <div class="container top-bar-container">
     <div class="top-bar-left">
       <a href="mailto:Mayankclasses083@gmail.com" class="top-bar-item">
@@ -34,14 +36,11 @@
 <!-- Main Site Header -->
 <header class="site-header" id="site-header">
   <div class="container nav-container">
-    <!-- Premium Brand Logo -->
-    <a href="/" class="brand-logo-box" aria-label="Mayank Classes Home">
-      <div class="logo-emblem">
-        <span class="logo-emblem-letter">M</span>
-      </div>
-      <div class="logo-text-group">
-        <div class="logo-name">MAYANK'S<sup class="logo-tm">™</sup></div>
-        <div class="logo-subtitle">CLASSES</div>
+    <!-- Premium Brand Logo with Continuous Motion -->
+    <a href="/" class="mc-navbar-logo-link" aria-label="Mayank Classes Home">
+      <div class="mc-logo-motion-wrap">
+        <img src="/static/images/mayank_classes_logo.png" alt="Mayank Classes" class="mc-brand-logo-img">
+        <div class="mc-logo-shimmer" aria-hidden="true"></div>
       </div>
     </a>
 
@@ -91,6 +90,7 @@
       <a href="/courses/jee/" class="nav-link {% if '/courses/jee/' in request.path %}active{% endif %}">JEE</a>
       <a href="/results/" class="nav-link {% if '/results/' in request.path %}active{% endif %}">Results</a>
       <a href="/faculty/" class="nav-link {% if '/faculty/' in request.path %}active{% endif %}">Faculty</a>
+      <a href="/photos/" class="nav-link {% if '/photos/' in request.path %}active{% endif %}">Photos</a>
       <a href="/contact/" class="nav-link {% if '/contact/' in request.path %}active{% endif %}">Contact</a>
     </nav>
 
@@ -113,13 +113,10 @@
   <!-- Mobile Navigation Drawer -->
   <div class="mobile-nav-drawer" id="mobile-nav-drawer" role="dialog" aria-label="Mobile Menu">
     <div class="mobile-nav-header">
-      <a href="/" class="brand-logo-box" aria-label="Mayank Classes Home" onclick="closeMobileNav()">
-        <div class="logo-emblem logo-emblem-sm">
-          <span class="logo-emblem-letter">M</span>
-        </div>
-        <div class="logo-text-group">
-          <div class="logo-name" style="font-size:0.95rem;">MAYANK'S<sup class="logo-tm">™</sup></div>
-          <div class="logo-subtitle" style="font-size:0.65rem;">CLASSES</div>
+      <a href="/" class="mc-navbar-logo-link" aria-label="Mayank Classes Home" onclick="closeMobileNav()">
+        <div class="mc-logo-motion-wrap">
+          <img src="/static/images/mayank_classes_logo.png" alt="Mayank Classes" class="mc-brand-logo-img" style="height:38px;">
+          <div class="mc-logo-shimmer" aria-hidden="true"></div>
         </div>
       </a>
       <button type="button" class="mobile-nav-close-btn" onclick="closeMobileNav()" aria-label="Close menu">✕</button>
@@ -142,6 +139,7 @@
       <a href="/courses/jee/" class="mobile-nav-link" onclick="closeMobileNav()">⚛️ JEE</a>
       <a href="/results/" class="mobile-nav-link" onclick="closeMobileNav()">🏆 Results</a>
       <a href="/faculty/" class="mobile-nav-link" onclick="closeMobileNav()">👥 Faculty</a>
+      <a href="/photos/" class="mobile-nav-link" onclick="closeMobileNav()">📸 Photos</a>
       <a href="/contact/" class="mobile-nav-link" onclick="closeMobileNav()">📇 Contact</a>
       <div class="mobile-nav-footer">
         <a href="/login/" class="btn btn-secondary btn-sm" style="width:100%;text-align:center;margin-bottom:0.75rem;">Portal Login</a>
@@ -151,6 +149,9 @@
   </div>
   <div class="mobile-overlay" id="mobile-overlay" onclick="closeMobileNav()"></div>
 </header>
+</div>
+<!-- Header Spacer prevents page content from jumping or being covered -->
+<div class="site-nav-spacer" aria-hidden="true"></div>
 
 <!-- Main Page Content Block -->
 <main>
@@ -162,11 +163,10 @@
   <div class="container">
     <div class="footer-grid">
       <div>
-        <a href="/" class="footer-brand" style="margin-bottom:1rem;display:inline-flex;align-items:center;gap:0.75rem;text-decoration:none;">
-          <div class="logo-emblem logo-emblem-sm"><span class="logo-emblem-letter">M</span></div>
-          <div>
-            <div style="font-size:1.1rem;font-weight:900;color:#FFC107;letter-spacing:0.04em;">MAYANK'S™</div>
-            <div style="font-size:0.7rem;font-weight:700;color:#94A3B8;letter-spacing:0.12em;">CLASSES</div>
+        <a href="/" class="mc-navbar-logo-link" style="margin-bottom:1rem;display:inline-flex;">
+          <div class="mc-logo-motion-wrap">
+            <img src="/static/images/mayank_classes_logo.png" alt="Mayank Classes" class="mc-brand-logo-img" style="height:48px;">
+            <div class="mc-logo-shimmer" aria-hidden="true"></div>
           </div>
         </a>
         <p style="font-size:0.875rem;line-height:1.6;margin-bottom:1.5rem;color:#94A3B8;">
@@ -196,6 +196,7 @@
           <li><a href="/login/">Student LMS Login</a></li>
           <li><a href="/login/">Faculty Dashboard</a></li>
           <li><a href="/results/">Toppers Hall of Fame</a></li>
+          <li><a href="/photos/">Photo Gallery</a></li>
           <li><a href="/verify-certificate/">Verify Certificate</a></li>
           <li><a href="/about/">About Our Pedagogy</a></li>
           <li><a href="/contact/">Admissions & Centers</a></li>
@@ -233,11 +234,18 @@
 </a>
 
 <!-- AI Academic Counselor Floating Button (Bottom-Left Stack) -->
-<button type="button" class="ai-chat-launcher" id="ai-chat-launcher" aria-label="Open Mayank Classes AI Counselor" title="Ask AI Counselor">
-  <span class="ai-launcher-icon">🤖</span>
+<button type="button" class="ai-chat-launcher" id="ai-chat-launcher" aria-label="Open Mayank Classes AI Counselor" title="Ask Mayank Classes AI Counselor">
+  <div class="ai-launcher-icon-wrap">
+    <svg class="ai-launcher-svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      <path d="M8 11.5h8"/>
+      <path d="M8 8.5h5"/>
+    </svg>
+    <span class="ai-launcher-spark">✨</span>
+  </div>
   <span class="ai-launcher-badge"></span>
   <div class="ai-chat-launcher-hint" id="ai-chat-launcher-hint">
-    <span>✨ Ask AI Counselor</span>
+    <span>✨ Ask Academic Counselor</span>
   </div>
 </button>
 
@@ -246,11 +254,14 @@
   <!-- Header -->
   <div class="ai-chat-header">
     <div class="ai-chat-header-left">
-      <div class="ai-chat-avatar">🤖</div>
+      <div class="ai-chat-avatar">
+        <span class="ai-avatar-letter">M</span>
+        <span class="ai-avatar-spark">✦</span>
+      </div>
       <div>
         <h4 class="ai-chat-title" id="ai-chat-title">Mayank Classes AI</h4>
         <div class="ai-chat-status">
-          <span class="ai-status-dot"></span> Online • Course Counselor
+          <span class="ai-status-dot"></span> Online • 24/7 Academic Counselor
         </div>
       </div>
     </div>
@@ -270,9 +281,12 @@
   <!-- Messages Scroll Area -->
   <div class="ai-chat-messages" id="ai-chat-messages">
     <div class="ai-msg-bubble ai-msg-bot">
-      <div class="ai-msg-avatar">🤖</div>
+      <div class="ai-msg-avatar">
+        <span class="ai-avatar-letter">M</span>
+        <span class="ai-avatar-spark">✦</span>
+      </div>
       <div class="ai-msg-content">
-        <p>👋 Hello! I am your <strong>Mayank Classes AI Academic Counselor</strong>.</p>
+        <p>👋 Hello! I am your <strong>Mayank Classes Academic AI Counselor</strong>.</p>
         <p>Ask me about our courses (NEET, JEE, Foundation 6–10, CUET, NDA), fee structures, batch schedules, faculty mentors, or how to book a <strong>Free Demo Class</strong>!</p>
         <div class="ai-msg-prompt-hint">💡 Tap any quick topic above or type your question below:</div>
       </div>

@@ -3,30 +3,54 @@
 {% block title %}Verify Academic Credential - Mayank Classes{% endblock %}
 
 {% block content %}
-<div style="min-height:100vh;background:#F8FAFC;display:flex;flex-direction:column;justify-content:space-between;">
-  <header style="padding:1rem 1.5rem;background:white;border-bottom:1px solid var(--border-color);display:flex;align-items:center;justify-content:space-between;gap:0.75rem;">
-    <a href="/" class="brand-logo" style="display:flex;align-items:center;gap:0.6rem;text-decoration:none;">
-      <div class="brand-logo-icon" style="width:36px;height:36px;background:linear-gradient(135deg,var(--primary-600),var(--primary-800));color:white;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.1rem;">M</div>
-      <span style="font-weight:800;font-size:1.1rem;letter-spacing:-0.02em;">MAYANK<span style="color:var(--brand-gold);">CLASSES</span></span>
+<div class="mc-landing-root" style="min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;">
+  <!-- Blueprint Grid Pattern & Cursor Glow -->
+  <div class="mc-grid-pattern" aria-hidden="true"></div>
+  <div class="mc-cursor-glow" id="mc-cursor-glow" aria-hidden="true"></div>
+
+  <!-- Header -->
+  <header style="padding:1.25rem 2rem;background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--mc-border-subtle);display:flex;align-items:center;justify-content:space-between;gap:1rem;position:relative;z-index:10;">
+    <a href="/" class="mc-navbar-logo-link" aria-label="Mayank Classes Home">
+      <div class="mc-logo-motion-wrap">
+        <img src="/static/images/mayank_classes_logo.png" alt="Mayank Classes" class="mc-brand-logo-img">
+        <div class="mc-logo-shimmer" aria-hidden="true"></div>
+      </div>
     </a>
-    <a href="/" class="btn btn-secondary btn-sm" style="font-weight:600;white-space:nowrap;">← Institute Home</a>
+    <a href="/" class="mc-btn-secondary" style="padding:0.45rem 1.15rem;font-size:0.85rem;font-weight:700;">
+      ← Institute Home
+    </a>
   </header>
 
-  <main class="container" style="max-width:760px;margin:2rem auto;padding:0 1rem;">
-    <div class="card p-4" style="margin-bottom:2rem;text-align:center;">
-      <h1 style="font-size:clamp(1.4rem, 3.5vw, 1.75rem);font-weight:900;margin-bottom:0.5rem;">Digital Certificate Verification System</h1>
-      <p style="font-size:0.92rem;color:var(--text-muted);margin-bottom:1.5rem;">Enter the verification UUID or certificate identifier to check official authenticity.</p>
+  <!-- Main Search Container -->
+  <main class="mc-container" style="max-width:760px;margin:3rem auto;padding:0 1rem;">
+    <div class="mc-filter-card mc-reveal text-center">
+      <div style="margin-bottom:1rem;">
+        <span class="mc-hero-badge mc-continuous-float">
+          <span class="mc-pulse-dot-live"></span>
+          <span>Official Cryptographic Verification</span>
+        </span>
+      </div>
 
-      <form onsubmit="verifyCertificateAction(event)" style="display:flex;gap:0.75rem;max-width:500px;margin:0 auto;flex-wrap:wrap;">
-        <input class="form-control" id="cert-search-input" value="{{ code }}" placeholder="e.g. c90a5a81-6b01-4aca-bd7c-41b781d94242" style="flex:1 1 220px;" required>
-        <button type="submit" class="btn btn-primary" style="white-space:nowrap;flex:0 0 auto;">Verify Online</button>
+      <h1 style="font-family:var(--mc-font-display);font-size:2.2rem;font-weight:900;margin:0 0 0.5rem 0;">
+        Digital Certificate Verification System
+      </h1>
+      <p style="font-size:0.95rem;color:var(--mc-text-muted);margin:0 0 1.75rem 0;">
+        Enter the verification UUID or certificate identifier to check official authenticity.
+      </p>
+
+      <form onsubmit="verifyCertificateAction(event)" style="display:flex;gap:0.75rem;max-width:520px;margin:0 auto;flex-wrap:wrap;">
+        <input class="mc-search-input" id="cert-search-input" value="{{ code }}" placeholder="e.g. c90a5a81-6b01-4aca-bd7c-41b781d94242" style="flex:1 1 240px;background:#ffffff;" required>
+        <button type="submit" class="mc-btn-primary" style="padding:0.75rem 1.5rem;font-size:0.92rem;flex:0 0 auto;">
+          Verify Online ➔
+        </button>
       </form>
     </div>
 
     <div id="cert-result-container"></div>
   </main>
 
-  <footer style="text-align:center;padding:1.5rem 1rem;font-size:0.8rem;color:var(--text-muted);">
+  <!-- Footer -->
+  <footer style="text-align:center;padding:2rem 1rem;font-size:0.82rem;color:var(--mc-text-muted);position:relative;z-index:2;">
     Official Verifiable Credential Service • Mayank Classes Institute of Technology & Medical Sciences
   </footer>
 </div>
@@ -56,18 +80,18 @@ async function verifyCode(code) {
     const c = res.certificate;
 
     container.innerHTML = `
-      <div class="certificate-frame" style="box-shadow:var(--shadow-xl);padding:2rem 1.5rem;text-align:center;background:#FFF;border:2px solid #E2E8F0;border-radius:20px;">
-        <div style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.4rem 1rem;background:#DCFCE7;color:#15803D;font-weight:700;font-size:0.85rem;border-radius:var(--radius-full);margin-bottom:1.5rem;">
+      <div class="mc-filter-card mc-reveal text-center" style="box-shadow:0 20px 45px rgba(0,0,0,0.08);padding:2.5rem 2rem;">
+        <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 1rem;background:#edfbf6;color:#059669;font-weight:800;font-size:0.85rem;border-radius:999px;border:1px solid #a7f3d0;margin-bottom:1.5rem;">
           ✓ OFFICIAL CERTIFICATE VERIFIED AUTHENTIC
         </div>
-        <div class="certificate-seal" style="font-size:2.5rem;margin-bottom:0.5rem;">🏅</div>
-        <h2 style="font-size:clamp(1.35rem, 3.5vw, 1.75rem);font-weight:900;margin-bottom:0.5rem;">${c.title}</h2>
-        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0.75rem;">Awarded to</p>
-        <h3 style="font-size:clamp(1.3rem, 3.5vw, 1.6rem);color:var(--primary-700);font-weight:800;margin-bottom:0.75rem;">${c.student_name}</h3>
-        <p style="font-size:0.9rem;color:var(--text-muted);max-width:540px;margin:0 auto 1.5rem;line-height:1.6;">
+        <div style="font-size:3rem;margin-bottom:0.5rem;">🏅</div>
+        <h2 style="font-family:var(--mc-font-display);font-size:1.85rem;font-weight:900;margin-bottom:0.5rem;">${c.title}</h2>
+        <p style="font-size:0.9rem;color:var(--mc-text-muted);margin-bottom:0.5rem;">Awarded to</p>
+        <h3 style="font-family:var(--mc-font-display);font-size:1.75rem;color:var(--mc-coral);font-weight:900;margin-bottom:0.75rem;">${c.student_name}</h3>
+        <p style="font-size:0.95rem;color:var(--mc-text-muted);max-width:540px;margin:0 auto 1.5rem;line-height:1.65;">
           ${c.description}
         </p>
-        <div class="flex items-center justify-center gap-4" style="padding-top:1.25rem;border-top:1px solid var(--border-color);font-size:0.825rem;color:var(--text-muted);flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:1.5rem;padding-top:1.25rem;border-top:1px solid var(--mc-border-subtle);font-size:0.85rem;color:var(--mc-text-muted);flex-wrap:wrap;">
           <span><strong>Course:</strong> ${c.course_title}</span>
           <span><strong>Grade:</strong> ${c.grade}</span>
           <span><strong>Issued:</strong> ${formatDate(c.issue_date)}</span>
@@ -76,9 +100,9 @@ async function verifyCode(code) {
     `;
   } catch (err) {
     container.innerHTML = `
-      <div class="card p-4 text-center" style="border-color:#FDA4AF;background:#FFF1F2;">
-        <h3 style="color:#BE123C;font-size:1.25rem;font-weight:800;margin-bottom:0.5rem;">Certificate Not Found</h3>
-        <p style="color:#9F1239;font-size:0.9rem;">The certificate ID you entered is invalid or does not match our official records.</p>
+      <div class="mc-filter-card mc-reveal text-center" style="border-color:#fca5a5;background:#fff1f2;">
+        <h3 style="color:#b91c1c;font-family:var(--mc-font-display);font-size:1.35rem;font-weight:900;margin-bottom:0.5rem;">Certificate Not Found</h3>
+        <p style="color:#991b1b;font-size:0.9rem;margin:0;">The certificate ID you entered is invalid or does not match our official records.</p>
       </div>
     `;
   }

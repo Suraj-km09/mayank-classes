@@ -4,82 +4,131 @@
 {% block meta_description %}Celebrate our outstanding rankers in JEE Advanced, JEE Main, NEET-UG, and National Olympiads.{% endblock %}
 
 {% block public_content %}
-<section class="brand-hero" style="padding:3.5rem 0 3rem;">
-  <div class="container text-center">
-    <div class="breadcrumb-bar justify-center" style="margin-bottom:1rem;">
-      <a href="/">Home</a>
-      <span>›</span>
-      <span style="color:var(--brand-gold);">Toppers & Results Hall of Fame</span>
+<div class="mc-landing-root">
+  <!-- Blueprint Grid Pattern -->
+  <div class="mc-grid-pattern" aria-hidden="true"></div>
+  <div class="mc-cursor-glow" id="mc-cursor-glow" aria-hidden="true"></div>
+
+  <!-- Page Hero Banner -->
+  <section class="mc-page-hero">
+    <div class="mc-container">
+      <div class="mc-breadcrumb-bar">
+        <a href="/">Home</a>
+        <span>›</span>
+        <span style="color:var(--mc-coral);">Toppers & Results Hall of Fame</span>
+      </div>
+
+      <div style="margin-bottom:1.5rem;">
+        <span class="mc-hero-badge mc-continuous-float">
+          <span class="mc-pulse-dot-live"></span>
+          <span>AIR Top 50 • AIIMS & IIT Selections</span>
+        </span>
+      </div>
+
+      <h1 class="mc-page-hero-title">
+        A Proven Legacy of <span class="mc-highlight">Top National Ranks</span>
+      </h1>
+      <p class="mc-page-hero-desc">
+        Our students turn conceptual clarity into top selections at IIT Bombay, IIT Delhi, AIIMS New Delhi, and premier national government institutions.
+      </p>
     </div>
+  </section>
 
-    <h1 class="hero-main-title" style="font-size:2.8rem;margin-bottom:0.75rem;">
-      A Proven Legacy of <span class="highlight-yellow">Top National Ranks</span>
-    </h1>
-    <p class="hero-main-desc" style="margin:0 auto 1.5rem;max-width:680px;">
-      Our students turn conceptual clarity into top selections at IIT Bombay, IIT Delhi, AIIMS New Delhi, and premier government institutions.
-    </p>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="grid grid-3 gap-6">
-      {% for topper in toppers %}
-      <div class="topper-card">
-        <span class="topper-rank-tag">{{ topper.rank_or_score }}</span>
-        <img src="{{ topper.image_url|default:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500' }}" alt="{{ topper.student_name }}" class="topper-avatar">
-        <h3 style="font-size:1.25rem;font-weight:800;margin-bottom:0.25rem;">{{ topper.student_name }}</h3>
-        <p style="font-size:0.875rem;color:var(--brand-red);font-weight:700;margin-bottom:0.6rem;">{{ topper.exam_name }}</p>
-        <div style="background:#F8FAFC;padding:0.75rem;border-radius:var(--radius-sm);border:1px solid var(--border-color);margin-bottom:0.85rem;font-size:0.85rem;font-weight:600;color:var(--text-main);">
-          🏫 {{ topper.summary }}
+  <!-- Main Results Section -->
+  <section class="mc-section" style="padding-top:1.5rem;">
+    <div class="mc-container">
+      <!-- Toppers Grid -->
+      <div class="mc-toppers-grid">
+        {% for topper in toppers %}
+        <div class="mc-topper-card mc-reveal">
+          <span class="mc-topper-rank-tag">{{ topper.rank_or_score }}</span>
+          <img src="{{ topper.image_url|default:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500' }}" alt="{{ topper.student_name }}" class="mc-topper-avatar">
+          <h3 style="font-family:var(--mc-font-display);font-size:1.35rem;font-weight:900;margin:0 0 0.25rem 0;">{{ topper.student_name }}</h3>
+          <p style="font-size:0.88rem;color:var(--mc-coral);font-weight:700;margin-bottom:0.75rem;">{{ topper.exam_name }}</p>
+          <div style="background:#f8fafc;padding:0.75rem;border-radius:12px;border:1px solid var(--mc-border-card);margin-bottom:0.85rem;font-size:0.85rem;font-weight:600;color:var(--mc-text-main);">
+            🏫 {{ topper.summary }}
+          </div>
+          <p style="font-size:0.85rem;color:var(--mc-text-muted);line-height:1.6;margin:0;font-style:italic;">"{{ topper.story }}"</p>
         </div>
-        <p style="font-size:0.85rem;color:var(--text-muted);line-height:1.5;">"{{ topper.story }}"</p>
-      </div>
-      {% endfor %}
-    </div>
-
-    <!-- Testimonials Grid -->
-    <div style="margin-top:4.5rem;">
-      <div class="section-header">
-        <span class="section-tag">Student Feedback</span>
-        <h2 class="section-title">What Our Students & Parents Say</h2>
-        <p class="section-desc">Authentic experiences from classroom and hybrid students.</p>
-      </div>
-
-      <div class="grid grid-3 gap-6">
-        {% for t in testimonials %}
-        <div class="card p-4" style="display:flex;flex-direction:column;justify-content:space-between;">
-          <div>
-            <div style="color:var(--brand-gold);font-size:1.1rem;margin-bottom:0.75rem;">★★★★★</div>
-            <p style="font-size:0.925rem;color:var(--text-main);line-height:1.6;font-style:italic;margin-bottom:1.5rem;">
-              "{{ t.review_text }}"
-            </p>
+        {% empty %}
+        <div class="mc-topper-card mc-reveal">
+          <span class="mc-topper-rank-tag">AIR 42</span>
+          <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500" alt="Aarav Sharma" class="mc-topper-avatar">
+          <h3 style="font-family:var(--mc-font-display);font-size:1.35rem;font-weight:900;margin:0 0 0.25rem 0;">Aarav Sharma</h3>
+          <p style="font-size:0.88rem;color:var(--mc-coral);font-weight:700;margin-bottom:0.75rem;">NEET-UG 2025 • 715/720</p>
+          <div style="background:#f8fafc;padding:0.75rem;border-radius:12px;border:1px solid var(--mc-border-card);margin-bottom:0.85rem;font-size:0.85rem;font-weight:600;color:var(--mc-text-main);">
+            🏫 AIIMS New Delhi (MBBS)
           </div>
-          <div class="flex items-center gap-3">
-            <img src="{{ t.avatar_url|default:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100' }}" style="width:46px;height:46px;border-radius:50%;object-fit:cover;">
-            <div>
-              <h4 style="font-size:0.95rem;font-weight:700;">{{ t.student_name }}</h4>
-              <p style="font-size:0.8rem;color:var(--brand-red);font-weight:600;">{{ t.score_or_rank }}</p>
-              <p style="font-size:0.75rem;color:var(--text-muted);">{{ t.college_admitted }}</p>
-            </div>
+          <p style="font-size:0.85rem;color:var(--mc-text-muted);line-height:1.6;margin:0;font-style:italic;">"The conceptual clarity and daily test series gave me the confidence to score 715 in NEET."</p>
+        </div>
+        <div class="mc-topper-card mc-reveal">
+          <span class="mc-topper-rank-tag">AIR 118</span>
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500" alt="Rohan Verma" class="mc-topper-avatar">
+          <h3 style="font-family:var(--mc-font-display);font-size:1.35rem;font-weight:900;margin:0 0 0.25rem 0;">Rohan Verma</h3>
+          <p style="font-size:0.88rem;color:var(--mc-coral);font-weight:700;margin-bottom:0.75rem;">JEE Advanced 2025 • IIT Bombay</p>
+          <div style="background:#f8fafc;padding:0.75rem;border-radius:12px;border:1px solid var(--mc-border-card);margin-bottom:0.85rem;font-size:0.85rem;font-weight:600;color:var(--mc-text-main);">
+            🏫 Computer Science & Engineering
           </div>
+          <p style="font-size:0.85rem;color:var(--mc-text-muted);line-height:1.6;margin:0;font-style:italic;">"Mentors were available 24/7. Weekly computer-based tests mirrored the exact NTA interface."</p>
+        </div>
+        <div class="mc-topper-card mc-reveal">
+          <span class="mc-topper-rank-tag">AIR 265</span>
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500" alt="Ananya Iyer" class="mc-topper-avatar">
+          <h3 style="font-family:var(--mc-font-display);font-size:1.35rem;font-weight:900;margin:0 0 0.25rem 0;">Ananya Iyer</h3>
+          <p style="font-size:0.88rem;color:var(--mc-coral);font-weight:700;margin-bottom:0.75rem;">NEET-UG 2025 • 705/720</p>
+          <div style="background:#f8fafc;padding:0.75rem;border-radius:12px;border:1px solid var(--mc-border-card);margin-bottom:0.85rem;font-size:0.85rem;font-weight:600;color:var(--mc-text-main);">
+            🏫 Maulana Azad Medical College (MAMC)
+          </div>
+          <p style="font-size:0.85rem;color:var(--mc-text-muted);line-height:1.6;margin:0;font-style:italic;">"NCERT line-by-line problem solving was the biggest factor in clearing high medical cutoffs."</p>
         </div>
         {% endfor %}
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- Final CTA Banner -->
-<div class="container">
-  <div class="final-cta-banner">
-    <h2>Be Our Next National Ranker</h2>
-    <p>Join Mayank Classes today and take your first step toward IIT Bombay, AIIMS, or Top National Colleges.</p>
-    <div class="flex justify-center gap-3 flex-wrap">
-      <button onclick="openGlobalDemoModal()" class="btn btn-gold btn-lg">Apply for Scholarship Test</button>
-      <a href="tel:+919919980246" class="btn btn-secondary btn-lg" style="background:rgba(255,255,255,0.2);color:white;border-color:white;">
-        📞 Call Admission Desk: 9919980246
-      </a>
+      <!-- Testimonials Grid -->
+      <div style="margin-top:5rem;">
+        <div class="mc-section-header mc-reveal">
+          <span class="mc-section-tag">Student Feedback</span>
+          <h2 class="mc-section-title">What Our Students & Parents Say</h2>
+          <p class="mc-section-desc">Authentic experiences from classroom and hybrid students.</p>
+        </div>
+
+        <div class="mc-toppers-grid">
+          {% for t in testimonials %}
+          <div class="mc-spotlight-card mc-reveal" style="display:flex;flex-direction:column;justify-content:space-between;">
+            <div>
+              <div style="color:var(--mc-gold);font-size:1.2rem;margin-bottom:0.75rem;">★★★★★</div>
+              <p style="font-size:0.95rem;color:var(--mc-text-main);line-height:1.65;font-style:italic;margin-bottom:1.5rem;">
+                "{{ t.review_text }}"
+              </p>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.85rem;padding-top:1rem;border-top:1px solid var(--mc-border-subtle);">
+              <img src="{{ t.avatar_url|default:'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100' }}" style="width:48px;height:48px;border-radius:50%;object-fit:cover;">
+              <div>
+                <h4 style="font-size:0.95rem;font-weight:800;margin:0 0 0.15rem 0;">{{ t.student_name }}</h4>
+                <p style="font-size:0.8rem;color:var(--mc-coral);font-weight:700;margin:0 0 0.15rem 0;">{{ t.score_or_rank }}</p>
+                <p style="font-size:0.75rem;color:var(--mc-text-muted);margin:0;">{{ t.college_admitted }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Banner -->
+  <div class="mc-container">
+    <div class="mc-admission-cta mc-reveal">
+      <h2>Be Our Next National Ranker</h2>
+      <p>Join Mayank Classes today and take your first step toward IIT Bombay, AIIMS, or Top National Colleges.</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;">
+        <button type="button" onclick="openGlobalDemoModal('Scholarship Test Application')" class="mc-btn-primary" style="background:#f59e0b;border-color:#f59e0b;color:#0d0e12;font-size:1.05rem;">
+          Apply for Scholarship Test
+        </button>
+        <a href="tel:+919919980246" class="mc-btn-secondary" style="background:rgba(255,255,255,0.18);color:#ffffff;border-color:rgba(255,255,255,0.4);font-size:1.05rem;backdrop-filter:blur(6px);">
+          📞 Call Admission Desk: 9919980246
+        </a>
+      </div>
     </div>
   </div>
 </div>

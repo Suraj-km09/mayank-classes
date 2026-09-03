@@ -281,7 +281,10 @@
     typingDiv.id = 'ai-chat-typing';
     typingDiv.className = 'ai-msg-bubble ai-msg-bot';
     typingDiv.innerHTML = `
-      <div class="ai-msg-avatar">🤖</div>
+      <div class="ai-msg-avatar">
+        <span class="ai-avatar-letter">M</span>
+        <span class="ai-avatar-spark">✦</span>
+      </div>
       <div class="ai-msg-content ai-typing-content">
         <span class="ai-typing-dot"></span>
         <span class="ai-typing-dot"></span>
@@ -305,7 +308,10 @@
     const botDiv = document.createElement('div');
     botDiv.className = 'ai-msg-bubble ai-msg-bot';
     botDiv.innerHTML = `
-      <div class="ai-msg-avatar">🤖</div>
+      <div class="ai-msg-avatar">
+        <span class="ai-avatar-letter">M</span>
+        <span class="ai-avatar-spark">✦</span>
+      </div>
       <div class="ai-msg-content">
         ${formatMarkdown(replyText)}
       </div>

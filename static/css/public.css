@@ -1363,7 +1363,8 @@
 .whatsapp-float-btn {
   position: fixed;
   bottom: 28px;
-  left: 28px;
+  right: 28px;
+  left: auto;
   width: 56px;
   height: 56px;
   background: #25D366;
@@ -2168,18 +2169,20 @@
     gap: 2rem !important;
   }
 
-  /* Floating action buttons on mobile */
+  /* Floating action buttons on mobile: WhatsApp on Right, AI Chat on Left */
   .whatsapp-float-btn {
     bottom: 20px !important;
-    left: 16px !important;
-    width: 50px !important;
-    height: 50px !important;
+    right: 18px !important;
+    left: auto !important;
+    width: 52px !important;
+    height: 52px !important;
   }
   .ai-chat-launcher {
-    bottom: 82px !important;
-    left: 16px !important;
-    width: 50px !important;
-    height: 50px !important;
+    bottom: 20px !important;
+    left: 18px !important;
+    right: auto !important;
+    width: 52px !important;
+    height: 52px !important;
   }
   .ai-chat-launcher.chat-open {
     opacity: 0 !important;

@@ -324,3 +324,35 @@ def admin_portal_view(request):
 
 def certificate_verify_view(request, code=''):
     return render(request, 'public/certificate_verify.html', {'code': code})
+
+
+def photos_view(request):
+    photos_data = [
+        {"src": "/static/uploads/photos/pic1.jpeg", "title": "Classroom Session", "category": "Classroom", "description": "Students attending a classroom session at Mayank Classes."},
+        {"src": "/static/uploads/photos/pic2.jpeg", "title": "Student Celebration Event", "category": "Events", "description": "Students participating in a celebration event."},
+        {"src": "/static/uploads/photos/pic3.jpeg", "title": "Interactive Classroom Discussion", "category": "Classroom", "description": "A packed classroom with active student participation."},
+        {"src": "/static/uploads/photos/pic4.jpeg", "title": "Test Practice Session", "category": "Exams", "description": "Students appearing in a written practice or test session."},
+        {"src": "/static/uploads/photos/pic5.jpeg", "title": "Focused Study Session", "category": "Exams", "description": "Students working attentively during a class test."},
+        {"src": "/static/uploads/photos/pic6.jpeg", "title": "Award Ceremony Group Photo", "category": "Awards", "description": "Group photo from a certificate and award ceremony."},
+        {"src": "/static/uploads/photos/pic7.jpeg", "title": "Student Welcome and Recognition", "category": "Achievements", "description": "Students and faculty during a felicitation moment."},
+        {"src": "/static/uploads/photos/pic8.jpeg", "title": "Classroom Recognition Event", "category": "Achievements", "description": "A special classroom gathering to recognize student success."},
+        {"src": "/static/uploads/photos/pic9.jpeg", "title": "Study and Test Preparation", "category": "Classroom", "description": "Students preparing and writing during class."},
+        {"src": "/static/uploads/photos/pic10.jpeg", "title": "Outdoor Student Group Photo", "category": "Events", "description": "Students and faculty together for an outdoor group picture."},
+        {"src": "/static/uploads/photos/pic11.jpeg", "title": "Special Felicitation Moment", "category": "Achievements", "description": "A memorable recognition moment with bouquet presentation."},
+        {"src": "/static/uploads/photos/pic12.jpeg", "title": "Stage Speech Program", "category": "Events", "description": "A speaker addressing the audience during a stage program."},
+        {"src": "/static/uploads/photos/pic13.jpeg", "title": "Certificate Distribution", "category": "Awards", "description": "The certificate is being presented during the ceremony."},
+        {"src": "/static/uploads/photos/pic14.jpeg", "title": "Young Achievers Award Ceremony", "category": "Awards", "description": "Children receiving certificates during an award function."},
+        {"src": "/static/uploads/photos/pic15.jpeg", "title": "Kids Award Presentation", "category": "Awards", "description": "A young student receiving a certificate on stage."},
+        {"src": "/static/uploads/photos/pic17.jpeg", "title": "Medal Ceremony Group Photo", "category": "Achievements", "description": "Students posing proudly with medals after the ceremony."},
+        {"src": "/static/uploads/photos/pic18.jpeg", "title": "Certificate and Medal Presentation", "category": "Awards", "description": "Children receiving recognition certificates and medals."},
+        {"src": "/static/uploads/photos/pic19.jpeg", "title": "Award Ceremony Group Photo", "category": "Awards", "description": "Large group photo of students after the award event."},
+        {"src": "/static/uploads/photos/pic20.jpeg", "title": "Topper Celebration Group", "category": "Achievements", "description": "Students posing together with medals and teachers."}
+    ]
+    categories = ["All", "Classroom", "Events", "Exams", "Achievements", "Awards"]
+    return render(request, 'public/photos.html', {
+        'photos': photos_data,
+        'categories': categories,
+        'total_count': len(photos_data),
+        'active_page': 'photos',
+    })
+
